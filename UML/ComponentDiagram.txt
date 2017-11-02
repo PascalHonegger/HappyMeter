@@ -1,0 +1,51 @@
+@startuml
+
+left to right direction
+
+node "Frontend" {
+  [DataService]
+  [LoginService]
+  [AdministrationService]
+}
+
+cloud "Backend" {
+  package "Attributes" {
+    [AuthorizationAttribute]
+  }
+  package "Controller" {
+    [EmotionalState]
+    [AvailableEmotions]
+    [User]
+  }
+  package "Services" {
+    [AuthorizationService]
+  }
+  package "Model" {
+    [UserModel]
+    [EmotionalStateModel]
+    [AvailableEmotionsModel]
+  }
+}
+
+
+database "MySql"
+
+[DataService] --> [EmotionalState]
+[DataService] --> [AvailableEmotions]
+[LoginService] --> [User]
+[AdministrationService] --> [User]
+[AdministrationService] -l-> [DataService]
+[AdministrationService] --> [LoginService]
+
+[EmotionalState] --> [EmotionalStateModel]
+[AvailableEmotions] --> [AvailableEmotionsModel]
+[User] --> [AuthorizationService]
+[User] --> [UserModel]
+[AuthorizationService] --> [UserModel]
+[AuthorizationAttribute] --> [AuthorizationService]
+
+[UserModel] --> MySql
+[EmotionalStateModel] --> MySql
+[AvailableEmotionsModel] --> MySql
+
+@enduml

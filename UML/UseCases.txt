@@ -1,0 +1,36 @@
+@startuml
+
+title Use-Cases für das Happy-Meter
+
+
+left to right direction
+
+actor Benutzer
+actor Administrator
+
+rectangle Startseite {
+    Benutzer --> (Tagesabhängige gefühlslage der anderen sehen)
+    Benutzer --> (Gefühlslage ohne Kommentar verfassen)
+    Benutzer --> (Gefühlslage mit Kommentar verfassen)
+}
+
+rectangle Administration {
+    Administrator --> (Benutzername ändern)
+    Administrator --> (Passwort ändern)
+    Administrator --> (Gefühlslageoptionen auflisten)
+    Administrator --> (Neue Gefühlslageoption hinzufügen)
+    Administrator --> (Bestehende Gefühlslageoption bearbeiten)
+    (Bestehende Gefühlslageoption bearbeiten) <|-- (Smiley ändern)
+    (Bestehende Gefühlslageoption bearbeiten) <|-- (Aktiven Smiley deaktivieren)
+    (Bestehende Gefühlslageoption bearbeiten) <|-- (Inaktiven Smiley aktivieren)
+    Administrator --> (Gefühlslage-Verlauf einsehen)
+}
+
+rectangle Anmeldung {
+    Administrator --> (Autorisieren)
+    Administrator --> (Abmelden)
+}
+
+Administrator -|> Benutzer
+
+@enduml

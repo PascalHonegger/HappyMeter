@@ -1,0 +1,27 @@
+@startuml
+
+title Ablauf Anfrageverarbeitung \n
+
+start
+
+:Anfrage trifft ein;
+
+if (Benötigt Autorisierung) then (Ja)
+  :Lese Anmeldedaten aus HTTP-Header;
+  if (Anmeldedaten vorhanden und korrekt) then (Ja)
+  else (Nein - HTTP-Code 401)
+    stop
+  endif
+else (Nein)
+endif
+
+if (Überprüfe Parameter) then (Gültig)
+  :Verarbeite Anfrage;
+  -> HTTP-Code 200;
+  stop
+else (Ungültig - HTTP-Code 400)
+  stop
+endif
+
+
+@enduml
