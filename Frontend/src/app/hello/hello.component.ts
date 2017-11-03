@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
-import { ServerService } from './../services/server.service';
+import { EmotionalStateService } from './../services/emotional-state.service';
 import { CalculationService } from './../services/calculation.service';
 import { CustomTitleService } from './../services/custom-title.service';
+import { EmotionalState } from './../model/emotional-state.model';
 
 @Component({
   selector: 'hello',
@@ -10,29 +11,12 @@ import { CustomTitleService } from './../services/custom-title.service';
   templateUrl: './hello.component.html'
 })
 export class HelloComponent {
-  public loadedData: string[];
-  public token: string = '';
+  public loadedData: EmotionalState[];
 
-  constructor(private server: ServerService) {
+  constructor(private server: EmotionalStateService) {
   }
 
-  /*public loadBasicData() {
-    this.httpClient.get<string[]>(baseUrl + '/Data/Basic')
-      .subscribe((d) => this.loadedData = d);
-  }
-
-  public loadSecureData() {
-    this.httpClient.get<string[]>(baseUrl + '/Data/Secure', {
-      headers: new HttpHeaders().append('token', this.token)
-    })
-      .subscribe((d) => this.loadedData = d);
-  }*/
-
-  public sendLogin() {
-    this.server.login('admin', 'admin').subscribe((t) => this.token = t.id);
-  }
-
-  public sendLogout() {
-    this.server.logout().subscribe();
+  public loadEmotionalStates() {
+    this.server.dailyEmotionalStates().subscribe((e) => this.loadedData = e);
   }
 }

@@ -17,20 +17,30 @@ import { AppComponent } from './app.component';
 // Different sites
 import { HelloComponent } from './hello/hello.component';
 
+// Dialog contents
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+
 // 404 not found page
 import { NoContentComponent } from './no-content/no-content.component';
 
 // Services
 import { AuthService } from './services/auth.service';
-import { ServerService } from './services/server.service';
+import { UserService } from './services/user.service';
+import { EmotionalStateService } from './services/emotional-state.service';
+import { EmotionService } from './services/emotion.service';
 
 // Interceptors
-import { TokenInterceptor } from './interceptors/token.interceptor';
+import { AuthorizeInterceptor } from './interceptors/authorize.interceptor';
+import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
+
+// Guards
+import { CanActivateViaAuthGuard } from './guards/can-activate-via-auth.guard';
 
 // Material 2
 import {
   MatButtonModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatDialogModule
 } from '@angular/material';
 import 'hammerjs';
 
@@ -45,7 +55,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
   declarations: [
     AppComponent,
     HelloComponent,
+    ErrorDialogComponent,
     NoContentComponent
+  ],
+  entryComponents: [
+    ErrorDialogComponent
   ],
   /**
    * Import Angular's modules.
@@ -62,6 +76,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     }),
     MatButtonModule,
     MatToolbarModule,
+    MatDialogModule,
     FlexLayoutModule
   ],
   /**
@@ -70,14 +85,23 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
   providers: [
     ENV_PROVIDERS,
     Title,
-    ServerService,
+    UserService,
+    EmotionalStateService,
+    EmotionService,
     AuthService,
+    CanActivateViaAuthGuard,
     {
       provide: LOCALE_ID,
-      useValue: 'de-CH' },
+      useValue: 'de-CH'
+    },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
+      useClass: AuthorizeInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlerInterceptor,
       multi: true
     }
   ]

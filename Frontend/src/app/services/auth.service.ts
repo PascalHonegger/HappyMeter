@@ -1,27 +1,41 @@
-import { Token } from './../model/token.model';
 import { Injectable } from '@angular/core';
 
-const tokenStorageKey = 'sessionToken';
+const usernameStorageKey = 'sessionUsername';
+const passwordStorageKey = 'sessionPassword';
 
 @Injectable()
 export class AuthService {
-    private _token: string;
+    private _username: string;
+    private _password: string;
 
     constructor() {
-        this._token = sessionStorage.getItem(tokenStorageKey) || '';
+        this._username = sessionStorage.getItem(usernameStorageKey) || '';
+        this._password = sessionStorage.getItem(passwordStorageKey) || '';
     }
 
-    public get token(): string {
-        return this._token;
+    public get username(): string {
+        return this._username;
     }
 
-    public set token(value: string) {
-        this._token = value;
-        sessionStorage.setItem(tokenStorageKey, JSON.stringify(value));
+    public set username(value: string) {
+        this._username = value;
+        sessionStorage.setItem(usernameStorageKey, JSON.stringify(value));
     }
 
-    public clearToken(): void {
-        this._token = null;
-        sessionStorage.removeItem(tokenStorageKey);
+    public get password(): string {
+        return this._password;
+    }
+
+    public set password(value: string) {
+        this._password = value;
+        sessionStorage.setItem(passwordStorageKey, JSON.stringify(value));
+    }
+
+    public clearCredentials() {
+        this._username = '';
+        this._password = '';
+
+        sessionStorage.removeItem(usernameStorageKey);
+        sessionStorage.removeItem(passwordStorageKey);
     }
 }

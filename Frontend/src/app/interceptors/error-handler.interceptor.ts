@@ -4,40 +4,43 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpResponse
+  HttpErrorResponse
 } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 
 import { AuthService } from './../services/auth.service';
-import { Router } from '@angular/router';
+import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router, private dialog: MatDialog) {}
 
   public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(request).do((event) => {
-      if (event instanceof HttpResponse && !event.ok) {
+    return next.handle(request).do(() => undefined, (event) => {
+      if (event instanceof HttpErrorResponse) {
         console.warn('Received not OK response with status ' + event.status, event);
         if (event.status === 400) {
           // Ignore requests concerning wrong user input
           return;
         }
 
-        if (request.url.endsWith('login')) {
+        if (request.url.endsWith('TestCredentials')) {
           // Ignore login request
           return;
         }
 
         if (event.status === 401) {
+          this.auth.clearCredentials();
           this.router.navigate(['login']);
           return;
         }
 
-        // TODO display popup with error content for further assistance
+        this.dialog.open(ErrorDialogComponent);
       }
     });
   }

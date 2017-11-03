@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AtosHappyMeter.Constants;
-using AtosHappyMeter.Models;
 
 namespace AtosHappyMeter.ControllerModel
 {

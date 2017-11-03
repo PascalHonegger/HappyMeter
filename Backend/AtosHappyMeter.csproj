@@ -122,7 +122,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AtosDatabaseContext.cs" />
-    <Compile Include="Models\UserController.cs" />
     <Compile Include="Controllers\EmotionController.cs" />
     <Compile Include="Controllers\EmotionalStateController.cs" />
     <Compile Include="Constants\RegularExpressions.cs" />

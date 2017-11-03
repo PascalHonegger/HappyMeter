@@ -10,14 +10,15 @@ import { AuthService } from './../services/auth.service';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
-export class TokenInterceptor implements HttpInterceptor {
+export class AuthorizeInterceptor implements HttpInterceptor {
 
   constructor(private auth: AuthService) {}
 
   public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     request = request.clone({
       setHeaders: {
-        token: this.auth.token
+        username: this.auth.username,
+        password: this.auth.password
       }
     });
 
