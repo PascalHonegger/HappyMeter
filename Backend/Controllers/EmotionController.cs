@@ -20,7 +20,11 @@ namespace AtosHappyMeter.Controllers
 			{
 				var data = await dbContext.Emotions
 					.Where(e => e.IsActive)
-					.Select(e => new ReducedEmotion(e))
+					.Select(e => new ReducedEmotion
+					{
+						Id = e.Id,
+						SmileyCode = e.Smiley
+					})
 					.ToListAsync();
 				return Json(data);
 			}

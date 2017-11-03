@@ -5,6 +5,7 @@ import { EmotionService } from './../services/emotion.service';
 import { CalculationService } from './../services/calculation.service';
 import { CustomTitleService } from './../services/custom-title.service';
 import { EmotionalState } from './../model/emotional-state.model';
+import { Emotion } from './../model/emotion.model';
 
 // 1 Minute
 const reloadIntervalInMs = 60000;
@@ -15,7 +16,8 @@ const reloadIntervalInMs = 60000;
   templateUrl: './hello.component.html'
 })
 export class HelloComponent {
-  public loadedData: EmotionalState[];
+  public activeEmotions: Emotion[];
+  public dailyEmotionalStates: EmotionalState[];
 
   constructor(private emotionServer: EmotionService,
               private emotionalStateServer: EmotionalStateService) {
@@ -24,7 +26,9 @@ export class HelloComponent {
   }
 
   private loadData() {
-    this.emotionServer.dailyEmotionalStates().subscribe((e) => this.loadedData = e);
-    this.emotionalStateServer.dailyEmotionalStates().subscribe((e) => this.loadedData = e);
+    this.emotionServer
+      .activeEmotions().subscribe((e) => this.activeEmotions = e);
+    this.emotionalStateServer
+      .dailyEmotionalStates().subscribe((de) => this.dailyEmotionalStates = de);
   }
 }

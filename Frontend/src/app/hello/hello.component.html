@@ -1,7 +1,6 @@
-<div fxLayout="column" fxLayoutGap="20px">
-  <h2>Wollen Sie sich anmelden?</h2>
-  <button mat-button (click)="loadEmotionalStates()">Load emotional states</button>
-  <pre>
-    {{loadedData | json}}
-  </pre>
+<div *ngIf="activeEmotions && dailyEmotionalStates" fxLayout="column" fxLayoutGap="20px">
+  <h2>Wie ist die allgemeine Gefühlslage?</h2>
+  <div *ngFor="let emotion of activeEmotions">
+    <emoji-display [emojiCodePoint]="emotion.smileyCode"></emoji-display>
+  </div>
 </div>

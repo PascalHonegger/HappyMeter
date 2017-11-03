@@ -20,6 +20,9 @@ import { HelloComponent } from './hello/hello.component';
 // Dialog contents
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 
+// Help components
+import { EmojiDisplayComponent } from './emoji-display/emoji-display.component';
+
 // 404 not found page
 import { NoContentComponent } from './no-content/no-content.component';
 
@@ -55,6 +58,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
   declarations: [
     AppComponent,
     HelloComponent,
+    EmojiDisplayComponent,
     ErrorDialogComponent,
     NoContentComponent
   ],

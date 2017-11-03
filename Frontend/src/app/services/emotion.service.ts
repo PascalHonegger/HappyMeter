@@ -12,7 +12,7 @@ export class EmotionService extends ServerService {
     }
 
     public activeEmotions() {
-        return this.httpClient.get<Emotion[]>(this.baseUrl + '/DailyEmotionalStates');
+        return this.httpClient.get<Emotion[]>(this.baseUrl + '/ActiveEmotions');
     }
 
     public allEmotions() {
