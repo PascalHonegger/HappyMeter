@@ -1,0 +1,40 @@
+$content-padding: 16px;
+$title-padding: 20px;
+$menu-margin: 6px;
+
+.app-toolbar {
+  color: white !important;
+  text-transform: uppercase;
+  text-align: center;
+  z-index: 10;
+  position: relative;
+}
+
+a.active-link {
+  background: hsla(0,0%,100%,.15);
+}
+
+.app-title {
+  text-align: left;
+  font-weight: bold;
+}
+
+.nav-flex-div {
+  width: 100%;
+}
+
+.main-title {
+  text-align: center;
+  padding-top: $title-padding;
+  padding-bottom: $title-padding;
+  background: #3f51b5;
+  color: hsla(0,0%,100%,.87);
+  padding-left: $content-padding;
+  padding-right: $content-padding;
+}
+
+.main-content {
+  padding-left: $content-padding;
+  padding-right: $content-padding;
+  padding-bottom: $content-padding;
+}

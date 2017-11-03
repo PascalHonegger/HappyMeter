@@ -1,0 +1,11 @@
+<div fxLayout="column" fxLayoutGap="20px">
+  <h2>Wollen Sie sich anmelden?</h2>
+  <button mat-button (click)="sendLogin()">Login</button>
+  <button mat-button (click)="sendLogout()">Logout</button>
+  <pre>
+    {{loadedData | json}}
+  </pre>
+  <pre>
+    {{token}}
+  </pre>
+</div>
