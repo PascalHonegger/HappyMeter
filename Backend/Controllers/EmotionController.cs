@@ -26,6 +26,18 @@ namespace AtosHappyMeter.Controllers
 			}
 		}
 
+		[HttpGet]
+		[ResponseType(typeof(List<Emotion>))]
+		[AuthorizeAdministrator]
+		public async Task<IHttpActionResult> AllEmotions()
+		{
+			using (var dbContext = new AtosDatabaseContext())
+			{
+				var data = await dbContext.Emotions.ToListAsync();
+				return Json(data);
+			}
+		}
+
 		[HttpPost]
 		[ResponseType(typeof(void))]
 		[AuthorizeAdministrator]

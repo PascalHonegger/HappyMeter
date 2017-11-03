@@ -23,7 +23,7 @@ namespace AtosHappyMeter.Controllers
 				var currentDate = DateTime.Now.Date;
 				var data = await dbContext.EmotionalStates
 					.Where(e => e.Emotion.IsActive && e.CreatedDate == currentDate)
-					.Select(e => new { e.CreatedDate, e.Comment, e.EmotionId })
+					.Select(e => new ReducedEmotionalState(e))
 					.ToListAsync();
 				return Json(data);
 			}
@@ -44,7 +44,7 @@ namespace AtosHappyMeter.Controllers
 			{
 				var data = await dbContext.EmotionalStates
 					.Where(e => e.CreatedDate >= from && e.CreatedDate <= to)
-					.Select(e => new { e.CreatedDate, e.Comment, e.EmotionId })
+					.Select(e => new ReducedEmotionalState(e))
 					.ToListAsync();
 				return Json(data);
 			}

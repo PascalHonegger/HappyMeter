@@ -2,28 +2,35 @@ import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { ServerService } from './server.service';
-import { EmotionalState } from './../model/emotional-state.model';
+import { Emotion } from './../model/emotion.model';
+import { FullEmotion } from './../model/full-emotion.model';
 
 @Injectable()
 export class EmotionService extends ServerService {
     constructor(private httpClient: HttpClient) {
-        super('EmotionalState');
+        super('Emotion');
     }
 
-    public dailyEmotionalStates() {
-        return this.httpClient.get<EmotionalState[]>(this.baseUrl + '/DailyEmotionalStates');
+    public activeEmotions() {
+        return this.httpClient.get<Emotion[]>(this.baseUrl + '/DailyEmotionalStates');
     }
 
-    public allEmotionalStatesWithinRange(from: Date, to: Date) {
-        const params = new HttpParams()
-            .set('from', from.toISOString())
-            .set('to', to.toISOString());
+    public allEmotions() {
+        return this.httpClient.get<FullEmotion[]>(this.baseUrl + '/AllEmotions');
+    }
+
+    public setActiveForEmotion(emotionId: number, isActive: boolean) {
         return this.httpClient
-            .get<EmotionalState[]>(this.baseUrl + '/AllEmotionalStatesWithinRange', { params });
+            .post<void>(this.baseUrl + '/SetActiveForEmotion', { emotionId, isActive });
     }
 
-    public addEmotionalState(emotionId: number, comment: string) {
+    public setSmileyForEmotion(emotionId: number, newSmileyCode: string) {
         return this.httpClient
-            .post<void>(this.baseUrl + 'User/SetNewUsername', { emotionId, comment });
+            .post<void>(this.baseUrl + '/SetSmileyForEmotion', { emotionId, newSmileyCode });
+    }
+
+    public addNewEmotion(newSmileyCode: string) {
+        return this.httpClient
+            .post<void>(this.baseUrl + '/SetSmileyForEmotion', { newSmileyCode });
     }
 }
