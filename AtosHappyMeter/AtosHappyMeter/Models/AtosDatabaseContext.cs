@@ -1,6 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using MySql.Data.Entity;
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace AtosHappyMeter.Models
 {
@@ -27,6 +29,9 @@ namespace AtosHappyMeter.Models
 
 		[ForeignKey(nameof(EmotionId))]
 		public virtual Emotion Emotion { get; set; }
+
+		[Column("created_date")]
+		public DateTime CreatedDate { get; set; }
 
 		[Column("comment")]
 		public string Comment { get; set; }
