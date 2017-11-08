@@ -1,6 +1,28 @@
-<div *ngIf="activeEmotions && dailyEmotionalStates" fxLayout="column" fxLayoutGap="20px">
-  <h2>Wie ist die allgemeine Gefühlslage?</h2>
-  <div *ngFor="let emotion of activeEmotions">
-    <emoji-display [emojiCodePoint]="emotion.smileyCode"></emoji-display>
+<div style="align-items: center" *ngIf="activeEmotions && dailyEmotionalStates" fxLayout="column" fxLayoutGap="20px">
+  <h2 class="mat-display-1">Wie ist die allgemeine Gefühlslage?</h2>
+  <ng-container *ngIf="dailyEmotionalStates.length === 0; else elseTemplate">
+    <h3>Heute wurden noch keine Gefühlslagen erfasst</h3>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <div class="emotion-view-container" fxLayoutAlign="center" fxLayout="row" fxLayoutGap="20px">
+      <div fxFlex="{{relativeSize(emotion.id)}}%" *ngFor="let emotion of activeEmotions" [matTooltip]="randomComment(emotion.id)">
+        <emoji-display [emojiCodePoint]="emotion.smileyCode"></emoji-display>
+      </div>
+    </div>
+  </ng-template>
+  <h2 class="mat-display-1">Eigene Gefühlslage erfassen</h2>
+  <div fxfLayout="row wrap" fxLayoutGap="20px">
+    <button mat-raised-button class="select-emotion-button" [color]="selectedEmotionId == emotion.id ? 'primary' : 'default'" *ngFor="let emotion of activeEmotions" (click)="selectedEmotionId = emotion.id">
+      <emoji-display [emojiCodePoint]="emotion.smileyCode"></emoji-display>
+    </button>
   </div>
+  <mat-form-field class="comment-input">
+    <textarea matInput placeholder="Kommentar" [formControl]="commentFormControl" [(ngModel)]="comment" maxLength="250" pattern="[A-Za-z0-9 \-\+\*%&/\\()=?!:;.,üöäÄÖÜÊêéèà<>^]*"></textarea>
+    <mat-error *ngIf="commentFormControl.hasError('pattern')">
+      Bitte keine ungewöhnlichen Zeichen verwenden
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button [disabled]="commentFormControl.invalid || selectedEmotionId == null || saveBlocked" (click)="sendEmotion()">
+    Senden
+  </button>
 </div>

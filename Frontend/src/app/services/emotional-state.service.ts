@@ -24,6 +24,6 @@ export class EmotionalStateService extends ServerService {
 
     public addEmotionalState(emotionId: number, comment: string) {
         return this.httpClient
-            .post<void>(this.baseUrl + 'User/SetNewUsername', { emotionId, comment });
+            .post<void>(this.baseUrl + '/AddEmotionalState', { emotionId, comment });
     }
 }

@@ -43,7 +43,10 @@ import { CanActivateViaAuthGuard } from './guards/can-activate-via-auth.guard';
 import {
   MatButtonModule,
   MatToolbarModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTooltipModule,
+  MatInputModule,
+  MatSnackBarModule
 } from '@angular/material';
 import 'hammerjs';
 
@@ -78,9 +81,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
       useHash: Boolean(history.pushState) === false,
       preloadingStrategy: PreloadAllModules
     }),
+    MatInputModule,
     MatButtonModule,
     MatToolbarModule,
     MatDialogModule,
+    MatTooltipModule,
+    MatSnackBarModule,
     FlexLayoutModule
   ],
   /**

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -88,7 +89,7 @@ namespace AtosHappyMeter.Controllers
 
 				await dbContext.SaveChangesAsync();
 
-				return Ok();
+				return StatusCode(HttpStatusCode.NoContent);
 			}
 		}
 	}

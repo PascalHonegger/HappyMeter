@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -17,7 +18,7 @@ namespace AtosHappyMeter.Controllers
 		public IHttpActionResult TestCredentials()
 		{
 			// Authorization is done through the Attribute
-			return Ok();
+			return StatusCode(HttpStatusCode.NoContent);
 		}
 
 		[HttpPost]
@@ -40,7 +41,7 @@ namespace AtosHappyMeter.Controllers
 
 				await dbContext.SaveChangesAsync();
 
-				return Ok();
+				return StatusCode(HttpStatusCode.NoContent);
 			}
 		}
 
@@ -64,7 +65,7 @@ namespace AtosHappyMeter.Controllers
 
 				await dbContext.SaveChangesAsync();
 
-				return Ok();
+				return StatusCode(HttpStatusCode.NoContent);
 			}
 		}
 	}

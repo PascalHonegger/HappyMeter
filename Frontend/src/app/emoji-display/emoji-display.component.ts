@@ -19,4 +19,8 @@ const reloadIntervalInMs = 60000;
 export class EmojiDisplayComponent {
   @Input()
   public emojiCodePoint: string;
+
+  public get emojiFromCodePoint(): string {
+    return String.fromCodePoint(parseInt(this.emojiCodePoint, 16));
+  }
 }

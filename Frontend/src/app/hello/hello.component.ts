@@ -6,9 +6,16 @@ import { CalculationService } from './../services/calculation.service';
 import { CustomTitleService } from './../services/custom-title.service';
 import { EmotionalState } from './../model/emotional-state.model';
 import { Emotion } from './../model/emotion.model';
+import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 // 1 Minute
 const reloadIntervalInMs = 60000;
+
+// 1 Minute
+const reloadTimeBlock = 60000;
+
+const notSaveAgainKey = 'last-save-time';
 
 @Component({
   selector: 'hello',
@@ -19,16 +26,55 @@ export class HelloComponent {
   public activeEmotions: Emotion[];
   public dailyEmotionalStates: EmotionalState[];
 
+  public selectedEmotionId: number | null = null;
+  public comment: string;
+  public commentFormControl: FormControl = new FormControl();
+
+  public saveBlocked: boolean = false;
+
   constructor(private emotionServer: EmotionService,
-              private emotionalStateServer: EmotionalStateService) {
+              private emotionalStateServer: EmotionalStateService,
+              private snackBar: MatSnackBar) {
     this.loadData();
     setInterval(() => this.loadData(), reloadIntervalInMs);
+    const lastSaveTime = localStorage.getItem('last-save-time');
+  }
+
+  public relativeSize(emotionId: number): number {
+    const totalAmount = this.dailyEmotionalStates.length;
+    const emotionAmount = this.dailyEmotionalStates.filter((d) => d.emotionId === emotionId).length;
+    return 100 / totalAmount * emotionAmount;
+  }
+
+  public randomComment(emotionId: number): string {
+    const emotion = this.dailyEmotionalStates
+      .find((de) => de.emotionId === emotionId && de.comment != null);
+    return emotion !== undefined ? emotion.comment : undefined;
+  }
+
+  public sendEmotion() {
+    this.emotionalStateServer.addEmotionalState(this.selectedEmotionId, this.comment)
+      .subscribe((success) => {
+        this.loadData();
+        this.snackBar.open('Gesendet');
+        this.saveBlocked = true;
+        setTimeout(() => this.saveBlocked = false, reloadTimeBlock);
+      });
+  }
+
+  // Thanks to https://stackoverflow.com/a/12646864
+  private shuffleArray<T>(array: T[]): T[] {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
 
   private loadData() {
     this.emotionServer
       .activeEmotions().subscribe((e) => this.activeEmotions = e);
     this.emotionalStateServer
-      .dailyEmotionalStates().subscribe((de) => this.dailyEmotionalStates = de);
+      .dailyEmotionalStates().subscribe((de) => this.dailyEmotionalStates = this.shuffleArray(de));
   }
 }
