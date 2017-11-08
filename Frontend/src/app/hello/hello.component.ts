@@ -56,7 +56,14 @@ export class HelloComponent {
   public sendEmotion() {
     this.emotionalStateServer.addEmotionalState(this.selectedEmotionId, this.comment)
       .subscribe((success) => {
+        // Load new data
         this.loadData();
+
+        // Reset user input
+        this.comment = '';
+        this.selectedEmotionId = undefined;
+
+        // Inform user
         const snackRef = this.snackBar.open(
           'Gesendet - Bitte warten Sie, bis Sie weitere Gefühlslagen erfassen können');
         this.saveBlocked = true;
