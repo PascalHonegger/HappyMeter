@@ -1,33 +1,70 @@
-<div *ngIf="allEmotions" style="align-items: center" fxLayout="column" fxLayoutGap="20px">
-  <h2 class="mat-display-1">Verlauf</h2>
-  <div class="charts-container">
-    <mat-form-field>
-      <input matInput [matDatepicker]="fromDatePicker" placeholder="Von"
-              [(ngModel)]="fromDate">
-      <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #fromDatePicker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput [matDatepicker]="toDatePicker" placeholder="Bis"
-              [(ngModel)]="toDate">
-      <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #toDatePicker></mat-datepicker>
-    </mat-form-field>
-    <button mat-raised-button (click)="tryRefreshChart()">Aktualisieren</button>
+<mat-tab-group>
+  <mat-tab label="Emotionsverlauf">
+      <div fxLayout="column" class="mat-tab-content-div">
+        <div fxLayout="row" fxLayoutGap="10px">
+          <mat-form-field fxFlex>
+              <input matInput [matDatepicker]="fromDatePicker" placeholder="Von"
+                    [(ngModel)]="fromDate">
+            <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #fromDatePicker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field fxFlex>
+            <input matInput [matDatepicker]="toDatePicker" placeholder="Bis"
+                    [(ngModel)]="toDate">
+            <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #toDatePicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <button mat-raised-button (click)="tryRefreshChart()">Aktualisieren</button>
+    
+        <ngx-charts-line-chart *ngIf="chartData"
+          [results]="chartData"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          xAxisLabel="Datum"
+          yAxisLabel="Personen">
+        </ngx-charts-line-chart>
+      </div>
+  </mat-tab>
+  <mat-tab label="Emotionen verwalten">
+      <div fxLayout="column" fxLayoutGap="20px" class="mat-tab-content-div">
+        <div *ngFor="let emotion of allEmotions" fxLayout="row" fxLayoutGap="20px">
+          <emoji-display class="edit-emoji-display" [emojiCodePoint]="emotion.smiley"></emoji-display>
+          <button mat-raised-button (click)="invertActive(emotion)">{{ emotion.isActive ? 'Deaktivieren' : 'Aktivieren' }}</button>
+          <button mat-raised-button (click)="openSetEmojiDialog()">Smiley ändern</button>
+        </div>
+        <button mat-raised-button (click)="openNewEmojiDialog()">Emotion hinzufügen</button>
+      </div>
+  </mat-tab>
+  <mat-tab label="Benutzerdaten verwalten">
+      <div fxLayout="column" fxLayoutGap="20px" class="mat-tab-content-div">
+        <mat-form-field class="input-fill-width">
+          <input matInput placeholder="Neuer Benutzername" [formControl]="usernameFormControl" [(ngModel)]="username" required minLength="1" maxLength="100" pattern="[A-Za-z0-9 \-\+\*%&/\\()=?!:;.,üöäÄÖÜÊêéèà<>^]*">
+          <mat-error *ngIf="usernameFormControl.hasError('pattern')">
+            Bitte keine ungewöhnlichen Zeichen verwenden
+          </mat-error>
+          <mat-error *ngIf="usernameFormControl.hasError('minLength') || usernameFormControl.hasError('maxLength')">
+            Bitte einen Benutzernamen zwischen 1 und 100 Zeichen eingeben
+          </mat-error>
+        </mat-form-field>
+        <button mat-raised-button [disabled]="usernameFormControl.invalid || authService.username === username" (click)="setNewUsername()">
+          Neuen Benutzername setzen
+        </button>
+      
+        <mat-form-field class="input-fill-width">
+          <input matInput placeholder="Neues Passwort" type="password" [formControl]="passwordFormControl" [(ngModel)]="password" required minLength="1" maxLength="100">
+        </mat-form-field>
+      
+        <button mat-raised-button [disabled]="passwordFormControl.invalid" (click)="setNewPassword()">
+          Neues Passwort setzen
+        </button>
 
-    <ngx-charts-line-chart *ngIf="chartData"
-      [results]="chartData"
-      [xAxis]="true"
-      [yAxis]="true"
-      [legend]="true"
-      [showXAxisLabel]="true"
-      [showYAxisLabel]="true"
-      xAxisLabel="Datum"
-      yAxisLabel="Personen">
-    </ngx-charts-line-chart>
-  </div>
-
-  <pre>
-    {{chartData | json}}
-  </pre>
-</div>
+        <button mat-raised-button (click)="logout()">
+          Abmelden
+        </button>
+      </div>
+  </mat-tab>
+</mat-tab-group>

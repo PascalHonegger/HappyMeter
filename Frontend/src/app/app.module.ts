@@ -54,7 +54,8 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   NativeDateAdapter,
-  DateAdapter
+  DateAdapter,
+  MatTabsModule
 } from '@angular/material';
 import 'hammerjs';
 
@@ -99,6 +100,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatTabsModule,
     FlexLayoutModule,
     NgxChartsModule
   ],

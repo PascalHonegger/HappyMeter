@@ -19,11 +19,11 @@ export class UserService extends ServerService {
         });
     }
 
-    public setNewUsername(username: string) {
-        return this.httpClient.post<void>(this.baseUrl + '/SetNewUsername', username);
+    public setNewUsername(newUsername: string) {
+        return this.httpClient.post<void>(this.baseUrl + '/SetNewUsername', { newUsername });
     }
 
-    public setNewPassword(password: string) {
-        return this.httpClient.post<void>(this.baseUrl + '/SetNewPassword', password);
+    public setNewPassword(newPassword: string) {
+        return this.httpClient.post<void>(this.baseUrl + '/SetNewPassword', { newPassword });
     }
 }

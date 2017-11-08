@@ -1,3 +1,11 @@
-.charts-container {
-	height: 300px;
+.edit-emoji-display {
+	width: 50px;
+}
+
+.mat-tab-content-div {
+	margin: 10px;
+}
+
+.input-fill-width {
+	width: 100%;
 }

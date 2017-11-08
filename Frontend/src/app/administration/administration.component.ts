@@ -27,16 +27,23 @@ export class AdministrationComponent {
 
   public chartData: any[];
 
-  constructor(private userServer: UserService,
+  public username: string = '';
+  public password: string = '';
+  public usernameFormControl: FormControl = new FormControl('');
+  public passwordFormControl: FormControl = new FormControl('');
+
+  constructor(public authService: AuthService,
+              private userServer: UserService,
               private emotionServer: EmotionService,
               private emotionalStateServer: EmotionalStateService,
-              private authService: AuthService,
               private snackBar: MatSnackBar,
               private router: Router) {
                 this.fromDate = new Date(Date.now() - 1 * 24 * 3600 * 1000);
                 this.toDate = new Date(Date.now());
 
                 this.loadEmotions();
+
+                this.username = this.authService.username;
               }
 
     public loadEmotions() {
@@ -45,10 +52,34 @@ export class AdministrationComponent {
       });
     }
 
+    public invertActive(emotion: FullEmotion) {
+      this.emotionServer.setActiveForEmotion(emotion.id, !emotion.isActive).subscribe(() => {
+        emotion.isActive = !emotion.isActive;
+      });
+    }
+
+    public setNewUsername() {
+      this.userServer.setNewUsername(this.username).subscribe(() => {
+        this.authService.username = this.username;
+      });
+    }
+
+    public setNewPassword() {
+      this.userServer.setNewPassword(this.password).subscribe(() => {
+        this.authService.password = this.password;
+      });
+    }
+
+    public logout() {
+      this.authService.clearCredentials();
+      this.snackBar.open('Anmelden erfolgreich');
+      this.router.navigate(['']);
+    }
+
     public tryRefreshChart() {
       // Ensure dates are valid
       if (this.fromDate > this.toDate) {
-        this.snackBar.open('Das Start-Datum muss kleiner als das Bis-Datum sein');
+        this.snackBar.open('Das Start-Datum muss kleiner als das Bis-Datum sein', 'Ok');
       } else {
         this.emotionalStateServer
           .allEmotionalStatesWithinRange(this.fromDate, this.toDate)
