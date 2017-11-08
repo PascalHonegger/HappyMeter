@@ -17,7 +17,7 @@ namespace AtosHappyMeter.Controllers
 		[ResponseType(typeof(List<ReducedEmotion>))]
 		public async Task<IHttpActionResult> ActiveEmotions()
 		{
-			using (var dbContext = new AtosDatabaseContext())
+			using (var dbContext = new HappyMeterDatabaseContext())
 			{
 				var data = await dbContext.Emotions
 					.Where(e => e.IsActive)
@@ -36,7 +36,7 @@ namespace AtosHappyMeter.Controllers
 		[AuthorizeAdministrator]
 		public async Task<IHttpActionResult> AllEmotions()
 		{
-			using (var dbContext = new AtosDatabaseContext())
+			using (var dbContext = new HappyMeterDatabaseContext())
 			{
 				var data = await dbContext.Emotions.ToListAsync();
 				return Ok(data);
@@ -54,7 +54,7 @@ namespace AtosHappyMeter.Controllers
 				return BadRequest();
 			}
 
-			using (var dbContext = new AtosDatabaseContext())
+			using (var dbContext = new HappyMeterDatabaseContext())
 			{
 				var data = await dbContext.Emotions.FindAsync(changeEmotionIsActiveDto.EmotionId);
 
@@ -82,7 +82,7 @@ namespace AtosHappyMeter.Controllers
 				return BadRequest();
 			}
 
-			using (var dbContext = new AtosDatabaseContext())
+			using (var dbContext = new HappyMeterDatabaseContext())
 			{
 				if (await dbContext.Emotions.AnyAsync(e => e.Smiley == changeEmotionSmileyDto.NewSmileyCode))
 				{
@@ -115,7 +115,7 @@ namespace AtosHappyMeter.Controllers
 				return BadRequest();
 			}
 
-			using (var dbContext = new AtosDatabaseContext())
+			using (var dbContext = new HappyMeterDatabaseContext())
 			{
 				if (await dbContext.Emotions.AnyAsync(e => e.Smiley == addNewEmotionDto.NewSmileyCode))
 				{

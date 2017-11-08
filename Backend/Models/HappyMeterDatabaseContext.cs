@@ -7,9 +7,9 @@ using MySql.Data.Entity;
 namespace AtosHappyMeter.Models
 {
 	[DbConfigurationType(typeof(MySqlEFConfiguration))]
-	public class AtosDatabaseContext : DbContext
+	public class HappyMeterDatabaseContext : DbContext
 	{
-		public AtosDatabaseContext() : base("name=AtosHappyMeterDatabase")
+		public HappyMeterDatabaseContext() : base("name=AtosHappyMeterDatabase")
 		{
 		}
 

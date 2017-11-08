@@ -19,7 +19,7 @@ namespace AtosHappyMeter.Controllers
 		[ResponseType(typeof(List<ReducedEmotionalState>))]
 		public async Task<IHttpActionResult> DailyEmotionalStates()
 		{
-			using (var dbContext = new AtosDatabaseContext())
+			using (var dbContext = new HappyMeterDatabaseContext())
 			{
 				var currentDate = DateTime.Now.Date;
 				var data = await dbContext.EmotionalStates
@@ -36,9 +36,9 @@ namespace AtosHappyMeter.Controllers
 		}
 
 		[HttpGet]
-		[ResponseType(typeof(List<ReducedEmotionalState>))]
+		[ResponseType(typeof(List<GroupedEmotionalState>))]
 		[AuthorizeAdministrator]
-		public async Task<IHttpActionResult> AllEmotionalStatesWithinRange([Required] DateTime from, [Required] DateTime to)
+		public async Task<IHttpActionResult> GroupedEmotionalStatesWithinRange([Required] DateTime from, [Required] DateTime to)
 		{
 			// Validate parameters
 			if (!ModelState.IsValid || from > to)
@@ -46,15 +46,16 @@ namespace AtosHappyMeter.Controllers
 				return BadRequest();
 			}
 
-			using (var dbContext = new AtosDatabaseContext())
+			using (var dbContext = new HappyMeterDatabaseContext())
 			{
 				var data = await dbContext.EmotionalStates
 					.Where(e => e.CreatedDate >= from.Date && e.CreatedDate <= to.Date)
-					.Select(e => new ReducedEmotionalState
+					.GroupBy(e => new { e.EmotionId, e.CreatedDate })
+					.Select(group => new GroupedEmotionalState
 					{
-						Comment = e.Comment,
-						CreatedDate = e.CreatedDate,
-						EmotionId = e.EmotionId
+						CreatedDate = group.Key.CreatedDate,
+						EmotionId = group.Key.EmotionId,
+						Count = group.Count()
 					})
 					.ToListAsync();
 				return Ok(data);
@@ -71,7 +72,7 @@ namespace AtosHappyMeter.Controllers
 				return BadRequest();
 			}
 
-			using (var dbContext = new AtosDatabaseContext())
+			using (var dbContext = new HappyMeterDatabaseContext())
 			{
 				// The provided Emotion has to exist and be active
 				if (!await dbContext.Emotions.AnyAsync(e => e.Id == addEmotionalStateDto.EmotionId && e.IsActive))

@@ -16,7 +16,7 @@ namespace AtosHappyMeter.Services
 
 		public static (bool isAuthorized, Administrator foundAdministrator) AuthorizeUser(string username, string password)
 		{
-			using (var dbContext = new AtosDatabaseContext())
+			using (var dbContext = new HappyMeterDatabaseContext())
 			{
 				var foundAdministrator = dbContext.Administrators.FirstOrDefault(a => a.Username == username);
 				if (foundAdministrator == null)

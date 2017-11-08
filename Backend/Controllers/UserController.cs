@@ -33,7 +33,7 @@ namespace AtosHappyMeter.Controllers
 
 			var autorisedAdministrator = (Administrator) ActionContext.Request.Properties[AuthorizationConstants.UserInformationKey];
 
-			using (var dbContext = new AtosDatabaseContext())
+			using (var dbContext = new HappyMeterDatabaseContext())
 			{
 				dbContext.Administrators.Attach(autorisedAdministrator);
 
@@ -57,7 +57,7 @@ namespace AtosHappyMeter.Controllers
 
 			var autorisedAdministrator = (Administrator)ActionContext.Request.Properties[AuthorizationConstants.UserInformationKey];
 
-			using (var dbContext = new AtosDatabaseContext())
+			using (var dbContext = new HappyMeterDatabaseContext())
 			{
 				dbContext.Administrators.Attach(autorisedAdministrator);
 

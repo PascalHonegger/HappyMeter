@@ -114,6 +114,7 @@
     <Compile Include="ControllerModel\ChangeEmotionSmileyDto.cs" />
     <Compile Include="ControllerModel\ChangeEmotionIsActiveDto.cs" />
     <Compile Include="ControllerModel\ReducedEmotion.cs" />
+    <Compile Include="ControllerModel\GroupedEmotionalState.cs" />
     <Compile Include="ControllerModel\ReducedEmotionalState.cs" />
     <Compile Include="ControllerModel\AddEmotionalStateDto.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -121,7 +122,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AtosDatabaseContext.cs" />
+    <Compile Include="Models\HappyMeterDatabaseContext.cs" />
     <Compile Include="Controllers\EmotionController.cs" />
     <Compile Include="Controllers\EmotionalStateController.cs" />
     <Compile Include="Constants\RegularExpressions.cs" />
