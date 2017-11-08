@@ -23,7 +23,7 @@ namespace AtosHappyMeter.Controllers
 
 		[HttpPost]
 		[ResponseType(typeof(void))]
-		public async Task<IHttpActionResult> SetNewUsername([FromBody] [MinLength(1)] [MaxLength(100)] string newUsername)
+		public async Task<IHttpActionResult> SetNewUsername([FromBody] [MinLength(1)] [MaxLength(100)] [RegularExpression(RegularExpressions.NoFunkyCharactersRegex)] string newUsername)
 		{
 			// Validate parameters
 			if (!ModelState.IsValid)

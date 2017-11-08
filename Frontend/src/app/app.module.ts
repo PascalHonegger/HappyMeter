@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 
 // Different sites
 import { HelloComponent } from './hello/hello.component';
+import { LoginComponent } from './login/login.component';
 
 // Dialog contents
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
@@ -61,6 +62,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
   declarations: [
     AppComponent,
     HelloComponent,
+    LoginComponent,
     EmojiDisplayComponent,
     ErrorDialogComponent,
     NoContentComponent

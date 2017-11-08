@@ -23,7 +23,8 @@ export class EmotionalStateService extends ServerService {
     }
 
     public addEmotionalState(emotionId: number, comment: string) {
+        const data = comment.length !== 0 ? { emotionId, comment } : { emotionId };
         return this.httpClient
-            .post<void>(this.baseUrl + '/AddEmotionalState', { emotionId, comment });
+            .post<void>(this.baseUrl + '/AddEmotionalState', data);
     }
 }

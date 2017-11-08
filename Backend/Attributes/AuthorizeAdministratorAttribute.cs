@@ -28,7 +28,7 @@ namespace AtosHappyMeter.Attributes
 			}
 
 			actionContext.Request.Properties[AuthorizationConstants.UserInformationKey] = foundUser;
-			return false;
+			return true;
 		}
 	}
 }

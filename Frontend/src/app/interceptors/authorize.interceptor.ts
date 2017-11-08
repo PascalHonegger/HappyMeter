@@ -17,8 +17,8 @@ export class AuthorizeInterceptor implements HttpInterceptor {
   public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     request = request.clone({
       setHeaders: {
-        username: this.auth.username,
-        password: this.auth.password
+        username: request.headers.get('username') || this.auth.username,
+        password: request.headers.get('password') || this.auth.password
       }
     });
 

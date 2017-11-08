@@ -8,6 +8,7 @@ import { EmotionalState } from './../model/emotional-state.model';
 import { Emotion } from './../model/emotion.model';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 // 1 Minute
 const reloadIntervalInMs = 60000;
@@ -27,8 +28,8 @@ export class HelloComponent {
   public dailyEmotionalStates: EmotionalState[];
 
   public selectedEmotionId: number | null = null;
-  public comment: string;
-  public commentFormControl: FormControl = new FormControl();
+  public comment: string = '';
+  public commentFormControl: FormControl = new FormControl('');
 
   public saveBlocked: boolean = false;
 
@@ -56,9 +57,19 @@ export class HelloComponent {
     this.emotionalStateServer.addEmotionalState(this.selectedEmotionId, this.comment)
       .subscribe((success) => {
         this.loadData();
-        this.snackBar.open('Gesendet');
+        const snackRef = this.snackBar.open(
+          'Gesendet - Bitte warten Sie, bis Sie weitere Gefühlslagen erfassen können');
         this.saveBlocked = true;
-        setTimeout(() => this.saveBlocked = false, reloadTimeBlock);
+        setTimeout(() => {
+          this.saveBlocked = false;
+          snackRef.dismiss();
+        }, reloadTimeBlock);
+      }, (error: HttpErrorResponse) => {
+        // In case the sent emoji has been disabled in the meantime
+        if (error.status === 400) {
+          this.loadData();
+          this.snackBar.open('Bitte versuchen Sie es erneut', 'Ok');
+        }
       });
   }
 

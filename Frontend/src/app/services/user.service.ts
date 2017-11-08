@@ -2,6 +2,7 @@ import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { ServerService } from './server.service';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class UserService extends ServerService {
@@ -10,7 +11,12 @@ export class UserService extends ServerService {
     }
 
     public testCredentials(username: string, password: string) {
-        return this.httpClient.get<void>(this.baseUrl + '/TestCredentials');
+        return this.httpClient.get<void>(this.baseUrl + '/TestCredentials', {
+            headers: new HttpHeaders({
+                username,
+                password
+            })
+        });
     }
 
     public setNewUsername(username: string) {

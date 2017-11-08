@@ -19,7 +19,7 @@ export class AuthService {
 
     public set username(value: string) {
         this._username = value;
-        sessionStorage.setItem(usernameStorageKey, JSON.stringify(value));
+        sessionStorage.setItem(usernameStorageKey, value);
     }
 
     public get password(): string {
@@ -28,7 +28,7 @@ export class AuthService {
 
     public set password(value: string) {
         this._password = value;
-        sessionStorage.setItem(passwordStorageKey, JSON.stringify(value));
+        sessionStorage.setItem(passwordStorageKey, value);
     }
 
     public clearCredentials() {

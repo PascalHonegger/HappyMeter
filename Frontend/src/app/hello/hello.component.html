@@ -18,6 +18,7 @@
   </div>
   <mat-form-field class="comment-input">
     <textarea matInput placeholder="Kommentar" [formControl]="commentFormControl" [(ngModel)]="comment" maxLength="250" pattern="[A-Za-z0-9 \-\+\*%&/\\()=?!:;.,üöäÄÖÜÊêéèà<>^]*"></textarea>
+    <mat-hint align="end">{{comment.length}} / 250</mat-hint>
     <mat-error *ngIf="commentFormControl.hasError('pattern')">
       Bitte keine ungewöhnlichen Zeichen verwenden
     </mat-error>
