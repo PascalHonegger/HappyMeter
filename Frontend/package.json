@@ -1,8 +1,8 @@
 {
-  "name": "auth-example",
+  "name": "atos-happy-meter",
   "version": "0.0.1",
   "private": true,
-  "description": "Eine Beispielapplikation für Authorization",
+  "description": "Eine Anwendung zum überprüfen der Glücklichkeit seiner Mitarbeiter",
   "keywords": [
     "angular",
     "angular2",

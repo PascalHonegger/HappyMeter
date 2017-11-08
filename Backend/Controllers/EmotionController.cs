@@ -26,7 +26,7 @@ namespace AtosHappyMeter.Controllers
 						SmileyCode = e.Smiley
 					})
 					.ToListAsync();
-				return Json(data);
+				return Ok(data);
 			}
 		}
 
@@ -38,7 +38,7 @@ namespace AtosHappyMeter.Controllers
 			using (var dbContext = new AtosDatabaseContext())
 			{
 				var data = await dbContext.Emotions.ToListAsync();
-				return Json(data);
+				return Ok(data);
 			}
 		}
 

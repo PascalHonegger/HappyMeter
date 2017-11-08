@@ -30,7 +30,7 @@ namespace AtosHappyMeter.Controllers
 						EmotionId = e.EmotionId
 					})
 					.ToListAsync();
-				return Json(data);
+				return Ok(data);
 			}
 		}
 
@@ -56,7 +56,7 @@ namespace AtosHappyMeter.Controllers
 						EmotionId = e.EmotionId
 					})
 					.ToListAsync();
-				return Json(data);
+				return Ok(data);
 			}
 		}
 
