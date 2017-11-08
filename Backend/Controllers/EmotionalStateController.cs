@@ -49,7 +49,7 @@ namespace AtosHappyMeter.Controllers
 			using (var dbContext = new AtosDatabaseContext())
 			{
 				var data = await dbContext.EmotionalStates
-					.Where(e => e.CreatedDate >= from && e.CreatedDate <= to)
+					.Where(e => e.CreatedDate >= from.Date && e.CreatedDate <= to.Date)
 					.Select(e => new ReducedEmotionalState
 					{
 						Comment = e.Comment,

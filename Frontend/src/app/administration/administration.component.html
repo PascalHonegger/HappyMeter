@@ -1,0 +1,33 @@
+<div *ngIf="allEmotions" style="align-items: center" fxLayout="column" fxLayoutGap="20px">
+  <h2 class="mat-display-1">Verlauf</h2>
+  <div class="charts-container">
+    <mat-form-field>
+      <input matInput [matDatepicker]="fromDatePicker" placeholder="Von"
+              [(ngModel)]="fromDate">
+      <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromDatePicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="toDatePicker" placeholder="Bis"
+              [(ngModel)]="toDate">
+      <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #toDatePicker></mat-datepicker>
+    </mat-form-field>
+    <button mat-raised-button (click)="tryRefreshChart()">Aktualisieren</button>
+
+    <ngx-charts-line-chart *ngIf="chartData"
+      [results]="chartData"
+      [xAxis]="true"
+      [yAxis]="true"
+      [legend]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      xAxisLabel="Datum"
+      yAxisLabel="Personen">
+    </ngx-charts-line-chart>
+  </div>
+
+  <pre>
+    {{chartData | json}}
+  </pre>
+</div>

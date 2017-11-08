@@ -6,6 +6,8 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -17,6 +19,7 @@ import { AppComponent } from './app.component';
 // Different sites
 import { HelloComponent } from './hello/hello.component';
 import { LoginComponent } from './login/login.component';
+import { AdministrationComponent } from './administration/administration.component';
 
 // Dialog contents
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
@@ -47,7 +50,11 @@ import {
   MatDialogModule,
   MatTooltipModule,
   MatInputModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  NativeDateAdapter,
+  DateAdapter
 } from '@angular/material';
 import 'hammerjs';
 
@@ -63,6 +70,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     AppComponent,
     HelloComponent,
     LoginComponent,
+    AdministrationComponent,
     EmojiDisplayComponent,
     ErrorDialogComponent,
     NoContentComponent
@@ -89,7 +97,10 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     MatDialogModule,
     MatTooltipModule,
     MatSnackBarModule,
-    FlexLayoutModule
+    MatDatepickerModule,
+    MatNativeDateModule,
+    FlexLayoutModule,
+    NgxChartsModule
   ],
   /**
    * Expose our Services and Providers into Angular's dependency injection.
