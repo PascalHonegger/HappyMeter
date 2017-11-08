@@ -31,6 +31,6 @@ export class EmotionService extends ServerService {
 
     public addNewEmotion(newSmileyCode: string) {
         return this.httpClient
-            .post<void>(this.baseUrl + '/SetSmileyForEmotion', { newSmileyCode });
+            .post<void>(this.baseUrl + '/AddNewEmotion', { newSmileyCode });
     }
 }

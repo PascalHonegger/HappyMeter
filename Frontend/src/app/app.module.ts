@@ -6,7 +6,9 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
+// External libraries
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { EmojiPickerModule } from 'angular2-emoji-picker';
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -23,6 +25,7 @@ import { AdministrationComponent } from './administration/administration.compone
 
 // Dialog contents
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import { SelectEmojiDialogComponent } from './select-emoji-dialog/select-emoji-dialog.component';
 
 // Help components
 import { EmojiDisplayComponent } from './emoji-display/emoji-display.component';
@@ -74,10 +77,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     AdministrationComponent,
     EmojiDisplayComponent,
     ErrorDialogComponent,
+    SelectEmojiDialogComponent,
     NoContentComponent
   ],
   entryComponents: [
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    SelectEmojiDialogComponent
   ],
   /**
    * Import Angular's modules.
@@ -102,7 +107,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     MatNativeDateModule,
     MatTabsModule,
     FlexLayoutModule,
-    NgxChartsModule
+    NgxChartsModule,
+    EmojiPickerModule.forRoot()
   ],
   /**
    * Expose our Services and Providers into Angular's dependency injection.

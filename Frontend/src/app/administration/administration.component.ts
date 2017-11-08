@@ -7,12 +7,13 @@ import { CustomTitleService } from './../services/custom-title.service';
 import { EmotionalState } from './../model/emotional-state.model';
 import { Emotion } from './../model/emotion.model';
 import { FormControl } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { UserService } from './../services/user.service';
 import { AuthService } from './../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FullEmotion } from './../model/full-emotion.model';
+import { SelectEmojiDialogComponent } from './../select-emoji-dialog/select-emoji-dialog.component';
 
 @Component({
   selector: 'administration',
@@ -37,7 +38,8 @@ export class AdministrationComponent {
               private emotionServer: EmotionService,
               private emotionalStateServer: EmotionalStateService,
               private snackBar: MatSnackBar,
-              private router: Router) {
+              private router: Router,
+              private dialog: MatDialog) {
                 this.fromDate = new Date(Date.now() - 1 * 24 * 3600 * 1000);
                 this.toDate = new Date(Date.now());
 
@@ -74,6 +76,34 @@ export class AdministrationComponent {
       this.authService.clearCredentials();
       this.snackBar.open('Anmelden erfolgreich');
       this.router.navigate(['']);
+    }
+
+    public openSetEmojiDialog(emotionId: number) {
+      this.dialog
+        .open(SelectEmojiDialogComponent)
+        .afterClosed()
+        .subscribe((emojiCode) => {
+          if (emojiCode) {
+            this.emotionServer
+              .setSmileyForEmotion(emotionId, emojiCode).subscribe(() => this.loadEmotions());
+          } else {
+            // Cancelled
+          }
+        });
+    }
+
+    public openNewEmojiDialog() {
+      this.dialog
+      .open(SelectEmojiDialogComponent)
+      .afterClosed()
+      .subscribe((emojiCode) => {
+        if (emojiCode) {
+          this.emotionServer
+            .addNewEmotion(emojiCode).subscribe(() => this.loadEmotions());
+        } else {
+          // Cancelled
+        }
+      });
     }
 
     public tryRefreshChart() {

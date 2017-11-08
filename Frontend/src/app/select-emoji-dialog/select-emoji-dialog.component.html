@@ -1,0 +1,18 @@
+<div style="align-items: center" fxLayout="column" fxLayoutGap="20px">
+    <i
+    [emojiPickerIf]="true"
+    emojiPickerDirection="top"
+    [emojiPickerPreserveSelection]="true"
+    [emojiPickerAutofocus]="true"
+    (emojiPickerSelect)="setSelectedEmoji($event.char)"></i>
+
+  <p>Vorschau</p>
+
+  <emoji-display class="emoji-preview" *ngIf="selectedEmojiCodePoint" [emojiCodePoint]="selectedEmojiCodePoint"></emoji-display>
+  <button mat-raised-button (click)="save()">
+    Speichern
+  </button>
+  <button mat-raised-button (click)="close()">
+    Abbrechen
+  </button>
+</div>

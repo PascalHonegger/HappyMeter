@@ -34,7 +34,7 @@
         <div *ngFor="let emotion of allEmotions" fxLayout="row" fxLayoutGap="20px">
           <emoji-display class="edit-emoji-display" [emojiCodePoint]="emotion.smiley"></emoji-display>
           <button mat-raised-button (click)="invertActive(emotion)">{{ emotion.isActive ? 'Deaktivieren' : 'Aktivieren' }}</button>
-          <button mat-raised-button (click)="openSetEmojiDialog()">Smiley ändern</button>
+          <button mat-raised-button (click)="openSetEmojiDialog(emotion.id)">Smiley ändern</button>
         </div>
         <button mat-raised-button (click)="openNewEmojiDialog()">Emotion hinzufügen</button>
       </div>
