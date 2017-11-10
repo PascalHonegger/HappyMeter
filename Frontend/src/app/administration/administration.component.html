@@ -45,7 +45,7 @@
           <mat-error *ngIf="usernameFormControl.hasError('pattern')">
             Bitte keine ungewöhnlichen Zeichen verwenden
           </mat-error>
-          <mat-error *ngIf="usernameFormControl.hasError('minLength') || usernameFormControl.hasError('maxLength')">
+          <mat-error *ngIf="usernameFormControl.hasError('required') || usernameFormControl.hasError('minLength') || usernameFormControl.hasError('maxLength')">
             Bitte einen Benutzernamen zwischen 1 und 100 Zeichen eingeben
           </mat-error>
         </mat-form-field>
@@ -54,10 +54,13 @@
         </button>
       
         <mat-form-field class="input-fill-width">
-          <input matInput placeholder="Neues Passwort" type="password" [formControl]="passwordFormControl" [(ngModel)]="password" required minLength="1" maxLength="100">
+          <input matInput placeholder="Neues Passwort" type="password" [formControl]="passwordFormControl" [(ngModel)]="password" required minLength="3" maxLength="100">
+          <mat-error *ngIf="passwordFormControl.hasError('required') || passwordFormControl.hasError('minLength') || passwordFormControl.hasError('maxLength')">
+            Bitte ein Passwort zwischen 3 und 100 Zeichen eingeben
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="input-fill-width">
-          <input matInput placeholder="Passwort wiederholen" type="password" [(ngModel)]="repeatedPassword" required minLength="1" maxLength="100">
+          <input matInput placeholder="Passwort wiederholen" type="password" [(ngModel)]="repeatedPassword" required minLength="3" maxLength="100">
         </mat-form-field>
       
         <button mat-raised-button [disabled]="passwordFormControl.invalid" (click)="setNewPassword()">
