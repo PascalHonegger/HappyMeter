@@ -2,10 +2,6 @@ import { Component } from '@angular/core';
 
 import { EmotionalStateService } from './../services/emotional-state.service';
 import { EmotionService } from './../services/emotion.service';
-import { CalculationService } from './../services/calculation.service';
-import { CustomTitleService } from './../services/custom-title.service';
-import { EmotionalState } from './../model/emotional-state.model';
-import { Emotion } from './../model/emotion.model';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { UserService } from './../services/user.service';
@@ -14,6 +10,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FullEmotion } from './../model/full-emotion.model';
 import { SelectEmojiDialogComponent } from './../select-emoji-dialog/select-emoji-dialog.component';
+
+const oneDayInMiliseconds = 1 * 24 * 3600 * 1000;
 
 @Component({
   selector: 'administration',
@@ -26,7 +24,30 @@ export class AdministrationComponent {
   public fromDate: Date;
   public toDate: Date;
 
-  public chartData: any[];
+  /* Example:
+  {
+    name: '🎃',
+    series: [
+      {
+        name: '2017-11-07',
+        value: 12
+      },
+      {
+        name: '2017-11-08',
+        value: 4
+      }
+    ]
+  }
+  */
+  public chartData: Array<
+  {
+    name: string,
+    emotionId: number,
+    series: Array<{
+      name: string,
+      value: number
+    }>
+  }>;
 
   public username: string = '';
   public password: string = '';
@@ -40,8 +61,10 @@ export class AdministrationComponent {
               private snackBar: MatSnackBar,
               private router: Router,
               private dialog: MatDialog) {
-                this.fromDate = new Date(Date.now() - 1 * 24 * 3600 * 1000);
+                this.fromDate = new Date(Date.now() - oneDayInMiliseconds);
                 this.toDate = new Date(Date.now());
+                this.fromDate.setHours(0, 0, 0, 0);
+                this.toDate.setHours(0, 0, 0, 0);
 
                 this.loadEmotions();
 
@@ -63,6 +86,10 @@ export class AdministrationComponent {
     public setNewUsername() {
       this.userServer.setNewUsername(this.username).subscribe(() => {
         this.authService.username = this.username;
+      }, (error: HttpErrorResponse) => {
+        if (error.status === 400) {
+          this.snackBar.open('Der neu gewählte Benutzername existiert bereits', 'Ok');
+        }
       });
     }
 
@@ -74,7 +101,7 @@ export class AdministrationComponent {
 
     public logout() {
       this.authService.clearCredentials();
-      this.snackBar.open('Anmelden erfolgreich');
+      this.snackBar.open('Erfolgreich abgemeldet', null, { duration: 3000 });
       this.router.navigate(['']);
     }
 
@@ -112,31 +139,50 @@ export class AdministrationComponent {
         this.snackBar.open('Das Start-Datum muss kleiner als das Bis-Datum sein', 'Ok');
       } else {
         this.emotionalStateServer
-          .allEmotionalStatesWithinRange(this.fromDate, this.toDate)
+          .groupedEmotionalStatesWithinRange(this.fromDate, this.toDate)
           .subscribe((data) => {
-            this.chartData = [];
-            for (const d of data.sort(
-                (a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime())) {
-              const emojiCode = this.allEmotions.find((e) => e.id === d.emotionId).smiley;
-              const emoji = String.fromCodePoint(parseInt(emojiCode, 16));
-              const date = new Date(d.createdDate).toISOString().substring(0, 10);
+            // Create an entry for each emotion / emoji
+            this.chartData = this.allEmotions.map((emotion) => (
+              {
+                name: String.fromCodePoint(parseInt(emotion.smiley, 16)),
+                emotionId: emotion.id,
+                series: []
+              }));
 
-              const existingChartItem = this.chartData.find((c) => c.name === emoji);
-              if (existingChartItem) {
-                const existingDateItem = existingChartItem.series.find((e) => e.name === date);
-                if (existingDateItem) {
-                  existingDateItem.value += 1;
-                } else {
-                  existingChartItem.series.push({ name: date, value: 1});
-                }
-              } else {
-                this.chartData.push({ name: emoji, series: [
-                  {
-                    name: date,
-                    value: 1
-                  }
-                ]});
+            // Iterate through all dates between the start and end date
+            let incrementingDate = new Date(this.fromDate.getTime());
+            incrementingDate.setHours(0, 0, 0, 0);
+            while (incrementingDate <= this.toDate) {
+              // Load all emotion-groups which belong to this date
+              const emotionsAtDate = data.filter((d) => {
+                const parsed = new Date(d.createdDate);
+                parsed.setHours(0, 0, 0, 0);
+                return parsed.getTime() === incrementingDate.getTime();
+              });
+
+              // For each emotion which has no emotion at the date, add one with a count of 0
+              for (const emotion of this.allEmotions
+                .filter((e) => !emotionsAtDate.find((emo) => emo.emotionId === e.id))) {
+                  emotionsAtDate.push({
+                    emotionId: emotion.id,
+                    createdDate: incrementingDate,
+                    count: 0});
               }
+
+              const formattedDate = incrementingDate.toISOString().substring(0, 10);
+
+              // Add the count to the emoji for each date
+              for (const dailyEmotion of emotionsAtDate) {
+                this.chartData
+                  .find((c) => c.emotionId === dailyEmotion.emotionId)
+                  .series.push({
+                    name: formattedDate,
+                    value: dailyEmotion.count
+                  });
+              }
+
+              // Increase the current date
+              incrementingDate = new Date(incrementingDate.getTime() + oneDayInMiliseconds);
             }
           });
       }

@@ -1,7 +1,4 @@
-import { Component, isDevMode } from '@angular/core';
-
-import { CustomTitleService } from './services/custom-title.service';
-import { Link } from './model/link.model';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app',

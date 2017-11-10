@@ -1,8 +1,7 @@
-import { Injectable, isDevMode } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { ServerService } from './server.service';
-import { HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class UserService extends ServerService {

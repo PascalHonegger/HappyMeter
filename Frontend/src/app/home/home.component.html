@@ -1,9 +1,9 @@
-<div style="align-items: center" *ngIf="activeEmotions && dailyEmotionalStates" fxLayout="column" fxLayoutGap="20px">
+<div style="align-items: center" *ngIf="activeEmotions && dailyEmotionalStates; else noDataTemplate" fxLayout="column" fxLayoutGap="20px">
   <h2 class="mat-display-1">Wie ist die allgemeine Gefühlslage?</h2>
-  <ng-container *ngIf="dailyEmotionalStates.length === 0; else elseTemplate">
+  <ng-container *ngIf="dailyEmotionalStates.length === 0; else hasEmotionalStatesTemplate">
     <h3>Heute wurden noch keine Gefühlslagen erfasst</h3>
   </ng-container>
-  <ng-template #elseTemplate>
+  <ng-template #hasEmotionalStatesTemplate>
     <div class="emotion-view-container" fxLayoutAlign="center" fxLayout="row" fxLayoutGap="20px">
       <div fxFlex="{{relativeSize(emotion.id)}}%" *ngFor="let emotion of activeEmotions" [matTooltip]="randomComment(emotion.id)">
         <emoji-display [emojiCodePoint]="emotion.smileyCode"></emoji-display>
@@ -26,4 +26,10 @@
   <button mat-raised-button [disabled]="commentFormControl.invalid || selectedEmotionId == null || saveBlocked" (click)="sendEmotion()">
     Senden
   </button>
+  <footer>
+     <a routerLink="administration">Administration</a> | Emoji-Grafiken ermöglich durch <a href="https://twitter.github.io/twemoji/">Twemoji</a>
+  </footer>
 </div>
+<ng-template #noDataTemplate>
+  Lade Daten...
+</ng-template>

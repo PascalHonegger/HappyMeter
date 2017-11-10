@@ -1,5 +1,4 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component } from '@angular/core';
 
 @Component({
   styleUrls: ['./error-dialog.component.css'],

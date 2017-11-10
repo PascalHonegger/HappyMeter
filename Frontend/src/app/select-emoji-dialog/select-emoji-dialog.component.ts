@@ -1,17 +1,5 @@
 import { Component } from '@angular/core';
-
-import { EmotionalStateService } from './../services/emotional-state.service';
-import { EmotionService } from './../services/emotion.service';
-import { CalculationService } from './../services/calculation.service';
-import { CustomTitleService } from './../services/custom-title.service';
-import { EmotionalState } from './../model/emotional-state.model';
-import { Emotion } from './../model/emotion.model';
-import { FormControl } from '@angular/forms';
-import { MatSnackBar, MatDialogRef } from '@angular/material';
-import { UserService } from './../services/user.service';
-import { AuthService } from './../services/auth.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   styleUrls: ['./select-emoji-dialog.component.css'],

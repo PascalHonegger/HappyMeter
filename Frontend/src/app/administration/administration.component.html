@@ -16,7 +16,6 @@
           </mat-form-field>
         </div>
         <button mat-raised-button (click)="tryRefreshChart()">Aktualisieren</button>
-    
         <ngx-charts-line-chart *ngIf="chartData"
           [results]="chartData"
           [xAxis]="true"

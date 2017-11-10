@@ -1,8 +1,4 @@
-import { Injectable, isDevMode } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
-import { Token } from './../model/token.model';
-import { AuthService } from './auth.service';
+import { isDevMode } from '@angular/core';
 
 const baseUrlDebug: string = 'http://localhost:49484/api/';
 

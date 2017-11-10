@@ -7,7 +7,7 @@ import { RouterModule, PreloadAllModules } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 // External libraries
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { LineChartModule } from '@swimlane/ngx-charts';
 import { EmojiPickerModule } from 'angular2-emoji-picker';
 
 /*
@@ -19,7 +19,7 @@ import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 
 // Different sites
-import { HelloComponent } from './hello/hello.component';
+import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AdministrationComponent } from './administration/administration.component';
 
@@ -56,8 +56,6 @@ import {
   MatSnackBarModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  NativeDateAdapter,
-  DateAdapter,
   MatTabsModule
 } from '@angular/material';
 import 'hammerjs';
@@ -72,7 +70,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    HelloComponent,
+    HomeComponent,
     LoginComponent,
     AdministrationComponent,
     EmojiDisplayComponent,
@@ -94,7 +92,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES, {
-      useHash: Boolean(history.pushState) === false,
+      useHash: true,
       preloadingStrategy: PreloadAllModules
     }),
     MatInputModule,
@@ -107,7 +105,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     MatNativeDateModule,
     MatTabsModule,
     FlexLayoutModule,
-    NgxChartsModule,
+    LineChartModule,
     EmojiPickerModule.forRoot()
   ],
   /**

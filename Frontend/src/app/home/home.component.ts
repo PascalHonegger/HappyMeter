@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 
 import { EmotionalStateService } from './../services/emotional-state.service';
 import { EmotionService } from './../services/emotion.service';
-import { CalculationService } from './../services/calculation.service';
-import { CustomTitleService } from './../services/custom-title.service';
 import { EmotionalState } from './../model/emotional-state.model';
 import { Emotion } from './../model/emotion.model';
 import { FormControl } from '@angular/forms';
@@ -16,14 +14,12 @@ const reloadIntervalInMs = 60000;
 // 1 Minute
 const reloadTimeBlock = 60000;
 
-const notSaveAgainKey = 'last-save-time';
-
 @Component({
-  selector: 'hello',
-  styleUrls: ['./hello.component.css'],
-  templateUrl: './hello.component.html'
+  selector: 'home',
+  styleUrls: ['./home.component.css'],
+  templateUrl: './home.component.html'
 })
-export class HelloComponent {
+export class HomeComponent {
   public activeEmotions: Emotion[];
   public dailyEmotionalStates: EmotionalState[];
 
@@ -38,7 +34,6 @@ export class HelloComponent {
               private snackBar: MatSnackBar) {
     this.loadData();
     setInterval(() => this.loadData(), reloadIntervalInMs);
-    const lastSaveTime = localStorage.getItem('last-save-time');
   }
 
   public relativeSize(emotionId: number): number {
@@ -55,7 +50,7 @@ export class HelloComponent {
 
   public sendEmotion() {
     this.emotionalStateServer.addEmotionalState(this.selectedEmotionId, this.comment)
-      .subscribe((success) => {
+      .subscribe(() => {
         // Load new data
         this.loadData();
 
