@@ -117,6 +117,8 @@
     <Compile Include="ControllerModel\GroupedEmotionalState.cs" />
     <Compile Include="ControllerModel\ReducedEmotionalState.cs" />
     <Compile Include="ControllerModel\AddEmotionalStateDto.cs" />
+    <Compile Include="ControllerModel\SetPasswordDto.cs" />
+    <Compile Include="ControllerModel\SetUsernameDto.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">

@@ -51,6 +51,7 @@ export class AdministrationComponent {
 
   public username: string = '';
   public password: string = '';
+  public repeatedPassword: string = '';
   public usernameFormControl: FormControl = new FormControl('');
   public passwordFormControl: FormControl = new FormControl('');
 
@@ -86,6 +87,7 @@ export class AdministrationComponent {
     public setNewUsername() {
       this.userServer.setNewUsername(this.username).subscribe(() => {
         this.authService.username = this.username;
+        this.snackBar.open('Benutzername geändert', 'Ok');
       }, (error: HttpErrorResponse) => {
         if (error.status === 400) {
           this.snackBar.open('Der neu gewählte Benutzername existiert bereits', 'Ok');
@@ -94,8 +96,15 @@ export class AdministrationComponent {
     }
 
     public setNewPassword() {
+      if (this.password !== this.repeatedPassword) {
+        this.snackBar.open('Die Passwörter stimmen nicht überein', 'Ok');
+        return;
+      }
       this.userServer.setNewPassword(this.password).subscribe(() => {
         this.authService.password = this.password;
+        this.password = '';
+        this.repeatedPassword = '';
+        this.snackBar.open('Passwort geändert', 'Ok');
       });
     }
 
@@ -112,7 +121,13 @@ export class AdministrationComponent {
         .subscribe((emojiCode) => {
           if (emojiCode) {
             this.emotionServer
-              .setSmileyForEmotion(emotionId, emojiCode).subscribe(() => this.loadEmotions());
+              .setSmileyForEmotion(emotionId, emojiCode).subscribe(
+                () => this.loadEmotions(),
+                (error: HttpErrorResponse) => {
+                  if (error.status === 400) {
+                    this.snackBar.open('Das neu gewählte Emoji wird bereits verwendet', 'Ok');
+                  }
+                });
           } else {
             // Cancelled
           }
@@ -126,7 +141,13 @@ export class AdministrationComponent {
       .subscribe((emojiCode) => {
         if (emojiCode) {
           this.emotionServer
-            .addNewEmotion(emojiCode).subscribe(() => this.loadEmotions());
+            .addNewEmotion(emojiCode).subscribe(
+              () => this.loadEmotions(),
+              (error: HttpErrorResponse) => {
+                if (error.status === 400) {
+                  this.snackBar.open('Das gewählte Emoji wird bereits verwendet', 'Ok');
+                }
+              });
         } else {
           // Cancelled
         }

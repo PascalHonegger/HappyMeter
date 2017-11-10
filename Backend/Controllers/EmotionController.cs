@@ -124,7 +124,8 @@ namespace AtosHappyMeter.Controllers
 
 				dbContext.Emotions.Add(new Emotion
 				{
-					Smiley = addNewEmotionDto.NewSmileyCode
+					Smiley = addNewEmotionDto.NewSmileyCode,
+					IsActive = true
 				});
 
 				await dbContext.SaveChangesAsync();

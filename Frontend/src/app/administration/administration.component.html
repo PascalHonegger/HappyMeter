@@ -56,6 +56,9 @@
         <mat-form-field class="input-fill-width">
           <input matInput placeholder="Neues Passwort" type="password" [formControl]="passwordFormControl" [(ngModel)]="password" required minLength="1" maxLength="100">
         </mat-form-field>
+        <mat-form-field class="input-fill-width">
+          <input matInput placeholder="Passwort wiederholen" type="password" [(ngModel)]="repeatedPassword" required minLength="1" maxLength="100">
+        </mat-form-field>
       
         <button mat-raised-button [disabled]="passwordFormControl.invalid" (click)="setNewPassword()">
           Neues Passwort setzen
