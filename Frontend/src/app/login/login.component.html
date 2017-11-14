@@ -11,7 +11,7 @@
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="Password" type="password" [formControl]="passwordFormControl" [(ngModel)]="password" required minLength="1" maxLength="100">
+    <input matInput placeholder="Passwort" type="password" [formControl]="passwordFormControl" [(ngModel)]="password" required minLength="1" maxLength="100">
   </mat-form-field>
 
   <button mat-raised-button [disabled]="usernameFormControl.invalid || passwordFormControl.invalid" (click)="login()">
