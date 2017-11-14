@@ -2,8 +2,7 @@ import { isDevMode } from '@angular/core';
 
 const baseUrlDebug: string = 'http://localhost:49484/api/';
 
-// TODO Prod port 80?
-const baseUrlProd: string = 'http://localhost:49484/api/';
+const baseUrlProd: string = 'http://atoshappymeter.azurewebsites.net/api/';
 
 export abstract class ServerService {
     protected readonly baseUrl: string;
