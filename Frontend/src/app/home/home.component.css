@@ -12,3 +12,7 @@
 	width: 90px;
 	height: 90px;
 }
+
+::ng-deep .mat-tooltip {
+	font-size: large !important;
+}
