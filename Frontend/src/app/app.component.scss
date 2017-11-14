@@ -1,6 +1,5 @@
 $content-padding: 16px;
-$title-padding: 20px;
-$menu-margin: 6px;
+$logo-margin: 5px;
 
 .app-toolbar {
   color: white !important;
@@ -15,18 +14,11 @@ $menu-margin: 6px;
   font-weight: bold;
 }
 
-.nav-flex-div {
-  width: 100%;
-}
-
-.main-title {
-  text-align: center;
-  padding-top: $title-padding;
-  padding-bottom: $title-padding;
-  background: #3f51b5;
-  color: hsla(0,0%,100%,.87);
-  padding-left: $content-padding;
-  padding-right: $content-padding;
+.app-logo {
+  height: 65%;
+  padding: 5px;
+  margin: $logo-margin $logo-margin $logo-margin 0;
+  background: white;
 }
 
 .main-content {
