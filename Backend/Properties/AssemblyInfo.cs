@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AtosHappyMeter")]
+[assembly: AssemblyTitle("Atos Happy Meter")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Licence Owner")]
+[assembly: AssemblyCompany("Atos AG")]
 [assembly: AssemblyProduct("AtosHappyMeter")]
-[assembly: AssemblyCopyright("Copyright © Licence Owner 2017")]
+[assembly: AssemblyCopyright("Copyright © Atos AG 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
