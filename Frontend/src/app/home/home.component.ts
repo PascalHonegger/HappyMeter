@@ -11,8 +11,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 // 1 Minute
 const reloadIntervalInMs = 60000;
 
-// 1 Minute
-const reloadTimeBlock = 60000;
+// 20 Seconds
+const sendBlockedDuration = 20000;
 
 @Component({
   selector: 'home',
@@ -65,7 +65,7 @@ export class HomeComponent {
         setTimeout(() => {
           this.saveBlocked = false;
           snackRef.dismiss();
-        }, reloadTimeBlock);
+        }, sendBlockedDuration);
       }, (error: HttpErrorResponse) => {
         // In case the sent emoji has been disabled in the meantime
         if (error.status === 400) {
