@@ -100,6 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="client\**" />
     <Content Include="Global.asax" />
     <Content Include="LICENSE.txt" />
     <Content Include="Web.config">
