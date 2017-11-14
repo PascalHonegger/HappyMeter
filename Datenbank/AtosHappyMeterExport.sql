@@ -68,7 +68,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `AtosHappyMeter`;
-INSERT INTO `AtosHappyMeter`.`administrator` (`id`, `username`, `password_hash`) VALUES (1, 'admin', '$10$8I3rMrPvn1VmkTV5.4iGi.QDeLpGw1fk.bn9./npHiAdlZE1e87iS');
+INSERT INTO `AtosHappyMeter`.`administrator` (`id`, `username`, `password_hash`) VALUES (1, 'admin', '$2a$10$8I3rMrPvn1VmkTV5.4iGi.QDeLpGw1fk.bn9./npHiAdlZE1e87iS');
 
 COMMIT;
 
