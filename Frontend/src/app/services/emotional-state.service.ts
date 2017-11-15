@@ -4,10 +4,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ServerService } from './server.service';
 import { EmotionalState } from './../model/emotional-state.model';
 import { GroupedEmotionalState } from './../model/grouped-emotional-state.model';
+import { DateService } from './date.service';
 
 @Injectable()
 export class EmotionalStateService extends ServerService {
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private dateService: DateService) {
         super('EmotionalState');
     }
 
@@ -16,9 +17,10 @@ export class EmotionalStateService extends ServerService {
     }
 
     public groupedEmotionalStatesWithinRange(from: Date, to: Date) {
+        // Use substring as the time-offset is not used
         const params = new HttpParams()
-            .set('from', from.toISOString())
-            .set('to', to.toISOString());
+            .set('from', this.dateService.formatDate(from))
+            .set('to', this.dateService.formatDate(to));
         return this.httpClient.get<GroupedEmotionalState[]>(
                 this.baseUrl + '/GroupedEmotionalStatesWithinRange', { params });
     }

@@ -18,8 +18,8 @@ module.exports = {
     /**
      * <link> tags for favicons
      */
-    { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/assets/icon/favicon-32x32.png' },
-    { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/assets/icon/favicon-16x16.png' },
+    { rel: 'icon', type: 'image/png', sizes: '32x32', href: 'assets/icon/favicon-32x32.png' },
+    { rel: 'icon', type: 'image/png', sizes: '16x16', href: 'assets/icon/favicon-16x16.png' },
   ],
   meta: [
     { name: 'theme-color', content: '#3f51b5' }

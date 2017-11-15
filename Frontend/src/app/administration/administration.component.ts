@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import { MatSnackBar, MatDialog } from '@angular/material';
 
 import { EmotionalStateService } from './../services/emotional-state.service';
 import { EmotionService } from './../services/emotion.service';
-import { FormControl } from '@angular/forms';
-import { MatSnackBar, MatDialog } from '@angular/material';
 import { UserService } from './../services/user.service';
 import { AuthService } from './../services/auth.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { DateService } from './../services/date.service';
 import { FullEmotion } from './../model/full-emotion.model';
 import { SelectEmojiDialogComponent } from './../select-emoji-dialog/select-emoji-dialog.component';
-
-const oneDayInMiliseconds = 1 * 24 * 3600 * 1000;
 
 @Component({
   selector: 'administration',
@@ -61,11 +60,10 @@ export class AdministrationComponent {
               private emotionalStateServer: EmotionalStateService,
               private snackBar: MatSnackBar,
               private router: Router,
-              private dialog: MatDialog) {
-                this.fromDate = new Date(Date.now() - oneDayInMiliseconds);
-                this.toDate = new Date(Date.now());
-                this.fromDate.setHours(0, 0, 0, 0);
-                this.toDate.setHours(0, 0, 0, 0);
+              private dialog: MatDialog,
+              private dateService: DateService) {
+                this.fromDate = dateService.todayWithOffset(-1);
+                this.toDate = dateService.todayWithOffset(0);
 
                 this.loadEmotions();
 
@@ -171,7 +169,7 @@ export class AdministrationComponent {
               }));
 
             // Iterate through all dates between the start and end date
-            let incrementingDate = new Date(this.fromDate.getTime());
+            const incrementingDate = new Date(this.fromDate.getTime());
             incrementingDate.setHours(0, 0, 0, 0);
             while (incrementingDate <= this.toDate) {
               // Load all emotion-groups which belong to this date
@@ -190,7 +188,7 @@ export class AdministrationComponent {
                     count: 0});
               }
 
-              const formattedDate = incrementingDate.toISOString().substring(0, 10);
+              const formattedDate = this.dateService.formatDate(incrementingDate);
 
               // Add the count to the emoji for each date
               for (const dailyEmotion of emotionsAtDate) {
@@ -203,7 +201,7 @@ export class AdministrationComponent {
               }
 
               // Increase the current date
-              incrementingDate = new Date(incrementingDate.getTime() + oneDayInMiliseconds);
+              this.dateService.addDaysToDate(incrementingDate, 1);
             }
           });
       }

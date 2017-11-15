@@ -38,6 +38,7 @@ import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { EmotionalStateService } from './services/emotional-state.service';
 import { EmotionService } from './services/emotion.service';
+import { DateService } from './services/date.service';
 
 // Interceptors
 import { AuthorizeInterceptor } from './interceptors/authorize.interceptor';
@@ -117,6 +118,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     UserService,
     EmotionalStateService,
     EmotionService,
+    DateService,
     AuthService,
     CanActivateViaAuthGuard,
     {
