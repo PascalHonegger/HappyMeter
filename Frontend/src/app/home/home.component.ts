@@ -29,6 +29,10 @@ export class HomeComponent {
 
   public saveBlocked: boolean = false;
 
+  public get activeEmotionsWithAtLeastOneEntry(): Emotion[] {
+    return this.activeEmotions.filter((e) => this.amountOfEmotions(e.id) !== 0);
+  }
+
   constructor(private emotionServer: EmotionService,
               private emotionalStateServer: EmotionalStateService,
               private snackBar: MatSnackBar) {
@@ -38,7 +42,7 @@ export class HomeComponent {
 
   public relativeSize(emotionId: number): number {
     const totalAmount = this.dailyEmotionalStates.length;
-    const emotionAmount = this.dailyEmotionalStates.filter((d) => d.emotionId === emotionId).length;
+    const emotionAmount = this.amountOfEmotions(emotionId);
     return 100 / totalAmount * emotionAmount;
   }
 
@@ -73,6 +77,10 @@ export class HomeComponent {
           this.snackBar.open('Bitte versuchen Sie es erneut', 'Ok');
         }
       });
+  }
+
+  private amountOfEmotions(emotionId: number) {
+    return this.dailyEmotionalStates.filter((d) => d.emotionId === emotionId).length;
   }
 
   // Thanks to https://stackoverflow.com/a/12646864
