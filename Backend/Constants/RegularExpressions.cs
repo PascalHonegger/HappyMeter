@@ -2,6 +2,6 @@
 {
 	public static class RegularExpressions
 	{
-		public const string NoFunkyCharactersRegex = @"^[A-Za-z0-9 \-\+\*%&/\\()=?!:;.,üöäÄÖÜÊêéèà<>^]*$";
+		public const string NoFunkyCharactersRegex = @"^[A-Za-z0-9 \-+*%&/\\()=?!:;.,üöäÄÖÜÊêéèà<>^¨""ç'`´¦|@#°§¬¢~$£[{}\]€]*$";
 	}
 }

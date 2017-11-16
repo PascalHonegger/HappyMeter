@@ -41,7 +41,7 @@
   <mat-tab label="Benutzerdaten verwalten">
       <div fxLayout="column" fxLayoutGap="20px" class="mat-tab-content-div">
         <mat-form-field class="input-fill-width">
-          <input matInput placeholder="Neuer Benutzername" [formControl]="usernameFormControl" [(ngModel)]="username" required minLength="1" maxLength="100" pattern="[A-Za-z0-9 \-\+\*%&/\\()=?!:;.,üöäÄÖÜÊêéèà<>^]*">
+          <input matInput placeholder="Neuer Benutzername" [formControl]="usernameFormControl" [(ngModel)]="username" required minLength="1" maxLength="100" [pattern]="pattern">
           <mat-error *ngIf="usernameFormControl.hasError('pattern')">
             Bitte keine ungewöhnlichen Zeichen verwenden
           </mat-error>

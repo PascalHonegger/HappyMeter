@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-
-import { FormControl } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
-import { UserService } from './../services/user.service';
-import { AuthService } from './../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
+
+import { UserService } from './../services/user.service';
+import { AuthService } from './../services/auth.service';
+import { RegularExpressions } from './../constants/regular-expressions';
 
 @Component({
   selector: 'login',
@@ -17,6 +18,10 @@ export class LoginComponent {
   public password: string = '';
   public usernameFormControl: FormControl = new FormControl('');
   public passwordFormControl: FormControl = new FormControl('');
+
+  public get pattern() {
+    return RegularExpressions.noFunkyCharactersRegex;
+  }
 
   constructor(private userServer: UserService,
               private authService: AuthService,

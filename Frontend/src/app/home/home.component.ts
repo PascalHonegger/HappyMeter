@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { EmotionalStateService } from './../services/emotional-state.service';
 import { EmotionService } from './../services/emotion.service';
 import { EmotionalState } from './../model/emotional-state.model';
 import { Emotion } from './../model/emotion.model';
-import { FormControl } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
-import { HttpErrorResponse } from '@angular/common/http';
+import { RegularExpressions } from './../constants/regular-expressions';
 
 // 1 Minute
 const reloadIntervalInMs = 60000;
@@ -28,6 +29,10 @@ export class HomeComponent {
   public commentFormControl: FormControl = new FormControl('');
 
   public saveBlocked: boolean = false;
+
+  public get pattern() {
+    return RegularExpressions.noFunkyCharactersRegex;
+  }
 
   public get activeEmotionsWithAtLeastOneEntry(): Emotion[] {
     return this.activeEmotions.filter((e) => this.amountOfEmotions(e.id) !== 0);
@@ -57,19 +62,6 @@ export class HomeComponent {
       .subscribe(() => {
         // Load new data
         this.loadData();
-
-        // Reset user input
-        this.comment = '';
-        this.selectedEmotionId = undefined;
-
-        // Inform user
-        const snackRef = this.snackBar.open(
-          'Gesendet - Bitte warten Sie, bis Sie weitere Gefühlslagen erfassen können');
-        this.saveBlocked = true;
-        setTimeout(() => {
-          this.saveBlocked = false;
-          snackRef.dismiss();
-        }, sendBlockedDuration);
       }, (error: HttpErrorResponse) => {
         // In case the sent emoji has been disabled in the meantime
         if (error.status === 400) {
@@ -77,6 +69,19 @@ export class HomeComponent {
           this.snackBar.open('Bitte versuchen Sie es erneut', 'Ok');
         }
       });
+
+      // Reset user input
+    this.comment = '';
+    this.selectedEmotionId = undefined;
+
+    // Inform user
+    const snackRef = this.snackBar.open(
+        'Gesendet - Bitte warten Sie, bis Sie weitere Gefühlslagen erfassen können');
+    this.saveBlocked = true;
+    setTimeout(() => {
+        this.saveBlocked = false;
+        snackRef.dismiss();
+      }, sendBlockedDuration);
   }
 
   private amountOfEmotions(emotionId: number) {

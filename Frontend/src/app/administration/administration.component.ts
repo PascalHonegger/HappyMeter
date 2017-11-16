@@ -11,6 +11,7 @@ import { AuthService } from './../services/auth.service';
 import { DateService } from './../services/date.service';
 import { FullEmotion } from './../model/full-emotion.model';
 import { SelectEmojiDialogComponent } from './../select-emoji-dialog/select-emoji-dialog.component';
+import { RegularExpressions } from './../constants/regular-expressions';
 
 @Component({
   selector: 'administration',
@@ -53,6 +54,10 @@ export class AdministrationComponent {
   public repeatedPassword: string = '';
   public usernameFormControl: FormControl = new FormControl('');
   public passwordFormControl: FormControl = new FormControl('');
+
+  public get pattern() {
+    return RegularExpressions.noFunkyCharactersRegex;
+  }
 
   constructor(public authService: AuthService,
               private userServer: UserService,
