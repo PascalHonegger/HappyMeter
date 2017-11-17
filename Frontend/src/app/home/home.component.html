@@ -5,7 +5,7 @@
   </ng-container>
   <ng-template #hasEmotionalStatesTemplate>
     <div class="emotion-view-container" fxLayoutAlign="center" fxLayout="row" fxLayoutGap="20px">
-      <div fxFlex="{{relativeSize(emotion.id)}}%" *ngFor="let emotion of activeEmotionsWithAtLeastOneEntry" [matTooltip]="randomComment(emotion.id)">
+      <div [style.width.%]="relativeSize(emotion.id)" *ngFor="let emotion of activeEmotionsWithAtLeastOneEntry" [matTooltip]="randomComment(emotion.id)">
         <emoji-display [emojiCodePoint]="emotion.smileyCode"></emoji-display>
       </div>
     </div>
