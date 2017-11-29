@@ -28,6 +28,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AdministrationComponent } from './administration/administration.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 // Dialog contents
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
@@ -81,6 +82,7 @@ import '../styles/styles.scss';
     HomeComponent,
     LoginComponent,
     AdministrationComponent,
+    StatisticsComponent,
     EmojiDisplayComponent,
     CommentListComponent,
     ErrorDialogComponent,

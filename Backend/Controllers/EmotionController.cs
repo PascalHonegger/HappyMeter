@@ -33,7 +33,6 @@ namespace AtosHappyMeter.Controllers
 
 		[HttpGet]
 		[ResponseType(typeof(List<Emotion>))]
-		[AuthorizeAdministrator]
 		public async Task<IHttpActionResult> AllEmotions()
 		{
 			using (var dbContext = new HappyMeterDatabaseContext())

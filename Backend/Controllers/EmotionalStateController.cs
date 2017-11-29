@@ -7,7 +7,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using AtosHappyMeter.Attributes;
 using AtosHappyMeter.ControllerModel;
 using AtosHappyMeter.Models;
 
@@ -40,7 +39,6 @@ namespace AtosHappyMeter.Controllers
 
 		[HttpGet]
 		[ResponseType(typeof(List<GroupedEmotionalState>))]
-		[AuthorizeAdministrator]
 		public async Task<IHttpActionResult> GroupedEmotionalStatesWithinRange([Required] DateTime from, [Required] DateTime to)
 		{
 			// Validate parameters
@@ -52,12 +50,12 @@ namespace AtosHappyMeter.Controllers
 			using (var dbContext = new HappyMeterDatabaseContext())
 			{
 				var data = await dbContext.EmotionalStates
-					.Where(e => e.CreatedDate >= from.Date && e.CreatedDate <= to.Date)
-					.GroupBy(e => new { e.EmotionId, e.CreatedDate })
+					.Where(e => e.CreatedDate >= from && e.CreatedDate <= to)
+					.GroupBy(e => new { e.Emotion.Smiley, e.CreatedDate })
 					.Select(group => new GroupedEmotionalState
 					{
 						CreatedDate = group.Key.CreatedDate,
-						EmotionId = group.Key.EmotionId,
+						SmileyCode = group.Key.Smiley,
 						Count = group.Count()
 					})
 					.ToListAsync();

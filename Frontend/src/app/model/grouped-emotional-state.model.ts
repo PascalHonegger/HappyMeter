@@ -1,5 +1,5 @@
 export interface GroupedEmotionalState {
-    emotionId: number;
+    smileyCode: string;
     createdDate: Date;
     count: number;
 }

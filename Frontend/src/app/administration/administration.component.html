@@ -1,33 +1,4 @@
 <mat-tab-group>
-  <mat-tab label="Emotionsverlauf">
-      <div fxLayout="column" class="mat-tab-content-div">
-        <div fxLayout="row" fxLayoutGap="10px">
-          <mat-form-field fxFlex>
-              <input matInput [matDatepicker]="fromDatePicker" placeholder="Von"
-                    [(ngModel)]="fromDate">
-            <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #fromDatePicker></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field fxFlex>
-            <input matInput [matDatepicker]="toDatePicker" placeholder="Bis"
-                    [(ngModel)]="toDate">
-            <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #toDatePicker></mat-datepicker>
-          </mat-form-field>
-        </div>
-        <button mat-raised-button (click)="tryRefreshChart()">Aktualisieren</button>
-        <ngx-charts-line-chart *ngIf="chartData"
-          [results]="chartData"
-          [xAxis]="true"
-          [yAxis]="true"
-          [legend]="true"
-          [showXAxisLabel]="true"
-          [showYAxisLabel]="true"
-          xAxisLabel="Datum"
-          yAxisLabel="Personen">
-        </ngx-charts-line-chart>
-      </div>
-  </mat-tab>
   <mat-tab label="Emotionen verwalten">
       <div fxLayout="column" fxLayoutGap="20px" class="mat-tab-content-div">
         <div *ngFor="let emotion of allEmotions" fxLayout="row" fxLayoutGap="20px">
@@ -52,7 +23,7 @@
         <button mat-raised-button [disabled]="usernameFormControl.invalid || authService.username === username" (click)="setNewUsername()">
           Neuen Benutzername setzen
         </button>
-      
+
         <mat-form-field class="input-fill-width">
           <input matInput placeholder="Neues Passwort" type="password" [formControl]="passwordFormControl" [(ngModel)]="password" required minLength="3" maxLength="100">
           <mat-error *ngIf="passwordFormControl.hasError('required') || passwordFormControl.hasError('minLength') || passwordFormControl.hasError('maxLength')">

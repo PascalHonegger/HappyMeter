@@ -4,7 +4,7 @@ namespace AtosHappyMeter.ControllerModel
 {
 	public class GroupedEmotionalState
 	{
-		public int EmotionId { get; set; }
+		public string SmileyCode { get; set; }
 
 		public DateTime CreatedDate { get; set; }
 
