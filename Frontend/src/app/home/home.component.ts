@@ -7,11 +7,12 @@ import { EmotionalStateService } from './../services/emotional-state.service';
 import { EmotionService } from './../services/emotion.service';
 import { EmotionalState } from './../model/emotional-state.model';
 import { Emotion } from './../model/emotion.model';
+import { EmotionWithCount } from './../model/emotion-with-count.model';
 import { CommentWithDetails } from './../model/comment-with-details.model';
 import { RegularExpressions } from './../constants/regular-expressions';
 
-// 1 Minute
-const reloadIntervalInMs = 60000;
+// 5 Minutes
+const reloadIntervalInMs = 300000;
 
 // 20 Seconds
 const sendBlockedDuration = 20000;
@@ -35,17 +36,9 @@ export class HomeComponent {
     return RegularExpressions.noFunkyCharactersRegex;
   }
 
-  public get activeEmotionsWithAtLeastOneEntry(): Emotion[] {
-    return this.activeEmotions.filter((e) => this.amountOfEmotions(e.id) !== 0);
-  }
+  public activeEmotionsWithAtLeastOneEntry: EmotionWithCount[];
 
-  public get commentsWithEmotionAndTimestamp(): CommentWithDetails[] {
-    return this.dailyEmotionalStates.filter((d) => d.comment).map((d) => ({
-        comment: d.comment,
-        postDate: d.createdDate,
-        emojiCode: this.activeEmotions.find((e) => e.id === d.emotionId).smileyCode
-    }));
-  }
+  public commentsWithEmotionAndTimestamp: CommentWithDetails[];
 
   constructor(private emotionServer: EmotionService,
               private emotionalStateServer: EmotionalStateService,
@@ -54,16 +47,8 @@ export class HomeComponent {
     setInterval(() => this.loadData(), reloadIntervalInMs);
   }
 
-  public relativeSize(emotionId: number): number {
-    const totalAmount = this.dailyEmotionalStates.length;
-    const emotionAmount = this.amountOfEmotions(emotionId);
-    return 100 / totalAmount * emotionAmount;
-  }
-
-  public randomComment(emotionId: number): string {
-    const emotion = this.dailyEmotionalStates
-      .find((de) => de.emotionId === emotionId && de.comment != null);
-    return emotion !== undefined ? emotion.comment : undefined;
+  public relativeSize(emotionAmount: number): number {
+    return 100 / this.dailyEmotionalStates.length * emotionAmount;
   }
 
   public sendEmotion() {
@@ -93,23 +78,43 @@ export class HomeComponent {
       }, sendBlockedDuration);
   }
 
-  public amountOfEmotions(emotionId: number) {
+  private amountOfEmotions(emotionId: number) {
     return this.dailyEmotionalStates.filter((d) => d.emotionId === emotionId).length;
   }
 
-  // Thanks to https://stackoverflow.com/a/12646864
-  private shuffleArray<T>(array: T[]): T[] {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+  private loadData() {
+    const loadingEmotionsSubscription = this.emotionServer
+      .activeEmotions().subscribe((e) => {
+        this.activeEmotions = e;
+        if (loadingEmotionalStatesSubscription.closed) {
+          this.transformServerData();
+        }
+      });
+    const loadingEmotionalStatesSubscription = this.emotionalStateServer
+      .dailyEmotionalStates().subscribe((de) => {
+        this.dailyEmotionalStates = de.reverse();
+        if (loadingEmotionsSubscription.closed) {
+          this.transformServerData();
+        }
+      });
   }
 
-  private loadData() {
-    this.emotionServer
-      .activeEmotions().subscribe((e) => this.activeEmotions = e);
-    this.emotionalStateServer
-      .dailyEmotionalStates().subscribe((de) => this.dailyEmotionalStates = this.shuffleArray(de));
+  private transformServerData() {
+    this.activeEmotionsWithAtLeastOneEntry =
+      this.activeEmotions
+        .map((e) => {
+          const withCount = e as EmotionWithCount;
+          withCount.amount = this.amountOfEmotions(e.id);
+          return withCount;
+        })
+        .filter((e) => e.amount !== 0);
+
+    this.commentsWithEmotionAndTimestamp =
+      this.dailyEmotionalStates.filter((d) => d.comment).map((d) => ({
+        emotionalStateId: d.id,
+        comment: d.comment,
+        postDate: d.createdDate,
+        emojiCode: this.activeEmotions.find((e) => e.id === d.emotionId).smileyCode
+      }));
   }
 }

@@ -24,8 +24,11 @@ namespace AtosHappyMeter.Controllers
 				var currentDate = DateTime.Now.Date;
 				var data = await dbContext.EmotionalStates
 					.Where(e => e.Emotion.IsActive && e.CreatedDate == currentDate)
+					.OrderBy(e => e.CreatedDate)
+					.ThenBy(e => e.Id)
 					.Select(e => new ReducedEmotionalState
 					{
+						Id = e.Id,
 						Comment = e.Comment,
 						CreatedDate = e.CreatedDate,
 						EmotionId = e.EmotionId

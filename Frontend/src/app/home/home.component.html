@@ -5,33 +5,22 @@
   </ng-container>
   <ng-template #hasEmotionalStatesTemplate>
     <h3>Heute wurden {{dailyEmotionalStates.length}} Gefühlslagen erfasst</h3>
-    <div fxLayout="row" class="emotion-view-container" fxLayoutGap="20px">
-      <div fxFlex="1 1 60%" fxLayoutAlign="center" fxLayout="row" fxLayoutGap="20px">
-        <div [style.width.%]="relativeSize(emotion.id)" *ngFor="let emotion of activeEmotionsWithAtLeastOneEntry" [matTooltip]="amountOfEmotions(emotion.id)">
+    <div fxLayout.gt-sm="row" fxLayout.lt-md="column" class="emotion-view-container" fxLayoutGap="30px">
+      <div [ngStyle.gt-sm]="{'width': 70 + '%'}" fxLayoutAlign="center" fxLayout="row" fxLayoutGap="20px">
+        <div [style.width.%]="relativeSize(emotion.amount)" *ngFor="let emotion of activeEmotionsWithAtLeastOneEntry"
+        matTooltip="Stimmen: {{emotion.amount}} ({{relativeSize(emotion.amount) | number:'1.0-1'}}%)">
           <emoji-display [emojiCodePoint]="emotion.smileyCode"></emoji-display>
         </div>
       </div>
-      <div fxFlex="1 1 40%" fxfLayout="column" style="align-items: center;" fxLayoutGap="5px" class="chat-history-container">
-        <mat-card *ngFor="let comment of commentsWithEmotionAndTimestamp">
-          <mat-card-header>
-            <emoji-display mat-card-avatar class="emojiForComment" [emojiCodePoint]="comment.emojiCode"></emoji-display>
-            <mat-card-title>
-                {{comment.comment}}
-            </mat-card-title>
-            <mat-card-subtitle>
-                {{comment.postDate | date}}
-            </mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            Keine Bewertungen
-          </mat-card-content>
-        </mat-card>
+      <div [ngStyle.gt-sm]="{'width': 30 + '%'}" class="mat-elevation-z6 comment-list-container">
+        <comment-list [commentsWithEmotionAndTimestamp]="commentsWithEmotionAndTimestamp"></comment-list>
       </div>
     </div>
   </ng-template>
   <h2 class="mat-display-1">Wie fühlst Du dich?</h2>
   <div fxfLayout="row wrap" fxLayoutGap="20px">
-    <button mat-raised-button class="select-emotion-button" [color]="selectedEmotionId == emotion.id ? 'primary' : 'default'" *ngFor="let emotion of activeEmotions" (click)="selectedEmotionId = emotion.id">
+    <button mat-raised-button class="select-emotion-button" [color]="selectedEmotionId == emotion.id ? 'primary' : 'default'"
+    *ngFor="let emotion of activeEmotions" (click)="selectedEmotionId = emotion.id">
       <emoji-display [emojiCodePoint]="emotion.smileyCode"></emoji-display>
     </button>
   </div>

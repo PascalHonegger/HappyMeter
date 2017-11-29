@@ -29,6 +29,7 @@ import { SelectEmojiDialogComponent } from './select-emoji-dialog/select-emoji-d
 
 // Help components
 import { EmojiDisplayComponent } from './emoji-display/emoji-display.component';
+import { CommentListComponent } from './comment-list/comment-list.component';
 
 // 404 not found page
 import { NoContentComponent } from './no-content/no-content.component';
@@ -76,6 +77,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     LoginComponent,
     AdministrationComponent,
     EmojiDisplayComponent,
+    CommentListComponent,
     ErrorDialogComponent,
     SelectEmojiDialogComponent,
     NoContentComponent

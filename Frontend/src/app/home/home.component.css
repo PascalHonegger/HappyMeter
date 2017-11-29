@@ -1,5 +1,5 @@
 .emotion-view-container {
-	width: 80%;
+	width: 100%;
 }
 
 .comment-input {
@@ -17,12 +17,7 @@
 	font-size: large !important;
 }
 
-.chat-history-container {
-	height: 100%;
-	width: 100%;
+.comment-list-container {
 	overflow-y: scroll;
-}
-
-.chat-history-container > * {
-	margin: 5px;
+	max-height: 415px;
 }
