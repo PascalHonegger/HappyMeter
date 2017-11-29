@@ -1,5 +1,5 @@
 .emotion-view-container {
-	width: 400px;
+	width: 80%;
 }
 
 .comment-input {
@@ -15,4 +15,14 @@
 
 ::ng-deep .mat-tooltip {
 	font-size: large !important;
+}
+
+.chat-history-container {
+	height: 100%;
+	width: 100%;
+	overflow-y: scroll;
+}
+
+.chat-history-container > * {
+	margin: 5px;
 }

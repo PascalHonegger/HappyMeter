@@ -7,6 +7,7 @@ import { EmotionalStateService } from './../services/emotional-state.service';
 import { EmotionService } from './../services/emotion.service';
 import { EmotionalState } from './../model/emotional-state.model';
 import { Emotion } from './../model/emotion.model';
+import { CommentWithDetails } from './../model/comment-with-details.model';
 import { RegularExpressions } from './../constants/regular-expressions';
 
 // 1 Minute
@@ -36,6 +37,14 @@ export class HomeComponent {
 
   public get activeEmotionsWithAtLeastOneEntry(): Emotion[] {
     return this.activeEmotions.filter((e) => this.amountOfEmotions(e.id) !== 0);
+  }
+
+  public get commentsWithEmotionAndTimestamp(): CommentWithDetails[] {
+    return this.dailyEmotionalStates.filter((d) => d.comment).map((d) => ({
+        comment: d.comment,
+        postDate: d.createdDate,
+        emojiCode: this.activeEmotions.find((e) => e.id === d.emotionId).smileyCode
+    }));
   }
 
   constructor(private emotionServer: EmotionService,
@@ -70,7 +79,7 @@ export class HomeComponent {
         }
       });
 
-      // Reset user input
+    // Reset user input
     this.comment = '';
     this.selectedEmotionId = undefined;
 
@@ -84,7 +93,7 @@ export class HomeComponent {
       }, sendBlockedDuration);
   }
 
-  private amountOfEmotions(emotionId: number) {
+  public amountOfEmotions(emotionId: number) {
     return this.dailyEmotionalStates.filter((d) => d.emotionId === emotionId).length;
   }
 

@@ -57,7 +57,8 @@ import {
   MatSnackBarModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatTabsModule
+  MatTabsModule,
+  MatCardModule
 } from '@angular/material';
 import 'hammerjs';
 
@@ -105,6 +106,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     MatDatepickerModule,
     MatNativeDateModule,
     MatTabsModule,
+    MatCardModule,
     FlexLayoutModule,
     LineChartModule,
     EmojiPickerModule.forRoot()
