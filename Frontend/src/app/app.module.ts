@@ -4,7 +4,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { RouterModule, PreloadAllModules } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+// Import swiss german
+import { registerLocaleData } from '@angular/common';
+import localeDeCh from '@angular/common/locales/de-ch';
+
+registerLocaleData(localeDeCh);
 
 // External libraries
 import { LineChartModule } from '@swimlane/ngx-charts';
@@ -13,7 +19,7 @@ import { EmojiPickerModule } from 'angular2-emoji-picker';
 /*
  * Platform and Environment providers/directives/pipes
  */
-import { ENV_PROVIDERS } from './environment';
+import { environment } from 'environments/environment';
 import { ROUTES } from './app.routes';
 // App is our top level component
 import { AppComponent } from './app.component';
@@ -64,7 +70,6 @@ import {
 import 'hammerjs';
 
 import '../styles/styles.scss';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 /**
  * `AppModule` is the main entry point into Angular2's bootstraping process
@@ -117,7 +122,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
    * Expose our Services and Providers into Angular's dependency injection.
    */
   providers: [
-    ENV_PROVIDERS,
+    environment.ENV_PROVIDERS,
     Title,
     UserService,
     EmotionalStateService,

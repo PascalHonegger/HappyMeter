@@ -74,11 +74,6 @@ if ('production' === ENV) {
   // Production
 
 } else {
-
   // Development
-  Error.stackTraceLimit = Infinity;
-
-  /* tslint:disable no-var-requires */
-  require('zone.js/dist/long-stack-trace-zone');
 
 }
