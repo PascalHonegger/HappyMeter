@@ -23,3 +23,8 @@ $logo-margin: 5px;
 .main-content {
   padding: $content-padding;
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
