@@ -20,9 +20,13 @@ namespace AtosHappyMeter.Controllers
 		{
 			using (var dbContext = new HappyMeterDatabaseContext())
 			{
-				var currentDate = DateTime.Now.Date;
+				// earliest time today 
+				var today = DateTime.Today;
+				// earliest time tomorrow
+				var tomorrow = DateTime.Today.AddDays(1);
+
 				var data = await dbContext.EmotionalStates
-					.Where(e => e.Emotion.IsActive && e.CreatedDate == currentDate)
+					.Where(e => e.Emotion.IsActive && e.CreatedDate >= today && e.CreatedDate < tomorrow)
 					.OrderBy(e => e.CreatedDate)
 					.ThenBy(e => e.Id)
 					.Select(e => new ReducedEmotionalState
@@ -38,7 +42,7 @@ namespace AtosHappyMeter.Controllers
 		}
 
 		[HttpGet]
-		[ResponseType(typeof(List<GroupedEmotionalState>))]
+		[ResponseType(typeof(List<EmotionalStateHistoryItem>))]
 		public async Task<IHttpActionResult> GroupedEmotionalStatesWithinRange([Required] DateTime from, [Required] DateTime to)
 		{
 			// Validate parameters
@@ -47,19 +51,36 @@ namespace AtosHappyMeter.Controllers
 				return BadRequest();
 			}
 
+			var fromDate = from.Date;
+			// Add a day to the target as we'll check if the dates are smaller than specified
+			var toDate = to.Date.AddDays(1);
+
 			using (var dbContext = new HappyMeterDatabaseContext())
 			{
 				var data = await dbContext.EmotionalStates
-					.Where(e => e.CreatedDate >= from && e.CreatedDate <= to)
-					.GroupBy(e => new { e.Emotion.Smiley, e.CreatedDate })
-					.Select(group => new GroupedEmotionalState
-					{
-						CreatedDate = group.Key.CreatedDate,
-						SmileyCode = group.Key.Smiley,
-						Count = group.Count()
-					})
+					.Where(e => e.CreatedDate >= fromDate && e.CreatedDate < toDate)
+					.Select(e => new { e.Id, e.CreatedDate, e.Comment, e.Emotion.Smiley })
 					.ToListAsync();
-				return Ok(data);
+
+				var groupedData = data
+					.GroupBy(e => new { e.CreatedDate.Date })
+					.Select(dateGroup => new EmotionalStateHistoryItem
+					{
+						Date = dateGroup.Key.Date,
+						EmotionalStates = dateGroup.GroupBy(e => e.Smiley).OrderBy(g => g.Key).Select(g => new GroupedEmotionalState
+						{
+							SmileyCode = g.Key,
+							Comments = g.Where(e => !string.IsNullOrWhiteSpace(e.Comment)).Select(e => new CommentWithPostdate
+							{
+								Id = e.Id,
+								PostDate = e.CreatedDate,
+								Comment = e.Comment
+							}).ToList(),
+							Count = g.Count()
+						}).ToList()
+					});
+
+				return Ok(groupedData);
 			}
 		}
 
@@ -86,7 +107,7 @@ namespace AtosHappyMeter.Controllers
 				{
 					EmotionId = addEmotionalStateDto.EmotionId,
 					Comment = addEmotionalStateDto.Comment,
-					CreatedDate = DateTime.Now.Date
+					CreatedDate = DateTime.Now
 				});
 
 				await dbContext.SaveChangesAsync();

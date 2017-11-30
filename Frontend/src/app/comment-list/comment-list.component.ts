@@ -9,7 +9,17 @@ import { CommentWithDetails } from './../model/comment-with-details.model';
 })
 export class CommentListComponent {
     @Input()
-    public commentsWithEmotionAndTimestamp: CommentWithDetails[];
+    public set commentsWithEmotionAndTimestamp(value: CommentWithDetails[]) {
+        if (!value) {
+            this.comments = null;
+        } else {
+            this.comments = value.sort((a, b) => b.emotionalStateId - a.emotionalStateId);
+        }
+    }
+    public comments: CommentWithDetails[];
+
+    @Input()
+    public fullDate: boolean = false;
 
     public commentIdFunc(index: number, item: CommentWithDetails) {
         return item.emotionalStateId;

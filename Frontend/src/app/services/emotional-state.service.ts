@@ -3,8 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { ServerService } from './server.service';
 import { EmotionalState } from './../model/emotional-state.model';
-import { GroupedEmotionalState } from './../model/grouped-emotional-state.model';
 import { DateService } from './date.service';
+import { EmotionalStateHistoryItem } from './../model/emotional-state-history-item.model';
 
 @Injectable()
 export class EmotionalStateService extends ServerService {
@@ -21,7 +21,7 @@ export class EmotionalStateService extends ServerService {
         const params = new HttpParams()
             .set('from', this.dateService.formatDate(from))
             .set('to', this.dateService.formatDate(to));
-        return this.httpClient.get<GroupedEmotionalState[]>(
+        return this.httpClient.get<EmotionalStateHistoryItem[]>(
                 this.baseUrl + '/GroupedEmotionalStatesWithinRange', { params });
     }
 

@@ -15,15 +15,16 @@
   </div>
   <button mat-raised-button (click)="tryRefreshChart()">Aktualisieren</button>
   <div [style.height.px]="300">
-      <ngx-charts-line-chart *ngIf="chartData"
-        [results]="chartData"
-        [xAxis]="true"
-        [yAxis]="true"
-        [legend]="true"
-        [showXAxisLabel]="true"
-        [showYAxisLabel]="true"
-        xAxisLabel="Datum"
-        yAxisLabel="Personen">
-    </ngx-charts-line-chart>
+    <ngx-charts-bar-vertical-stacked *ngIf="chartData"
+      [results]="chartData"
+      [xAxis]="true"
+      [yAxis]="true"
+      [legend]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      xAxisLabel="Datum"
+      yAxisLabel="Personen">
+    </ngx-charts-bar-vertical-stacked>
   </div>
+  <comment-list *ngIf="comments" [fullDate]="true" [commentsWithEmotionAndTimestamp]="comments"></comment-list>
 </div>

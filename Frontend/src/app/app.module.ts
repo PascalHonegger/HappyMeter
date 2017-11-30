@@ -13,7 +13,7 @@ import localeDeCh from '@angular/common/locales/de-ch';
 registerLocaleData(localeDeCh);
 
 // External libraries
-import { LineChartModule } from '@swimlane/ngx-charts';
+import { BarChartModule } from '@swimlane/ngx-charts';
 import { EmojiPickerModule } from 'angular2-emoji-picker';
 
 /*
@@ -117,7 +117,7 @@ import '../styles/styles.scss';
     MatTabsModule,
     MatCardModule,
     FlexLayoutModule,
-    LineChartModule,
+    BarChartModule,
     EmojiPickerModule.forRoot()
   ],
   /**

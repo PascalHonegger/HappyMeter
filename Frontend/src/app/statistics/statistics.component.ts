@@ -12,6 +12,7 @@ import { DateService } from './../services/date.service';
 import { FullEmotion } from './../model/full-emotion.model';
 import { SelectEmojiDialogComponent } from './../select-emoji-dialog/select-emoji-dialog.component';
 import { RegularExpressions } from './../constants/regular-expressions';
+import { CommentWithDetails } from './../model/comment-with-details.model';
 
 @Component({
   selector: 'statistics',
@@ -26,15 +27,14 @@ export class StatisticsComponent {
 
   /* Example:
   {
-    name: '🎃',
-    smileyCode: '1F383',
+    name: '2017-11-07',
     series: [
       {
-        name: '2017-11-07',
+        name: '🎃',
         value: 12
       },
       {
-        name: '2017-11-08',
+        name: '😭',
         value: 4
       }
     ]
@@ -43,12 +43,13 @@ export class StatisticsComponent {
   public chartData: Array<
   {
     name: string,
-    smileyCode: string,
     series: Array<{
       name: string,
       value: number
     }>
   }>;
+
+  public comments: CommentWithDetails[];
 
   constructor(private emotionServer: EmotionService,
               private emotionalStateServer: EmotionalStateService,
@@ -74,48 +75,44 @@ export class StatisticsComponent {
         this.emotionalStateServer
           .groupedEmotionalStatesWithinRange(this.fromDate, this.toDate)
           .subscribe((data) => {
-            // Create an entry for each emotion / emoji
-            this.chartData = this.allEmotions.map((emotion) => (
-              {
-                name: String.fromCodePoint(parseInt(emotion.smiley, 16)),
-                smileyCode: emotion.smiley,
-                series: []
-              }));
+            this.comments = data
+              .map((d) =>
+                d.emotionalStates
+                  .filter((e) => e.comments)
+                  .map((e) =>
+                    e.comments.map<CommentWithDetails>((c) => (
+                      {
+                        emotionalStateId: c.id,
+                        comment: c.comment,
+                        postDate: c.postDate,
+                        emojiCode: e.smileyCode
+                      }))))
+              .reduce((a, b) => a.concat(b))
+              .reduce((a, b) => a.concat(b));
+
+            this.chartData = [];
 
             // Iterate through all dates between the start and end date
             const incrementingDate = new Date(this.fromDate.getTime());
             incrementingDate.setHours(0, 0, 0, 0);
             while (incrementingDate <= this.toDate) {
-              // Load all emotion-groups which belong to this date
-              const emotionsAtDate = data.filter((d) => {
-                const parsed = new Date(d.createdDate);
-                parsed.setHours(0, 0, 0, 0);
-                return parsed.getTime() === incrementingDate.getTime();
+              this.chartData.push({
+                name: this.dateService.formatDate(incrementingDate),
+                series: []
               });
-
-              // For each emotion which has no emotion at the date, add one with a count of 0
-              for (const emotion of this.allEmotions
-                .filter((e) => !emotionsAtDate.find((emo) => emo.smileyCode === e.smiley))) {
-                  emotionsAtDate.push({
-                    smileyCode: emotion.smiley,
-                    createdDate: incrementingDate,
-                    count: 0});
-              }
-
-              const formattedDate = this.dateService.formatDate(incrementingDate);
-
-              // Add the count to the emoji for each date
-              for (const dailyEmotion of emotionsAtDate) {
-                this.chartData
-                  .find((c) => c.smileyCode === dailyEmotion.smileyCode)
-                  .series.push({
-                    name: formattedDate,
-                    value: dailyEmotion.count
-                  });
-              }
 
               // Increase the current date
               this.dateService.addDaysToDate(incrementingDate, 1);
+            }
+
+            for (const emojisPerDate of data) {
+              const formattedName = this.dateService.formatDate(new Date(emojisPerDate.date));
+              const chartItem = this.chartData.find((c) => c.name === formattedName);
+              chartItem.series = emojisPerDate.emotionalStates.map((e) => (
+                {
+                  name: String.fromCodePoint(parseInt(e.smileyCode, 16)),
+                  value: e.count
+                }));
             }
           });
       }

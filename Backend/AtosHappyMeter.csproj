@@ -114,6 +114,8 @@
     <Compile Include="ControllerModel\AddNewEmotionDto.cs" />
     <Compile Include="ControllerModel\ChangeEmotionSmileyDto.cs" />
     <Compile Include="ControllerModel\ChangeEmotionIsActiveDto.cs" />
+    <Compile Include="ControllerModel\CommentWithPostdate.cs" />
+    <Compile Include="ControllerModel\EmotionalStateHistoryItem.cs" />
     <Compile Include="ControllerModel\ReducedEmotion.cs" />
     <Compile Include="ControllerModel\GroupedEmotionalState.cs" />
     <Compile Include="ControllerModel\ReducedEmotionalState.cs" />

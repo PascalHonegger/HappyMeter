@@ -1,4 +1,4 @@
-<ng-container *ngIf="!commentsWithEmotionAndTimestamp || commentsWithEmotionAndTimestamp.length === 0; else hasEmotionsTemplate">
+<ng-container *ngIf="!comments || comments.length === 0; else hasEmotionsTemplate">
 	<mat-card>
 		<mat-card-header>
 			<emoji-display mat-card-avatar emojiCodePoint="26a0"></emoji-display>
@@ -10,14 +10,14 @@
 </ng-container>
 <ng-template #hasEmotionsTemplate>
 	<div fxfLayout="column" fxLayoutGap="5px" class="chat-history-container">
-		<mat-card *ngFor="let comment of commentsWithEmotionAndTimestamp; trackBy: commentIdFunc">
+		<mat-card *ngFor="let comment of comments; trackBy: commentIdFunc">
 			<mat-card-header>
 				<emoji-display mat-card-avatar [emojiCodePoint]="comment.emojiCode"></emoji-display>
 				<mat-card-title>
 					{{comment.comment}}
 				</mat-card-title>
 				<mat-card-subtitle>
-					{{comment.postDate | date}}
+					{{comment.postDate | date:(fullDate ? 'medium' : 'shortTime')}}
 				</mat-card-subtitle>
 			</mat-card-header>
 			<!--

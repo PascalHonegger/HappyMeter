@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace AtosHappyMeter.ControllerModel
 {
@@ -6,8 +6,8 @@ namespace AtosHappyMeter.ControllerModel
 	{
 		public string SmileyCode { get; set; }
 
-		public DateTime CreatedDate { get; set; }
-
 		public int Count { get; set; }
+
+		public List<CommentWithPostdate> Comments { get; set; }
 	}
 }
