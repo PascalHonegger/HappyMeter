@@ -35,7 +35,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `AtosHappyMeter`.`emotional_state` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `emotion_id` INT NOT NULL,
-  `created_date` DATE NOT NULL,
+  `created_date` DATETIME NOT NULL,
   `comment` VARCHAR(250) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_table1_table2_idx` (`emotion_id` ASC),
