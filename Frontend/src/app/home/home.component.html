@@ -1,42 +1,43 @@
-<div style="align-items: center;" *ngIf="activeEmotions && dailyEmotionalStates; else noDataTemplate" fxLayout="column" fxLayoutGap="20px">
-  <h2 class="mat-display-1">Übersicht der heutigen Gefühlslage</h2>
-  <ng-container *ngIf="dailyEmotionalStates.length === 0; else hasEmotionalStatesTemplate">
-    <h3>Heute wurden noch keine Gefühlslagen erfasst</h3>
-  </ng-container>
-  <ng-template #hasEmotionalStatesTemplate>
-    <h3>Heute wurden {{dailyEmotionalStates.length}} Gefühlslagen erfasst</h3>
-    <div fxLayout.gt-sm="row" fxLayout.lt-md="column" class="emotion-view-container" fxLayoutGap="30px">
-      <div [ngStyle.gt-sm]="{'width': 70 + '%'}" fxLayoutAlign="center" fxLayout="row" fxLayoutGap="20px">
+<div fxLayout.lt-md="column" fxLayout.gt-xs="row" fxLayoutGap="20px" *ngIf="activeEmotions && dailyEmotionalStates; else noDataTemplate">
+  <div [ngStyle.gt-sm]="{'width': 60 + '%'}" style="align-items: center;" fxLayout="column" fxLayoutGap="20px">
+    <h2 class="mat-display-1">Übersicht der heutigen Gefühlslage</h2>
+    <ng-container *ngIf="dailyEmotionalStates.length === 0; else hasEmotionalStatesTemplate">
+      <h3>Heute wurden noch keine Gefühlslagen erfasst</h3>
+    </ng-container>
+    <ng-template #hasEmotionalStatesTemplate>
+      <h3>Heute wurden {{dailyEmotionalStates.length}} Gefühlslagen erfasst</h3>
+      <div class="emoji-container" fxLayoutAlign="center" fxLayout="row" fxLayoutGap.lt-md="20px" fxLayoutGap.gt-sm="40px">
         <div [style.width.%]="relativeSize(emotion.amount)" *ngFor="let emotion of activeEmotionsWithAtLeastOneEntry"
         matTooltip="Stimmen: {{emotion.amount}} ({{relativeSize(emotion.amount) | number:'1.0-1'}}%)">
           <emoji-display [emojiCodePoint]="emotion.smileyCode"></emoji-display>
         </div>
       </div>
-      <div [ngStyle.gt-sm]="{'width': 30 + '%'}" class="mat-elevation-z6 comment-list-container">
-        <comment-list [commentsWithEmotionAndTimestamp]="commentsWithEmotionAndTimestamp"></comment-list>
-      </div>
+    </ng-template>
+    <h2 class="mat-display-1">Wie fühlst Du dich?</h2>
+    <div fxfLayout="row wrap" fxLayoutGap="20px">
+      <button mat-raised-button class="select-emotion-button" [color]="selectedEmotionId == emotion.id ? 'primary' : 'default'"
+      *ngFor="let emotion of activeEmotions" (click)="selectedEmotionId = emotion.id">
+        <emoji-display [emojiCodePoint]="emotion.smileyCode"></emoji-display>
+      </button>
     </div>
-  </ng-template>
-  <h2 class="mat-display-1">Wie fühlst Du dich?</h2>
-  <div fxfLayout="row wrap" fxLayoutGap="20px">
-    <button mat-raised-button class="select-emotion-button" [color]="selectedEmotionId == emotion.id ? 'primary' : 'default'"
-    *ngFor="let emotion of activeEmotions" (click)="selectedEmotionId = emotion.id">
-      <emoji-display [emojiCodePoint]="emotion.smileyCode"></emoji-display>
+    <mat-form-field class="comment-input">
+      <input matInput placeholder="Kommentar" (keyup.enter)="sendEmotion()"
+        [formControl]="commentFormControl" [(ngModel)]="comment" maxLength="250" [pattern]="pattern">
+      <mat-hint align="end">{{comment.length}} / 250</mat-hint>
+      <mat-error *ngIf="commentFormControl.hasError('pattern')">
+        Bitte keine ungewöhnlichen Zeichen verwenden
+      </mat-error>
+    </mat-form-field>
+    <button color="accent" mat-raised-button [disabled]="canNotSendEmotion" (click)="sendEmotion()">
+      Senden
     </button>
+    <footer>
+      <a routerLink="statistics">Statistiken</a> | <a routerLink="administration">Administration</a> | Emoji-Grafiken ermöglich durch <a href="https://twitter.github.io/twemoji/">Twemoji</a> | Umgesetzt von Pascal Honegger
+    </footer>
   </div>
-  <mat-form-field class="comment-input">
-    <textarea matInput placeholder="Kommentar" [formControl]="commentFormControl" [(ngModel)]="comment" maxLength="250" [pattern]="pattern"></textarea>
-    <mat-hint align="end">{{comment.length}} / 250</mat-hint>
-    <mat-error *ngIf="commentFormControl.hasError('pattern')">
-      Bitte keine ungewöhnlichen Zeichen verwenden
-    </mat-error>
-  </mat-form-field>
-  <button mat-raised-button [disabled]="commentFormControl.invalid || selectedEmotionId == null || saveBlocked" (click)="sendEmotion()">
-    Senden
-  </button>
-  <footer>
-    <a routerLink="statistics">Statistiken</a> | <a routerLink="administration">Administration</a> | Emoji-Grafiken ermöglich durch <a href="https://twitter.github.io/twemoji/">Twemoji</a> | Umgesetzt von Pascal Honegger
-  </footer>
+  <div [ngStyle.gt-sm]="{'width': 40 + '%'}" class="comment-list-container">
+    <comment-list [commentsWithEmotionAndTimestamp]="commentsWithEmotionAndTimestamp"></comment-list>
+  </div>
 </div>
 <ng-template #noDataTemplate>
   Lade Daten...

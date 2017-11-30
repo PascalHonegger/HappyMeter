@@ -36,6 +36,10 @@ export class HomeComponent {
     return RegularExpressions.noFunkyCharactersRegex;
   }
 
+  public get canNotSendEmotion() {
+    return this.commentFormControl.invalid || this.selectedEmotionId == null || this.saveBlocked;
+  }
+
   public activeEmotionsWithAtLeastOneEntry: EmotionWithCount[];
 
   public commentsWithEmotionAndTimestamp: CommentWithDetails[];
@@ -52,6 +56,10 @@ export class HomeComponent {
   }
 
   public sendEmotion() {
+    if (this.canNotSendEmotion) {
+      return;
+    }
+
     this.emotionalStateServer.addEmotionalState(this.selectedEmotionId, this.comment)
       .subscribe(() => {
         // Load new data
