@@ -47,6 +47,7 @@ import { UserService } from './services/user.service';
 import { EmotionalStateService } from './services/emotional-state.service';
 import { EmotionService } from './services/emotion.service';
 import { DateService } from './services/date.service';
+import { DataParserService } from './services/data-parser.service';
 
 // Interceptors
 import { AuthorizeInterceptor } from './interceptors/authorize.interceptor';
@@ -130,6 +131,7 @@ import '../styles/styles.scss';
     EmotionalStateService,
     EmotionService,
     DateService,
+    DataParserService,
     AuthService,
     CanActivateViaAuthGuard,
     {

@@ -118,7 +118,6 @@
     <Compile Include="ControllerModel\EmotionalStateHistoryItem.cs" />
     <Compile Include="ControllerModel\ReducedEmotion.cs" />
     <Compile Include="ControllerModel\GroupedEmotionalState.cs" />
-    <Compile Include="ControllerModel\ReducedEmotionalState.cs" />
     <Compile Include="ControllerModel\AddEmotionalStateDto.cs" />
     <Compile Include="ControllerModel\SetPasswordDto.cs" />
     <Compile Include="ControllerModel\SetUsernameDto.cs" />

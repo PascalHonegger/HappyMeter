@@ -5,11 +5,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { EmotionalStateService } from './../services/emotional-state.service';
 import { EmotionService } from './../services/emotion.service';
-import { EmotionalState } from './../model/emotional-state.model';
 import { Emotion } from './../model/emotion.model';
-import { EmotionWithCount } from './../model/emotion-with-count.model';
 import { CommentWithDetails } from './../model/comment-with-details.model';
 import { RegularExpressions } from './../constants/regular-expressions';
+import { DateService } from './../services/date.service';
+import { DataParserService } from './../services/data-parser.service';
+import { GroupedEmotionalState } from './../model/grouped-emotional-state.model';
 
 // 5 Minutes
 const reloadIntervalInMs = 300000;
@@ -24,7 +25,7 @@ const sendBlockedDuration = 20000;
 })
 export class HomeComponent {
   public activeEmotions: Emotion[];
-  public dailyEmotionalStates: EmotionalState[];
+  public dailyEmotionalStates: GroupedEmotionalState[];
 
   public selectedEmotionId: number | null = null;
   public comment: string = '';
@@ -40,13 +41,13 @@ export class HomeComponent {
     return this.commentFormControl.invalid || this.selectedEmotionId == null || this.saveBlocked;
   }
 
-  public activeEmotionsWithAtLeastOneEntry: EmotionWithCount[];
-
-  public commentsWithEmotionAndTimestamp: CommentWithDetails[];
+  public comments: CommentWithDetails[];
 
   constructor(private emotionServer: EmotionService,
               private emotionalStateServer: EmotionalStateService,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private dateService: DateService,
+              private dataParseService: DataParserService) {
     this.loadData();
     setInterval(() => this.loadData(), reloadIntervalInMs);
   }
@@ -86,43 +87,24 @@ export class HomeComponent {
       }, sendBlockedDuration);
   }
 
-  private amountOfEmotions(emotionId: number) {
-    return this.dailyEmotionalStates.filter((d) => d.emotionId === emotionId).length;
-  }
-
   private loadData() {
-    const loadingEmotionsSubscription = this.emotionServer
-      .activeEmotions().subscribe((e) => {
-        this.activeEmotions = e;
-        if (loadingEmotionalStatesSubscription.closed) {
-          this.transformServerData();
+    // Active emotions for the buttons
+    this.emotionServer.activeEmotions().subscribe((e) => this.activeEmotions = e);
+
+    // Emotional state with comments for show
+    const today = this.dateService.todayWithOffset(0);
+    const tomorrow = this.dateService.todayWithOffset(1);
+    this.emotionalStateServer.groupedEmotionalStatesWithinRange(today, tomorrow)
+      .subscribe((data) => {
+        this.comments = this.dataParseService.getCommentsWithDetails(data);
+        if (data.length === 1) {
+          this.dailyEmotionalStates = data[0].emotionalStates;
+        } else if (data.length === 0) {
+          this.dailyEmotionalStates = [];
+        } else {
+          console.warn('Received data from more than one date, this should never happen!',
+            today, tomorrow);
         }
       });
-    const loadingEmotionalStatesSubscription = this.emotionalStateServer
-      .dailyEmotionalStates().subscribe((de) => {
-        this.dailyEmotionalStates = de.reverse();
-        if (loadingEmotionsSubscription.closed) {
-          this.transformServerData();
-        }
-      });
-  }
-
-  private transformServerData() {
-    this.activeEmotionsWithAtLeastOneEntry =
-      this.activeEmotions
-        .map((e) => {
-          const withCount = e as EmotionWithCount;
-          withCount.amount = this.amountOfEmotions(e.id);
-          return withCount;
-        })
-        .filter((e) => e.amount !== 0);
-
-    this.commentsWithEmotionAndTimestamp =
-      this.dailyEmotionalStates.filter((d) => d.comment).map((d) => ({
-        emotionalStateId: d.id,
-        comment: d.comment,
-        postDate: d.createdDate,
-        emojiCode: this.activeEmotions.find((e) => e.id === d.emotionId).smileyCode
-      }));
   }
 }

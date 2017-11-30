@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { ServerService } from './server.service';
-import { EmotionalState } from './../model/emotional-state.model';
 import { DateService } from './date.service';
 import { EmotionalStateHistoryItem } from './../model/emotional-state-history-item.model';
 
@@ -12,15 +11,11 @@ export class EmotionalStateService extends ServerService {
         super('EmotionalState');
     }
 
-    public dailyEmotionalStates() {
-        return this.httpClient.get<EmotionalState[]>(this.baseUrl + '/DailyEmotionalStates');
-    }
-
     public groupedEmotionalStatesWithinRange(from: Date, to: Date) {
-        // Use substring as the time-offset is not used
         const params = new HttpParams()
-            .set('from', this.dateService.formatDate(from))
-            .set('to', this.dateService.formatDate(to));
+            .set('from', from.toJSON())
+            .set('to', to.toJSON())
+            .set('utcOffsetInMinutes', (from.getTimezoneOffset()).toString());
         return this.httpClient.get<EmotionalStateHistoryItem[]>(
                 this.baseUrl + '/GroupedEmotionalStatesWithinRange', { params });
     }

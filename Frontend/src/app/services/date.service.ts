@@ -10,8 +10,8 @@ export class DateService {
         return resultDate;
     }
 
-    public addDaysToDate(date: Date, days: number) {
-        date.setTime(date.getTime() + oneDayInMiliseconds);
+    public dateWithOffset(date: Date, days: number): Date {
+        return new Date((date.getTime() + oneDayInMiliseconds));
     }
 
     public formatDate(date: Date): string {

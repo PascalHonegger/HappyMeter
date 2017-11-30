@@ -1,18 +1,10 @@
 import { Component } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
-import { MatSnackBar, MatDialog } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 import { EmotionalStateService } from './../services/emotional-state.service';
-import { EmotionService } from './../services/emotion.service';
-import { UserService } from './../services/user.service';
-import { AuthService } from './../services/auth.service';
 import { DateService } from './../services/date.service';
-import { FullEmotion } from './../model/full-emotion.model';
-import { SelectEmojiDialogComponent } from './../select-emoji-dialog/select-emoji-dialog.component';
-import { RegularExpressions } from './../constants/regular-expressions';
 import { CommentWithDetails } from './../model/comment-with-details.model';
+import { DataParserService } from './../services/data-parser.service';
 
 @Component({
   selector: 'statistics',
@@ -20,8 +12,6 @@ import { CommentWithDetails } from './../model/comment-with-details.model';
   templateUrl: './statistics.component.html'
 })
 export class StatisticsComponent {
-  public allEmotions: FullEmotion[];
-
   public fromDate: Date;
   public toDate: Date;
 
@@ -51,21 +41,13 @@ export class StatisticsComponent {
 
   public comments: CommentWithDetails[];
 
-  constructor(private emotionServer: EmotionService,
-              private emotionalStateServer: EmotionalStateService,
+  constructor(private emotionalStateServer: EmotionalStateService,
               private snackBar: MatSnackBar,
-              private dateService: DateService) {
+              private dateService: DateService,
+              private dataParserService: DataParserService) {
                 this.fromDate = dateService.todayWithOffset(-7);
                 this.toDate = dateService.todayWithOffset(0);
-
-                this.loadEmotions();
               }
-
-    public loadEmotions() {
-      this.emotionServer.allEmotions().subscribe((data) => {
-        this.allEmotions = data;
-      });
-    }
 
     public tryRefreshChart() {
       // Ensure dates are valid
@@ -73,27 +55,15 @@ export class StatisticsComponent {
         this.snackBar.open('Das Start-Datum muss kleiner als das Bis-Datum sein', 'Ok');
       } else {
         this.emotionalStateServer
-          .groupedEmotionalStatesWithinRange(this.fromDate, this.toDate)
+          .groupedEmotionalStatesWithinRange(
+            this.fromDate, this.dateService.dateWithOffset(this.toDate, 1))
           .subscribe((data) => {
-            this.comments = data
-              .map((d) =>
-                d.emotionalStates
-                  .filter((e) => e.comments)
-                  .map((e) =>
-                    e.comments.map<CommentWithDetails>((c) => (
-                      {
-                        emotionalStateId: c.id,
-                        comment: c.comment,
-                        postDate: c.postDate,
-                        emojiCode: e.smileyCode
-                      }))))
-              .reduce((a, b) => a.concat(b))
-              .reduce((a, b) => a.concat(b));
+            this.comments = this.dataParserService.getCommentsWithDetails(data);
 
             this.chartData = [];
 
             // Iterate through all dates between the start and end date
-            const incrementingDate = new Date(this.fromDate.getTime());
+            let incrementingDate = new Date(this.fromDate.getTime());
             incrementingDate.setHours(0, 0, 0, 0);
             while (incrementingDate <= this.toDate) {
               this.chartData.push({
@@ -102,7 +72,7 @@ export class StatisticsComponent {
               });
 
               // Increase the current date
-              this.dateService.addDaysToDate(incrementingDate, 1);
+              incrementingDate = this.dateService.dateWithOffset(incrementingDate, 1);
             }
 
             for (const emojisPerDate of data) {

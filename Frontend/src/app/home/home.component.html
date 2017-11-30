@@ -7,9 +7,9 @@
     <ng-template #hasEmotionalStatesTemplate>
       <h3>Heute wurden {{dailyEmotionalStates.length}} Gefühlslagen erfasst</h3>
       <div class="emoji-container" fxLayoutAlign="center" fxLayout="row" fxLayoutGap.lt-md="20px" fxLayoutGap.gt-sm="40px">
-        <div [style.width.%]="relativeSize(emotion.amount)" *ngFor="let emotion of activeEmotionsWithAtLeastOneEntry"
-        matTooltip="Stimmen: {{emotion.amount}} ({{relativeSize(emotion.amount) | number:'1.0-1'}}%)">
-          <emoji-display [emojiCodePoint]="emotion.smileyCode"></emoji-display>
+        <div [style.width.%]="relativeSize(emotionalState.count)" *ngFor="let emotionalState of dailyEmotionalStates"
+        matTooltip="Stimmen: {{emotionalState.count}} ({{relativeSize(emotionalState.count) | number:'1.0-1'}}%)">
+          <emoji-display [emojiCodePoint]="emotionalState.smileyCode"></emoji-display>
         </div>
       </div>
     </ng-template>
@@ -36,7 +36,7 @@
     </footer>
   </div>
   <div [ngStyle.gt-sm]="{'width': 40 + '%'}" class="comment-list-container">
-    <comment-list [commentsWithEmotionAndTimestamp]="commentsWithEmotionAndTimestamp"></comment-list>
+    <comment-list [comments]="comments"></comment-list>
   </div>
 </div>
 <ng-template #noDataTemplate>
