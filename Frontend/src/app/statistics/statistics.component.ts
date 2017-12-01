@@ -88,4 +88,8 @@ export class StatisticsComponent {
       }
     }
 
+    public getCode(emoji: string): string {
+      return emoji.codePointAt(0).toString(16);
+    }
+
 }

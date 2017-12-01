@@ -19,11 +19,19 @@
       [results]="chartData"
       [xAxis]="true"
       [yAxis]="true"
-      [legend]="true"
+      [legend]="false"
       [showXAxisLabel]="true"
       [showYAxisLabel]="true"
       xAxisLabel="Datum"
       yAxisLabel="Personen">
+      <ng-template #tooltipTemplate let-model="model">
+        <h1 class="emoji-tooltip">
+          <emoji-display [emojiCodePoint]="getCode(model.name)"></emoji-display>
+        </h1>
+        <h2>
+          {{model.value}}
+        </h2>
+      </ng-template>
     </ngx-charts-bar-vertical-stacked>
   </div>
   <comment-list *ngIf="comments" [fullDate]="true" [comments]="comments"></comment-list>
