@@ -15,7 +15,7 @@
     <button fxFlex mat-raised-button (click)="tryRefreshChart()">Aktualisieren</button>
   </div>
   <div [style.height.px]="350">
-    <ngx-charts-bar-vertical-stacked *ngIf="chartData"
+    <ngx-charts-bar-vertical-2d *ngIf="chartData"
       [results]="chartData"
       [xAxis]="true"
       [yAxis]="true"
@@ -32,7 +32,7 @@
           {{model.value}}
         </h2>
       </ng-template>
-    </ngx-charts-bar-vertical-stacked>
+    </ngx-charts-bar-vertical-2d>
   </div>
   <comment-list *ngIf="comments" [fullDate]="true" [comments]="comments"></comment-list>
 </div>

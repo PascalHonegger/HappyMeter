@@ -45,7 +45,7 @@ export class StatisticsComponent {
               private snackBar: MatSnackBar,
               private dateService: DateService,
               private dataParserService: DataParserService) {
-                this.fromDate = dateService.todayWithOffset(-7);
+                this.fromDate = dateService.todayWithOffset(-5);
                 this.toDate = dateService.todayWithOffset(0);
               }
 
