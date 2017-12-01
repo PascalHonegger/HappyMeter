@@ -8,7 +8,7 @@ import { DataParserService } from './../services/data-parser.service';
 
 @Component({
   selector: 'statistics',
-  styleUrls: ['./statistics.component.css'],
+  styleUrls: ['./statistics.component.scss'],
   templateUrl: './statistics.component.html'
 })
 export class StatisticsComponent {

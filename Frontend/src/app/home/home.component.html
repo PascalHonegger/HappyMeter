@@ -1,12 +1,11 @@
-<div fxLayout.lt-md="column" fxLayout.gt-xs="row" fxLayoutGap="20px" *ngIf="activeEmotions && dailyEmotionalStates; else noDataTemplate">
-  <div [ngStyle.gt-sm]="{'width': 60 + '%'}" style="align-items: center;" fxLayout="column" fxLayoutGap="20px">
-    <h2 class="mat-display-1">Übersicht der heutigen Gefühlslage</h2>
-    <ng-container *ngIf="dailyEmotionalStates.length === 0; else hasEmotionalStatesTemplate">
+<div class="home-component" fxLayout.lt-md="column" fxLayout.gt-xs="row" fxLayoutGap="20px" *ngIf="activeEmotions && dailyEmotionalStates; else noDataTemplate">
+  <div ngClass.gt-sm="large-smiley-list-container" class="smiley-list-container" fxLayout="column" fxLayoutGap="15px">
+    <h2 class="mat-display-1">Heutige Gefühlslage ({{amountOfEmotions}} Teilnehmer)</h2>
+    <ng-container *ngIf="amountOfEmotions === 0; else hasEmotionalStatesTemplate">
       <h3>Heute wurden noch keine Gefühlslagen erfasst</h3>
     </ng-container>
     <ng-template #hasEmotionalStatesTemplate>
-      <h3>Heute wurden {{dailyEmotionalStates.length}} Gefühlslagen erfasst</h3>
-      <div class="emoji-container" fxLayoutAlign="center" fxLayout="row" fxLayoutGap.lt-md="20px" fxLayoutGap.gt-sm="40px">
+      <div class="emoji-container" fxLayoutAlign="center" fxLayout="row" fxLayoutGap.lt-md="20px" fxLayoutGap.gt-sm="30px">
         <div [style.width.%]="relativeSize(emotionalState.count)" *ngFor="let emotionalState of dailyEmotionalStates"
         matTooltip="Stimmen: {{emotionalState.count}} ({{relativeSize(emotionalState.count) | number:'1.0-1'}}%)">
           <emoji-display [emojiCodePoint]="emotionalState.smileyCode"></emoji-display>
@@ -35,7 +34,7 @@
       <a routerLink="statistics">Statistiken</a> | <a routerLink="administration">Administration</a> | Emoji-Grafiken ermöglich durch <a href="https://twitter.github.io/twemoji/">Twemoji</a> | Umgesetzt von Pascal Honegger
     </footer>
   </div>
-  <div [ngStyle.gt-sm]="{'width': 40 + '%'}" class="comment-list-container">
+  <div ngClass.gt-sm="large-comment-list-container">
     <comment-list [comments]="comments"></comment-list>
   </div>
 </div>

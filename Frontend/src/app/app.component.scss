@@ -1,4 +1,3 @@
-$content-padding: 16px;
 $logo-margin: 5px;
 
 .app-toolbar {
@@ -18,10 +17,6 @@ $logo-margin: 5px;
   height: 65%;
   padding: 5px;
   margin: $logo-margin $logo-margin $logo-margin 0;
-}
-
-.main-content {
-  padding: $content-padding;
 }
 
 a {

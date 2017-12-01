@@ -10,7 +10,7 @@ import { RegularExpressions } from './../constants/regular-expressions';
 
 @Component({
   selector: 'login',
-  styleUrls: ['./login.component.css'],
+  styleUrls: ['./login.component.scss'],
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
@@ -23,12 +23,20 @@ export class LoginComponent {
     return RegularExpressions.noFunkyCharactersRegex;
   }
 
+  public get invalidForm(): boolean {
+    return this.usernameFormControl.invalid || this.passwordFormControl.invalid;
+  }
+
   constructor(private userServer: UserService,
               private authService: AuthService,
               private snackBar: MatSnackBar,
               private router: Router) { }
 
   public login() {
+    if (this.invalidForm) {
+      return;
+    }
+
     this.userServer.testCredentials(this.username, this.password)
       .subscribe(() => {
         this.authService.username = this.username;

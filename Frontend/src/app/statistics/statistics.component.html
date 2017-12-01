@@ -1,5 +1,5 @@
-<div fxLayout="column" fxLayoutGap="20px" [style.width.%]="100">
-  <div fxLayout="row" fxLayoutGap="10px">
+<div class="statistics-container" fxLayout="column" fxLayoutGap="20px">
+  <div fxLayout.gt-sm="row" fxLayout.lt-md="column" fxLayoutGap="10px">
     <mat-form-field fxFlex>
         <input matInput [matDatepicker]="fromDatePicker" placeholder="Von"
               [(ngModel)]="fromDate" disabled>
@@ -12,9 +12,9 @@
       <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #toDatePicker disabled="false"></mat-datepicker>
     </mat-form-field>
+    <button fxFlex mat-raised-button (click)="tryRefreshChart()">Aktualisieren</button>
   </div>
-  <button mat-raised-button (click)="tryRefreshChart()">Aktualisieren</button>
-  <div [style.height.px]="300">
+  <div [style.height.px]="350">
     <ngx-charts-bar-vertical-stacked *ngIf="chartData"
       [results]="chartData"
       [xAxis]="true"

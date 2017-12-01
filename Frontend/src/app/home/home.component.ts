@@ -20,12 +20,13 @@ const sendBlockedDuration = 20000;
 
 @Component({
   selector: 'home',
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.scss'],
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
   public activeEmotions: Emotion[];
   public dailyEmotionalStates: GroupedEmotionalState[];
+  public amountOfEmotions: number;
 
   public selectedEmotionId: number | null = null;
   public comment: string = '';
@@ -53,7 +54,7 @@ export class HomeComponent {
   }
 
   public relativeSize(emotionAmount: number): number {
-    return 100 / this.dailyEmotionalStates.length * emotionAmount;
+    return 100 / this.amountOfEmotions * emotionAmount;
   }
 
   public sendEmotion() {
@@ -104,7 +105,11 @@ export class HomeComponent {
         } else {
           console.warn('Received data from more than one date, this should never happen!',
             today, tomorrow);
+          this.dailyEmotionalStates = [];
         }
+        this.amountOfEmotions = this.dailyEmotionalStates
+          .map((d) => d.count)
+          .reduce((a, b) => a + b, 0);
       });
   }
 }

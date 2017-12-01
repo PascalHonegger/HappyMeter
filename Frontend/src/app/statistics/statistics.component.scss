@@ -1,0 +1,12 @@
+@import "../constants/variables";
+
+.statistics-container {
+	padding-top: $content-margin;
+	padding-left: $content-margin;
+	padding-right: $content-margin;
+	width: 100%;
+}
+
+.input-half-width {
+	width: 50%;
+}

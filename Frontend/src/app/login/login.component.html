@@ -1,4 +1,4 @@
-<div style="align-items: center" fxLayout="column" fxLayoutGap="20px">
+<div class="login-container" fxLayout="column" fxLayoutGap="20px">
   <h2 class="mat-display-1">Administrator Login</h2>
   <mat-form-field>
     <input matInput placeholder="Benutzername" [formControl]="usernameFormControl" [(ngModel)]="username" required minLength="1" maxLength="100" [pattern]="pattern">
@@ -11,10 +11,10 @@
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="Passwort" type="password" [formControl]="passwordFormControl" [(ngModel)]="password" required minLength="1" maxLength="100">
+    <input (keyup.enter)="login()" matInput placeholder="Passwort" type="password" [formControl]="passwordFormControl" [(ngModel)]="password" required minLength="1" maxLength="100">
   </mat-form-field>
 
-  <button mat-raised-button [disabled]="usernameFormControl.invalid || passwordFormControl.invalid" (click)="login()">
+  <button mat-raised-button [disabled]="invalidForm" (click)="login()">
     Anmelden
   </button>
 </div>

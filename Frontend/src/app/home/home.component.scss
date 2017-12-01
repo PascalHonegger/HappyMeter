@@ -1,0 +1,43 @@
+@import "../constants/variables";
+
+.emoji-container {
+	width: 100%;
+	max-width: 440px;
+}
+
+.comment-input {
+	width: 75%;
+}
+
+.select-emotion-button {
+	margin-top: 20px;
+	width: 90px;
+	height: 90px;
+}
+
+::ng-deep .mat-tooltip {
+	font-size: large !important;
+}
+
+.large-comment-list-container {
+	overflow-y: auto;
+	height: 100%;
+	width: 40%;
+}
+
+.large-smiley-list-container {
+	overflow-y: auto;
+	height: 100%;
+	width: 60%;
+}
+
+.smiley-list-container {
+	align-items: center;
+	padding-top: $content-margin;
+	padding-left: $content-margin;
+	padding-right: $content-margin;
+}
+
+.home-component {
+	height: calc(100vh - #{$toolbar-height});
+}
