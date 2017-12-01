@@ -15,10 +15,10 @@
 		<mat-card *ngFor="let comment of comments; trackBy: commentIdFunc">
 			<mat-card-header>
 				<emoji-display mat-card-avatar [emojiCodePoint]="comment.emojiCode"></emoji-display>
-				<mat-card-title>
+				<mat-card-title [style.margin-bottom.px]="6">
 					{{comment.comment}}
 				</mat-card-title>
-				<mat-card-subtitle>
+				<mat-card-subtitle [style.margin-bottom]="0">
 					{{comment.postDate | date:(fullDate ? 'medium' : 'shortTime')}}
 				</mat-card-subtitle>
 			</mat-card-header>
