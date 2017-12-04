@@ -1,18 +1,24 @@
 <div class="statistics-container" fxLayout="column" fxLayoutGap="20px">
-  <div fxLayout.gt-sm="row" fxLayout.lt-md="column" fxLayoutGap="10px">
-    <mat-form-field fxFlex>
-        <input matInput [matDatepicker]="fromDatePicker" placeholder="Von"
-              [(ngModel)]="fromDate" disabled>
-      <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #fromDatePicker disabled="false"></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field fxFlex>
-      <input matInput [matDatepicker]="toDatePicker" placeholder="Bis"
-              [(ngModel)]="toDate" disabled>
-      <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #toDatePicker disabled="false"></mat-datepicker>
-    </mat-form-field>
-    <button fxFlex mat-raised-button (click)="tryRefreshChart()">Aktualisieren</button>
+  <div>
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div fxFlex fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+        <mat-form-field fxFlex>
+            <input matInput [matDatepicker]="fromDatePicker" placeholder="Von"
+                  [(ngModel)]="fromDate" disabled>
+          <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #fromDatePicker disabled="false"></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput [matDatepicker]="toDatePicker" placeholder="Bis"
+                  [(ngModel)]="toDate" disabled>
+          <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #toDatePicker disabled="false"></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <button class="refresh-button" mat-raised-button (click)="tryRefreshChart()">
+        Aktualisieren
+      </button>
+    </div>
   </div>
   <div [style.height.px]="350">
     <ngx-charts-bar-vertical-2d *ngIf="chartData"
