@@ -1,5 +1,7 @@
 ﻿using System.Web.Http;
+#if DEBUG
 using System.Web.Http.Cors;
+#endif
 
 namespace AtosHappyMeter
 {
@@ -7,9 +9,11 @@ namespace AtosHappyMeter
 	{
 		public static void Register(HttpConfiguration config)
 		{
-			// Web API configuration and services
+#if DEBUG
+			// For debugging allow all sources
 			var enableForAllAttribute = new EnableCorsAttribute("*", "*", "*");
 			config.EnableCors(enableForAllAttribute);
+#endif
 
 			// Web API routes
 			config.MapHttpAttributeRoutes();
