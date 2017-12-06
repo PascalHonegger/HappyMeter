@@ -15,30 +15,35 @@
           <mat-datepicker #toDatePicker disabled="false"></mat-datepicker>
         </mat-form-field>
       </div>
-      <button class="refresh-button" mat-raised-button (click)="tryRefreshChart()">
-        Aktualisieren
+      <button class="refresh-button" mat-icon-button (click)="tryRefreshChart()">
+        <mat-icon aria-label="Aktualisieren">refresh</mat-icon>
       </button>
     </div>
   </div>
-  <div [style.height.px]="350">
-    <ngx-charts-bar-vertical-2d *ngIf="chartData"
-      [results]="chartData"
-      [xAxis]="true"
-      [yAxis]="true"
-      [legend]="false"
-      [showXAxisLabel]="true"
-      [showYAxisLabel]="true"
-      xAxisLabel="Datum"
-      yAxisLabel="Personen">
-      <ng-template #tooltipTemplate let-model="model">
-        <h1 class="emoji-tooltip">
-          <emoji-display [emojiCodePoint]="getCode(model.name)"></emoji-display>
-        </h1>
-        <h2>
-          {{model.value}}
-        </h2>
-      </ng-template>
-    </ngx-charts-bar-vertical-2d>
-  </div>
-  <comment-list *ngIf="comments" [fullDate]="true" [comments]="comments"></comment-list>
+  <ng-container *ngIf="isLoadingStatistics; else statisticsTemplate">
+    <mat-spinner></mat-spinner>
+  </ng-container>
+  <ng-template #statisticsTemplate>
+    <div [style.height.px]="350">
+      <ngx-charts-bar-vertical-2d
+        [results]="chartData"
+        [xAxis]="true"
+        [yAxis]="true"
+        [legend]="false"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        xAxisLabel="Datum"
+        yAxisLabel="Personen">
+        <ng-template #tooltipTemplate let-model="model">
+          <h1 class="emoji-tooltip">
+            <emoji-display [emojiCodePoint]="getCode(model.name)"></emoji-display>
+          </h1>
+          <h2>
+            {{model.value}}
+          </h2>
+        </ng-template>
+      </ngx-charts-bar-vertical-2d>
+    </div>
+    <comment-list [fullDate]="true" [comments]="comments"></comment-list>
+  </ng-template>
 </div>

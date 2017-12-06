@@ -67,9 +67,10 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatTabsModule,
-  MatCardModule
+  MatCardModule,
+  MatIconModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
-import 'hammerjs';
 
 import '../styles/styles.scss';
 
@@ -117,6 +118,8 @@ import '../styles/styles.scss';
     MatNativeDateModule,
     MatTabsModule,
     MatCardModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
     FlexLayoutModule,
     BarChartModule,
     EmojiPickerModule.forRoot()

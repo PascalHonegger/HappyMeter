@@ -1,4 +1,8 @@
+@import '~@angular/material/theming';
+@import './../styles/custom-material-design.scss';
+
 $logo-margin: 5px;
+$menu-margin: 6px;
 
 .app-toolbar {
   color: white !important;
@@ -6,6 +10,10 @@ $logo-margin: 5px;
   text-align: center;
   z-index: 10;
   position: relative;
+}
+
+.active-link {
+  background: mat-color($primary, 700);
 }
 
 .app-title {
@@ -17,6 +25,22 @@ $logo-margin: 5px;
   height: 65%;
   padding: 5px;
   margin: $logo-margin $logo-margin $logo-margin 0;
+}
+
+.menu-link + .menu-link {
+  margin-left: $menu-margin;
+}
+
+.has-icon-min-width {
+  min-width: 150px;
+}
+
+.smaller-menu {
+  font-size: small;
+}
+
+.nav-flex-div {
+  width: 100%;
 }
 
 a {
