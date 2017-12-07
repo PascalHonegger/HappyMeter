@@ -17,8 +17,8 @@ namespace AtosHappyMeter.Controllers
 		[ResponseType(typeof(List<EmotionalStateHistoryItem>))]
 		public async Task<IHttpActionResult> GroupedEmotionalStatesWithinRange([Required] DateTime from, [Required] DateTime to, int utcOffsetInMinutes)
 		{
-			from = from.AddMinutes(-utcOffsetInMinutes);
-			to = to.AddMinutes(-utcOffsetInMinutes);
+			from = from.AddMinutes(utcOffsetInMinutes);
+			to = to.AddMinutes(utcOffsetInMinutes);
 			// Validate parameters
 			if (!ModelState.IsValid || from > to)
 			{
