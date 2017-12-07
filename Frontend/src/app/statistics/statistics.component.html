@@ -4,13 +4,13 @@
       <div fxFlex fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
         <mat-form-field fxFlex>
             <input matInput [matDatepicker]="fromDatePicker" placeholder="Von"
-                  [(ngModel)]="fromDate" disabled>
+                  [(ngModel)]="fromDate" disabled [max]="toDate">
           <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #fromDatePicker disabled="false"></mat-datepicker>
         </mat-form-field>
         <mat-form-field fxFlex>
           <input matInput [matDatepicker]="toDatePicker" placeholder="Bis"
-                  [(ngModel)]="toDate" disabled>
+                  [(ngModel)]="toDate" disabled [min]="fromDate">
           <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #toDatePicker disabled="false"></mat-datepicker>
         </mat-form-field>

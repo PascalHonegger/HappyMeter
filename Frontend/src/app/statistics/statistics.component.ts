@@ -7,14 +7,18 @@ import { CommentWithDetails } from './../model/comment-with-details.model';
 import { DataParserService } from './../services/data-parser.service';
 import { EmotionalStateHistoryItem } from './../model/emotional-state-history-item.model';
 
+import * as moment from 'moment';
+
+const dateFormat = 'YYYY-MM-DD';
+
 @Component({
   selector: 'statistics',
   styleUrls: ['./statistics.component.scss'],
   templateUrl: './statistics.component.html'
 })
 export class StatisticsComponent {
-  public fromDate: Date;
-  public toDate: Date;
+  public fromDate: moment.Moment;
+  public toDate: moment.Moment;
   public isLoadingStatistics: boolean = false;
 
   /* Example:
@@ -45,22 +49,21 @@ export class StatisticsComponent {
 
   constructor(private emotionalStateServer: EmotionalStateService,
               private snackBar: MatSnackBar,
-              private dateService: DateService,
               private dataParserService: DataParserService) {
-                this.fromDate = dateService.todayWithOffset(-5);
-                this.toDate = dateService.todayWithOffset(0);
+                this.fromDate = moment().startOf('isoWeek');
+                this.toDate = moment().startOf('day');
                 this.tryRefreshChart();
               }
 
     public tryRefreshChart() {
       // Ensure dates are valid
-      if (this.fromDate > this.toDate) {
+      if (this.toDate.isBefore(this.fromDate)) {
         this.snackBar.open('Das Start-Datum muss kleiner als das Bis-Datum sein', 'Ok');
       } else {
         this.isLoadingStatistics = true;
         this.emotionalStateServer
           .groupedEmotionalStatesWithinRange(
-            this.fromDate, this.dateService.dateWithOffset(this.toDate, 1))
+            this.fromDate, this.toDate.endOf('day'))
           .subscribe(
             (data) => this.handleDataLoaded(data),
             (err) => undefined,
@@ -78,20 +81,15 @@ export class StatisticsComponent {
       this.chartData = [];
 
       // Iterate through all dates between the start and end date
-      let incrementingDate = new Date(this.fromDate.getTime());
-      incrementingDate.setHours(0, 0, 0, 0);
-      while (incrementingDate <= this.toDate) {
+      for (const m = moment(this.fromDate); m.isSameOrBefore(this.toDate); m.add(1, 'days')) {
         this.chartData.push({
-          name: this.dateService.formatDate(incrementingDate),
+          name: m.format(dateFormat),
           series: []
         });
-
-        // Increase the current date
-        incrementingDate = this.dateService.dateWithOffset(incrementingDate, 1);
       }
 
       for (const emojisPerDate of data) {
-        const formattedName = this.dateService.formatDate(new Date(emojisPerDate.date));
+        const formattedName = moment(emojisPerDate.date).format(dateFormat);
         const chartItem = this.chartData.find((c) => c.name === formattedName);
         chartItem.series = emojisPerDate.emotionalStates.map((e) => (
           {

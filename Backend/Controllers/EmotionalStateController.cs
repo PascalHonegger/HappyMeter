@@ -15,12 +15,10 @@ namespace AtosHappyMeter.Controllers
 	{
 		[HttpGet]
 		[ResponseType(typeof(List<EmotionalStateHistoryItem>))]
-		public async Task<IHttpActionResult> GroupedEmotionalStatesWithinRange([Required] DateTime from, [Required] DateTime to, int utcOffsetInMinutes)
+		public async Task<IHttpActionResult> GroupedEmotionalStatesWithinRange([Required] DateTimeOffset from, [Required] DateTimeOffset to)
 		{
-			from = from.AddMinutes(utcOffsetInMinutes);
-			to = to.AddMinutes(utcOffsetInMinutes);
 			// Validate parameters
-			if (!ModelState.IsValid || from > to)
+			if (!ModelState.IsValid || from > to || from.Offset != to.Offset)
 			{
 				return BadRequest();
 			}
@@ -28,15 +26,17 @@ namespace AtosHappyMeter.Controllers
 			using (var dbContext = new HappyMeterDatabaseContext())
 			{
 				var data = await dbContext.EmotionalStates
-					.Where(e => e.CreatedDate >= from && e.CreatedDate < to)
+					.Where(e => e.CreatedDate >= from.UtcDateTime && e.CreatedDate <= to.UtcDateTime)
 					.Select(e => new { e.Id, e.CreatedDate, e.Comment, e.Emotion.Smiley })
 					.ToListAsync();
 
+				var offset = from.Offset;
+
 				var groupedData = data
-					.GroupBy(e => new { Date = e.CreatedDate.AddMinutes(-utcOffsetInMinutes).Date.AddMinutes(utcOffsetInMinutes) })
+					.GroupBy(e => e.CreatedDate.Add(offset).Date)
 					.Select(dateGroup => new EmotionalStateHistoryItem
 					{
-						Date = dateGroup.Key.Date,
+						Date = new DateTimeOffset(dateGroup.Key, offset),
 						EmotionalStates = dateGroup.GroupBy(e => e.Smiley).OrderBy(g => g.Key).Select(g => new GroupedEmotionalState
 						{
 							SmileyCode = g.Key,

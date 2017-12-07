@@ -46,7 +46,6 @@ import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { EmotionalStateService } from './services/emotional-state.service';
 import { EmotionService } from './services/emotion.service';
-import { DateService } from './services/date.service';
 import { DataParserService } from './services/data-parser.service';
 
 // Interceptors
@@ -65,12 +64,13 @@ import {
   MatInputModule,
   MatSnackBarModule,
   MatDatepickerModule,
-  MatNativeDateModule,
   MatTabsModule,
   MatCardModule,
   MatIconModule,
   MatProgressSpinnerModule
 } from '@angular/material';
+
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 import '../styles/styles.scss';
 
@@ -115,7 +115,7 @@ import '../styles/styles.scss';
     MatTooltipModule,
     MatSnackBarModule,
     MatDatepickerModule,
-    MatNativeDateModule,
+    MatMomentDateModule,
     MatTabsModule,
     MatCardModule,
     MatIconModule,
@@ -133,7 +133,6 @@ import '../styles/styles.scss';
     UserService,
     EmotionalStateService,
     EmotionService,
-    DateService,
     DataParserService,
     AuthService,
     CanActivateViaAuthGuard,

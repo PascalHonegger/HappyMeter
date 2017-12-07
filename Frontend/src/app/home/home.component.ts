@@ -8,9 +8,10 @@ import { EmotionService } from './../services/emotion.service';
 import { Emotion } from './../model/emotion.model';
 import { CommentWithDetails } from './../model/comment-with-details.model';
 import { RegularExpressions } from './../constants/regular-expressions';
-import { DateService } from './../services/date.service';
 import { DataParserService } from './../services/data-parser.service';
 import { GroupedEmotionalState } from './../model/grouped-emotional-state.model';
+
+import * as moment from 'moment';
 
 // 5 Minutes
 const reloadIntervalInMs = 300000;
@@ -49,7 +50,6 @@ export class HomeComponent implements OnDestroy {
   constructor(private emotionServer: EmotionService,
               private emotionalStateServer: EmotionalStateService,
               private snackBar: MatSnackBar,
-              private dateService: DateService,
               private dataParseService: DataParserService) {
     this.loadData();
     this.loadDataTimerId = window.setInterval(() => this.loadData(), reloadIntervalInMs);
@@ -99,8 +99,8 @@ export class HomeComponent implements OnDestroy {
     this.emotionServer.activeEmotions().subscribe((e) => this.activeEmotions = e);
 
     // Emotional state with comments for show
-    const today = this.dateService.todayWithOffset(0);
-    const tomorrow = this.dateService.todayWithOffset(1);
+    const today = moment().startOf('day');
+    const tomorrow = moment().endOf('day');
     this.emotionalStateServer.groupedEmotionalStatesWithinRange(today, tomorrow)
       .subscribe((data) => {
         this.comments = this.dataParseService.getCommentsWithDetails(data);

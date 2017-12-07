@@ -5,7 +5,7 @@ namespace AtosHappyMeter.ControllerModel
 {
 	public class EmotionalStateHistoryItem
 	{
-		public DateTime Date { get; set; }
+		public DateTimeOffset Date { get; set; }
 		public List<GroupedEmotionalState> EmotionalStates;
 	}
 }
