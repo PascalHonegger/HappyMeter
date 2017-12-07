@@ -20,20 +20,23 @@
           <emoji-display [emojiCodePoint]="emotion.smileyCode"></emoji-display>
         </button>
       </div>
-      <mat-form-field class="comment-input">
-        <input matInput placeholder="Kommentar" (keyup.enter)="sendEmotion()"
-          [formControl]="commentFormControl" [(ngModel)]="comment" maxLength="250" [pattern]="pattern">
-        <mat-hint align="end">{{comment.length}} / 250</mat-hint>
-        <mat-error *ngIf="commentFormControl.hasError('pattern')">
-          Bitte keine ungewöhnlichen Zeichen verwenden
-        </mat-error>
-      </mat-form-field>
-      <button color="accent" mat-raised-button [disabled]="canNotSendEmotion" (click)="sendEmotion()">
-        Senden
-      </button>
-      <div>
-        <a routerLink="administration">Administration</a> | Emoji-Grafiken ermöglich durch <a href="https://twitter.github.io/twemoji/">Twemoji</a> | Umgesetzt von Pascal Honegger
+
+      <div [ngClass.lt-md]="['mobile-comment-and-send-container']" [ngClass.gt-sm]="['comment-and-send-container']" fxLayout="row" fxLayoutGap="20px">
+        <mat-form-field fxFlex>
+          <input matInput placeholder="Kommentar" (keyup.enter)="sendEmotion()"
+            [formControl]="commentFormControl" [(ngModel)]="comment" maxLength="250" [pattern]="pattern">
+          <mat-hint align="end">{{comment.length}} / 250</mat-hint>
+          <mat-error *ngIf="commentFormControl.hasError('pattern')">
+            Bitte keine ungewöhnlichen Zeichen verwenden
+          </mat-error>
+        </mat-form-field>
+        <button mat-fab class="refresh-button" color="accent" [disabled]="canNotSendEmotion" (click)="sendEmotion()">
+          <mat-icon aria-label="Senden">send</mat-icon>
+        </button>
       </div>
+      <footer>
+        <a routerLink="administration">Administration</a> | Emoji-Grafiken ermöglich durch <a href="https://twitter.github.io/twemoji/">Twemoji</a> | Umgesetzt von Pascal Honegger
+      </footer>
     </div>
   </div>
 
@@ -42,5 +45,7 @@
   </div>
 </div>
 <ng-template #noDataTemplate>
-  Lade Daten...
+  <div class="spinner-container" fxLayout="column">
+      <mat-spinner></mat-spinner>
+  </div>
 </ng-template>

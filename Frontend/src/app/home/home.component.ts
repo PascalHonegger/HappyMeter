@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -23,7 +23,7 @@ const sendBlockedDuration = 20000;
   styleUrls: ['./home.component.scss'],
   templateUrl: './home.component.html'
 })
-export class HomeComponent {
+export class HomeComponent implements OnDestroy {
   public activeEmotions: Emotion[];
   public dailyEmotionalStates: GroupedEmotionalState[];
   public amountOfEmotions: number;
@@ -44,13 +44,19 @@ export class HomeComponent {
 
   public comments: CommentWithDetails[];
 
+  private loadDataTimerId: number;
+
   constructor(private emotionServer: EmotionService,
               private emotionalStateServer: EmotionalStateService,
               private snackBar: MatSnackBar,
               private dateService: DateService,
               private dataParseService: DataParserService) {
     this.loadData();
-    setInterval(() => this.loadData(), reloadIntervalInMs);
+    this.loadDataTimerId = window.setInterval(() => this.loadData(), reloadIntervalInMs);
+  }
+
+  public ngOnDestroy() {
+    clearInterval(this.loadDataTimerId);
   }
 
   public relativeSize(emotionAmount: number): number {

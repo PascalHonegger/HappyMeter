@@ -21,7 +21,7 @@
     </div>
   </div>
   <ng-container *ngIf="isLoadingStatistics; else statisticsTemplate">
-    <mat-spinner></mat-spinner>
+    <mat-spinner class="loading-spinner"></mat-spinner>
   </ng-container>
   <ng-template #statisticsTemplate>
     <div [style.height.px]="350">

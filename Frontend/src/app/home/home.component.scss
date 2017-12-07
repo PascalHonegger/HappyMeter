@@ -2,11 +2,15 @@
 
 .emoji-container {
 	width: 100%;
-	max-width: 440px;
+	max-width: 550px;
 }
 
-.comment-input {
-	width: 80%;
+.comment-and-send-container {
+	width: 75%;
+}
+
+.mobile-comment-and-send-container {
+	width: 100%;
 }
 
 .select-emotion-button {
@@ -38,4 +42,9 @@
 
 .home-component {
 	height: calc(100vh - #{$toolbar-height});
+}
+
+.spinner-container {
+	margin-top: $content-margin;
+	align-items: center;
 }
