@@ -1,4 +1,4 @@
-@import 'variables';
+@import 'palettes';
 
 @import '~@angular/material/theming';
 // Plus imports for other components in your app.
@@ -12,7 +12,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
 $primary: mat-palette($mat-primary-palette);
-$accent:  mat-palette($mat-pink, A200, A100, A400);
+$accent:  mat-palette($mat-secondary-palette);
 
 // The warn palette is optional (defaults to red).
 $warn:    mat-palette($mat-red);
