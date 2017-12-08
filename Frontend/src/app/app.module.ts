@@ -47,6 +47,7 @@ import { UserService } from './services/user.service';
 import { EmotionalStateService } from './services/emotional-state.service';
 import { EmotionService } from './services/emotion.service';
 import { DataParserService } from './services/data-parser.service';
+import { SpamProtectionService } from './services/spam-protection.service';
 
 // Interceptors
 import { AuthorizeInterceptor } from './interceptors/authorize.interceptor';
@@ -134,6 +135,7 @@ import '../styles/styles.scss';
     EmotionalStateService,
     EmotionService,
     DataParserService,
+    SpamProtectionService,
     AuthService,
     CanActivateViaAuthGuard,
     {

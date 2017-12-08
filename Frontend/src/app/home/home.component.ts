@@ -9,15 +9,13 @@ import { Emotion } from './../model/emotion.model';
 import { CommentWithDetails } from './../model/comment-with-details.model';
 import { RegularExpressions } from './../constants/regular-expressions';
 import { DataParserService } from './../services/data-parser.service';
+import { SpamProtectionService } from './../services/spam-protection.service';
 import { GroupedEmotionalState } from './../model/grouped-emotional-state.model';
 
 import * as moment from 'moment';
 
 // 5 Minutes
 const reloadIntervalInMs = 300000;
-
-// 20 Seconds
-const sendBlockedDuration = 20000;
 
 @Component({
   selector: 'home',
@@ -35,14 +33,14 @@ export class HomeComponent implements OnDestroy {
   public comment: string = '';
   public commentFormControl: FormControl = new FormControl('');
 
-  public saveBlocked: boolean = false;
-
   public get pattern() {
     return RegularExpressions.noFunkyCharactersRegex;
   }
 
   public get canNotSendEmotion() {
-    return this.commentFormControl.invalid || this.selectedEmotionId == null || this.saveBlocked;
+    return this.commentFormControl.invalid ||
+    this.selectedEmotionId == null ||
+    this.spamService.isSendingEmotionalStateBlocked;
   }
 
   public comments: CommentWithDetails[];
@@ -52,7 +50,8 @@ export class HomeComponent implements OnDestroy {
   constructor(private emotionServer: EmotionService,
               private emotionalStateServer: EmotionalStateService,
               private snackBar: MatSnackBar,
-              private dataParseService: DataParserService) {
+              private dataParseService: DataParserService,
+              private spamService: SpamProtectionService) {
     this.loadData();
     this.loadDataTimerId = window.setInterval(() => this.loadData(), reloadIntervalInMs);
   }
@@ -86,14 +85,8 @@ export class HomeComponent implements OnDestroy {
     this.comment = '';
     this.selectedEmotionId = undefined;
 
-    // Inform user
-    const snackRef = this.snackBar.open(
-        'Gesendet - Bitte warten Sie, bis Sie weitere Gefühlslagen erfassen können');
-    this.saveBlocked = true;
-    setTimeout(() => {
-        this.saveBlocked = false;
-        snackRef.dismiss();
-      }, sendBlockedDuration);
+    // Client side spam preventation
+    this.spamService.sentEmotionalState();
   }
 
   private loadData() {
