@@ -28,6 +28,8 @@ export class HomeComponent implements OnDestroy {
   public activeEmotions: Emotion[];
   public dailyEmotionalStates: GroupedEmotionalState[];
   public amountOfEmotions: number;
+  public emojisMaxWidth: number;
+  public readonly baseEmojiMargin: number = 30;
 
   public selectedEmotionId: number | null = null;
   public comment: string = '';
@@ -116,6 +118,18 @@ export class HomeComponent implements OnDestroy {
         this.amountOfEmotions = this.dailyEmotionalStates
           .map((d) => d.count)
           .reduce((a, b) => a + b, 0);
+
+        let largedEmojiRatio = 0;
+        for (const groupedEmoji of this.dailyEmotionalStates) {
+          const ratio = groupedEmoji.count / this.amountOfEmotions;
+          if (ratio > largedEmojiRatio) {
+            largedEmojiRatio = ratio;
+          }
+        }
+
+        const emojisBaseWidth = 500 / largedEmojiRatio;
+        const emojiMarginWidth = (this.dailyEmotionalStates.length - 1) * this.baseEmojiMargin;
+        this.emojisMaxWidth = emojisBaseWidth + emojiMarginWidth;
       });
   }
 }

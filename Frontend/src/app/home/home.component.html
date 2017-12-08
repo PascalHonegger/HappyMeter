@@ -6,7 +6,7 @@
         <h3>Heute wurden noch keine Gefühlslagen erfasst</h3>
       </ng-container>
       <ng-template #hasEmotionalStatesTemplate>
-        <div class="emoji-container" fxLayoutAlign="center" fxLayout="row" fxLayoutGap.lt-md="20px" fxLayoutGap="30px">
+        <div class="emoji-container" [style.max-width.px]="emojisMaxWidth" fxLayoutAlign="center" fxLayout="row" fxLayoutGap.xs="{{baseEmojiMargin - 20}}px" fxLayoutGap.sm="{{baseEmojiMargin - 10}}px" fxLayoutGap="{{baseEmojiMargin}}px">
           <div [style.width.%]="relativeSize(emotionalState.count)" *ngFor="let emotionalState of dailyEmotionalStates"
           matTooltip="Stimmen: {{emotionalState.count}} ({{relativeSize(emotionalState.count) | number:'1.0-1'}}%)">
             <emoji-display [emojiCodePoint]="emotionalState.smileyCode"></emoji-display>
