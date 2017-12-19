@@ -26,6 +26,6 @@ module.exports = {
     { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' }
   ],
   meta: [
-    { name: 'theme-color', content: '#3f51b5' }
+    { name: 'theme-color', content: '#0066a1' }
   ]
 };
