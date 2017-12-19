@@ -2,6 +2,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DomSanitizer } from '@angular/platform-browser';
+import { SafeStyle } from '@angular/platform-browser/src/security/dom_sanitization_service';
 
 import { EmotionalStateService } from './../services/emotional-state.service';
 import { EmotionService } from './../services/emotion.service';
@@ -26,8 +28,8 @@ export class HomeComponent implements OnDestroy {
   public activeEmotions: Emotion[];
   public dailyEmotionalStates: GroupedEmotionalState[];
   public amountOfEmotions: number;
-  public emojisMaxWidth: number;
-  public readonly baseEmojiMargin: number = 30;
+  public emojisMaxWidth: SafeStyle;
+  public readonly baseEmojiMargin: number = 25;
 
   public selectedEmotionId: number | null = null;
   public comment: string = '';
@@ -51,7 +53,8 @@ export class HomeComponent implements OnDestroy {
               private emotionalStateServer: EmotionalStateService,
               private snackBar: MatSnackBar,
               private dataParseService: DataParserService,
-              private spamService: SpamProtectionService) {
+              private spamService: SpamProtectionService,
+              private sanitizer: DomSanitizer) {
     this.loadData();
     this.loadDataTimerId = window.setInterval(() => this.loadData(), reloadIntervalInMs);
   }
@@ -120,9 +123,10 @@ export class HomeComponent implements OnDestroy {
           }
         }
 
-        const emojisBaseWidth = 500 / largedEmojiRatio;
-        const emojiMarginWidth = (this.dailyEmotionalStates.length - 1) * this.baseEmojiMargin;
-        this.emojisMaxWidth = emojisBaseWidth + emojiMarginWidth;
+        const relativeSize = 40 / largedEmojiRatio;
+        const emojisMarginWidth = (this.dailyEmotionalStates.length - 1) * this.baseEmojiMargin;
+        this.emojisMaxWidth = this.sanitizer.bypassSecurityTrustStyle(
+            `calc(${relativeSize}vh + ${emojisMarginWidth}px)`);
       });
   }
 }
