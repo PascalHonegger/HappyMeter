@@ -1,5 +1,4 @@
-@import '~@angular/material/theming';
-@import './../styles/custom-material-design.scss';
+@import './../styles/palettes';
 
 $logo-margin: 5px;
 $menu-margin: 6px;
@@ -13,7 +12,7 @@ $menu-margin: 6px;
 }
 
 .active-link {
-  background: mat-color($primary, 700);
+  background: map-get($mat-primary-palette, 700);
 }
 
 .app-title {
