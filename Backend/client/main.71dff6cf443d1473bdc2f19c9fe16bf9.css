@@ -961,17 +961,23 @@ input.mat-input-element {
 .mat-input-element:disabled {
   color: rgba(0, 0, 0, 0.38); }
 
-.mat-input-element::placeholder {
-  color: rgba(0, 0, 0, 0.42); }
+.mat-input-element {
+  caret-color: #0066a1; }
+  .mat-input-element::placeholder {
+    color: rgba(0, 0, 0, 0.42); }
+  .mat-input-element::-moz-placeholder {
+    color: rgba(0, 0, 0, 0.42); }
+  .mat-input-element::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.42); }
+  .mat-input-element:-ms-input-placeholder {
+    color: rgba(0, 0, 0, 0.42); }
 
-.mat-input-element::-moz-placeholder {
-  color: rgba(0, 0, 0, 0.42); }
+.mat-accent .mat-input-element {
+  caret-color: #a626aa; }
 
-.mat-input-element::-webkit-input-placeholder {
-  color: rgba(0, 0, 0, 0.42); }
-
-.mat-input-element:-ms-input-placeholder {
-  color: rgba(0, 0, 0, 0.42); }
+.mat-warn .mat-input-element,
+.mat-form-field-invalid .mat-input-element {
+  caret-color: #f44336; }
 
 .mat-list .mat-list-item, .mat-nav-list .mat-list-item, .mat-selection-list .mat-list-item {
   color: rgba(0, 0, 0, 0.87); }
@@ -1447,4 +1453,4 @@ body {
   min-height: 100%;
   background: #fafafa; }
 
-/*# sourceMappingURL=main.ba92c6f408692a588472ab13ff4c8461.css.map*/
+/*# sourceMappingURL=main.71dff6cf443d1473bdc2f19c9fe16bf9.css.map*/
