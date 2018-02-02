@@ -7,7 +7,7 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
 import { tap } from 'rxjs/operators';
@@ -17,6 +17,7 @@ import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
+  private currentlyOpenedDialog: MatDialogRef<any>;
 
   constructor(private auth: AuthService, private router: Router, private dialog: MatDialog) {}
 
@@ -41,7 +42,11 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
             return;
           }
 
-          this.dialog.open(ErrorDialogComponent);
+          if (this.currentlyOpenedDialog) {
+            this.currentlyOpenedDialog.close();
+          }
+
+          this.currentlyOpenedDialog = this.dialog.open(ErrorDialogComponent);
         }
     })));
   }
