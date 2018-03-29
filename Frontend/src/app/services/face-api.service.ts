@@ -36,7 +36,7 @@ export class FaceApiService {
                     // 'blur',
                     // 'exposure',
                     // 'noise'
-                ]
+                ].join(',')
             }}),
             headers: this.headers
         });
