@@ -1,5 +1,5 @@
 /**
- * @author: @AngularClass
+ * @author: tipe.io
  */
 const helpers = require('./helpers');
 const buildUtils = require('./build-utils');
@@ -65,14 +65,14 @@ module.exports = function (env) {
     /**
      * Options affecting the output of the compilation.
      *
-     * See: http://webpack.github.io/docs/configuration.html#output
+     * See: https://webpack.js.org/configuration/output/
      */
     output: {
 
       /**
        * The output directory as absolute path (required).
        *
-       * See: http://webpack.github.io/docs/configuration.html#output-path
+       * See: https://webpack.js.org/configuration/output/#output-path
        */
       path: helpers.root('../Backend/client'),
 
@@ -80,7 +80,7 @@ module.exports = function (env) {
        * Specifies the name of each output file on disk.
        * IMPORTANT: You must not specify an absolute path here!
        *
-       * See: http://webpack.github.io/docs/configuration.html#output-filename
+       * See: https://webpack.js.org/configuration/output/#output-filename
        */
       filename: '[name].[chunkhash].bundle.js',
 
@@ -88,7 +88,7 @@ module.exports = function (env) {
        * The filename of the SourceMaps for the JavaScript files.
        * They are inside the output.path directory.
        *
-       * See: http://webpack.github.io/docs/configuration.html#output-sourcemapfilename
+       * See: https://webpack.js.org/configuration/output/#output-sourcemapfilename
        */
       sourceMapFilename: '[file].map',
 
@@ -96,7 +96,7 @@ module.exports = function (env) {
        * The filename of non-entry chunks as relative path
        * inside the output.path directory.
        *
-       * See: http://webpack.github.io/docs/configuration.html#output-chunkfilename
+       * See: https://webpack.js.org/configuration/output/#output-chunkfilename
        */
       chunkFilename: '[name].[chunkhash].chunk.js'
 
@@ -137,7 +137,7 @@ module.exports = function (env) {
     /**
      * Add additional plugins to the compiler.
      *
-     * See: http://webpack.github.io/docs/configuration.html#plugins
+     * See: https://webpack.js.org/configuration/plugins/
      */
     plugins: [
 
@@ -167,14 +167,28 @@ module.exports = function (env) {
        * Description: Minimize all JavaScript output of chunks.
        * Loaders are switched into minimizing mode.
        *
-       * See: https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
+       * See: https://webpack.js.org/plugins/uglifyjs-webpack-plugin/
        *
        * NOTE: To debug prod builds uncomment //debug lines and comment //prod lines
        */
       new UglifyJsPlugin({
-        sourceMap: false, //debug true
+        sourceMap: true,
+        parallel: true,
         uglifyOptions: getUglifyOptions(supportES2015)
-      })
+      }),
+
+      /**
+       * Plugin: CompressionPlugin
+       * Description: Prepares compressed versions of assets to serve
+       * them with Content-Encoding
+       *
+       * See: https://github.com/webpack/compression-webpack-plugin
+       */
+      //  install compression-webpack-plugin
+/*      new CompressionPlugin({
+        regExp: /\.css$|\.html$|\.js$|\.map$/,
+        threshold: 2 * 1024
+      })*/
 
     ],
 
@@ -182,7 +196,7 @@ module.exports = function (env) {
      * Include polyfills or mocks for various node stuff
      * Description: Node configuration
      *
-     * See: https://webpack.github.io/docs/configuration.html#node
+     * See: https://webpack.js.org/configuration/node/
      */
     node: {
       global: true,
@@ -190,8 +204,9 @@ module.exports = function (env) {
       process: false,
       module: false,
       clearImmediate: false,
-      setImmediate: false
+      setImmediate: false,
+      fs: 'empty'
     }
 
   });
-}
+};
