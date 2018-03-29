@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { WebcamImage } from 'ngx-webcam';
 import { FaceApiService } from '../services/face-api.service';
 import { Subject } from 'rxjs';
+import { FaceAnalysis } from '../model/face-analysis.model';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'face',
@@ -9,19 +11,23 @@ import { Subject } from 'rxjs';
     styleUrls: ['face.component.scss']
 })
 export class FaceComponent {
-    public failedToLoad: boolean = false;
-    public faceData: any;
+    public failedToStartCamera: boolean = false;
+    public loadingFaces: boolean = false;
+    public faces: FaceAnalysis[];
 
     public cameraTrigger = new Subject<void>();
 
     constructor(private faceService: FaceApiService) { }
 
     public capturedImage(image: WebcamImage) {
-        this.faceService.detectFaces(image.imageAsBase64).subscribe(
-            (faces) => {
-                console.log(faces);
-                this.faceData = faces;
-            }
+        this.loadingFaces = true;
+        this.faceService.detectFaces(image.imageAsBase64)
+            .pipe(finalize(() => this.loadingFaces = false))
+            .subscribe(
+                (faces) => {
+                    console.log(faces);
+                    this.faces = faces;
+                }
         );
     }
 }

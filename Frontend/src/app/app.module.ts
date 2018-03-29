@@ -39,6 +39,7 @@ import { SelectEmojiDialogComponent } from './select-emoji-dialog/select-emoji-d
 // Help components
 import { EmojiDisplayComponent } from './emoji-display/emoji-display.component';
 import { CommentListComponent } from './comment-list/comment-list.component';
+import { FaceRepresentationComponent } from './face-representation/face-representation.component';
 
 // 404 not found page
 import { NoContentComponent } from './no-content/no-content.component';
@@ -89,6 +90,7 @@ import '../styles/styles.scss';
     LoginComponent,
     AdministrationComponent,
     FaceComponent,
+    FaceRepresentationComponent,
     StatisticsComponent,
     EmojiDisplayComponent,
     CommentListComponent,

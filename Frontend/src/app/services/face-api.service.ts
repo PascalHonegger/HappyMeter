@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { ServerService } from './server.service';
+import { FaceAnalysis } from '../model/face-analysis.model';
 
 const baseUrl = 'https://westeurope.api.cognitive.microsoft.com/face/v1.0';
 
@@ -18,7 +19,7 @@ export class FaceApiService {
     public detectFaces(data: string) {
         const arrayBuffer = this.base64ToArrayBuffer(data);
 
-        return this.httpClient.post<any>(baseUrl + '/detect', arrayBuffer, {
+        return this.httpClient.post<FaceAnalysis[]>(baseUrl + '/detect', arrayBuffer, {
             params: new HttpParams({fromObject: {
                 returnFaceId: 'false',
                 returnFaceLandmarks: 'false',
@@ -31,6 +32,7 @@ export class FaceApiService {
                     'glasses',
                     'emotion',
                     'hair',
+                    // 'makeup',
                     // 'occlusion',
                     'accessories',
                     // 'blur',

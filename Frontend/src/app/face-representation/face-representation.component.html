@@ -1,0 +1,8 @@
+
+<p>Alter: {{face.faceAttributes.age}}‍</p>
+<p>Geschlecht: {{face.faceAttributes.gender}}‍</p>
+<p *ngIf="hasGlasses">Art der Brille: {{face.faceAttributes.glasses}}‍</p>
+<p>Haar: {{hairColor}}‍</p>
+<p>Lachen: {{face.faceAttributes.smile}}</p>
+<p>Gefühlslage: {{face.faceAttributes.emotion | json}}</p>
+<p>Gesichtsbehaarung: {{face.faceAttributes.facialHair | json}}</p>
