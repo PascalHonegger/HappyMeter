@@ -15,6 +15,7 @@ registerLocaleData(localeDeCh);
 // External libraries
 import { BarChartModule } from '@swimlane/ngx-charts';
 import { EmojiPickerModule } from 'angular2-emoji-picker';
+import { WebcamModule } from 'ngx-webcam';
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -27,6 +28,7 @@ import { AppComponent } from './app.component';
 // Different sites
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { FaceComponent } from './face/face.component';
 import { AdministrationComponent } from './administration/administration.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 
@@ -48,6 +50,7 @@ import { EmotionalStateService } from './services/emotional-state.service';
 import { EmotionService } from './services/emotion.service';
 import { DataParserService } from './services/data-parser.service';
 import { SpamProtectionService } from './services/spam-protection.service';
+import { FaceApiService } from './services/face-api.service';
 
 // Interceptors
 import { AuthorizeInterceptor } from './interceptors/authorize.interceptor';
@@ -85,6 +88,7 @@ import '../styles/styles.scss';
     HomeComponent,
     LoginComponent,
     AdministrationComponent,
+    FaceComponent,
     StatisticsComponent,
     EmojiDisplayComponent,
     CommentListComponent,
@@ -123,7 +127,8 @@ import '../styles/styles.scss';
     MatProgressSpinnerModule,
     FlexLayoutModule,
     BarChartModule,
-    EmojiPickerModule.forRoot()
+    EmojiPickerModule.forRoot(),
+    WebcamModule
   ],
   /**
    * Expose our Services and Providers into Angular's dependency injection.
@@ -134,6 +139,7 @@ import '../styles/styles.scss';
     UserService,
     EmotionalStateService,
     EmotionService,
+    FaceApiService,
     DataParserService,
     SpamProtectionService,
     AuthService,

@@ -1,0 +1,16 @@
+<div class="camera-container">
+	<ng-container *ngIf="failedToLoad; else loadedCameraTemplate">
+		<p class="mat-title">Die Kamera konnte nicht geladen werden. Bitte überprüfen Sie die Berechtigungen ihres Browsers.</p>
+	</ng-container>
+	<ng-template #loadedCameraTemplate>
+		<div fxLayout="column" fxLayoutGap="20px">
+			<webcam fxFlexAlign="center" (initError)="failedToLoad = true" [trigger]="cameraTrigger" (imageCapture)="capturedImage($event)"></webcam>
+
+			<button mat-raised-button color="primary" (click)="cameraTrigger.next()">Bild analysieren</button>
+
+			<div>
+				{{faceData || json}}
+			</div>
+		</div>
+	</ng-template>
+</div>

@@ -11,8 +11,14 @@ export class AppComponent {
   public links: Link[] = [{
     url: ['/'],
     matIcon: 'insert_emoticon',
-    content: 'Startseite'
-  }, {
+    content: 'Start'
+  },
+  {
+    url: ['/face'],
+    matIcon: 'face',
+    content: 'Kamera'
+  },
+  {
     url: ['/statistics'],
     matIcon: 'insert_chart',
     content: 'Statistiken'
