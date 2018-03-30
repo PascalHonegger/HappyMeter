@@ -7,11 +7,13 @@ import { LoginComponent } from './login/login.component';
 import { AdministrationComponent } from './administration/administration.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { FaceComponent } from './face/face.component';
+import { FacialRecognitionComponent } from './facial-recognition/facial-recognition.component';
 
 export const ROUTES: Routes = [
   { path: '', component: HomeComponent },
   { path: 'statistics', component: StatisticsComponent },
   { path: 'face', component: FaceComponent },
+  { path: 'facial-recognition/:imageBase64', component: FacialRecognitionComponent },
   { path: 'login', component: LoginComponent },
   { path: 'administration', component: AdministrationComponent,
     canActivate: [CanActivateViaAuthGuard] },

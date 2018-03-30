@@ -39,8 +39,16 @@
 	padding-right: $content-margin;
 }
 
-.home-component {
-	height: calc(100vh - #{$toolbar-height});
+.home-component-gt-sm {
+	height: calc(100vh - #{$toolbar-height-md-xl});
+}
+
+.home-component-sm {
+	height: calc(100vh - #{$toolbar-height-sm});
+}
+
+.home-component-xs {
+	height: calc(100vh - #{$toolbar-height-xs});
 }
 
 .spinner-container {

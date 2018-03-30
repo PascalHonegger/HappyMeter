@@ -3,25 +3,12 @@
 		<p class="mat-title">Die Kamera konnte nicht geladen werden. Bitte überprüfen Sie die Berechtigungen ihres Browsers.</p>
 	</ng-container>
 	<ng-template #loadedCameraTemplate>
-		<div fxLayout="column" fxLayoutGap="20px">
-			<div fxFlex fxFlexAlign="center">
-				<webcam (initError)="failedToStartCamera = true" [trigger]="cameraTrigger" (imageCapture)="capturedImage($event)"></webcam>
-			</div>
-
-			<button mat-raised-button color="primary" (click)="cameraTrigger.next()">Bild analysieren</button>
-
-			<div *ngFor="let face of faces; let i = index">
-				<mat-card>
-					<mat-card-header>
-						<mat-card-title>
-							Gesicht nummer {{i + 1}}
-						</mat-card-title>
-					</mat-card-header>
-					<mat-card-content>
-						<face-representation [face]="face"></face-representation>
-					</mat-card-content>
-				</mat-card>
-			</div>
+		<div ngClass.gt-sm="camera-preview-gt-sm" ngClass.sm="camera-preview-sm" ngClass.xs="camera-preview-xs" fxFlexAlign="center">
+			<webcam (initError)="failedToStartCamera = true" [trigger]="cameraTrigger" (imageCapture)="capturedImage($event)"></webcam>
 		</div>
+
+		<button mat-fab (click)="cameraTrigger.next()" class="camera-trigger-button">
+			<mat-icon>backup</mat-icon>
+		</button>
 	</ng-template>
 </div>

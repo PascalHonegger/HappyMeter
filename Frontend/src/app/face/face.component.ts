@@ -4,6 +4,7 @@ import { FaceApiService } from '../services/face-api.service';
 import { Subject } from 'rxjs';
 import { FaceAnalysis } from '../model/face-analysis.model';
 import { finalize } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'face',
@@ -12,22 +13,13 @@ import { finalize } from 'rxjs/operators';
 })
 export class FaceComponent {
     public failedToStartCamera: boolean = false;
-    public loadingFaces: boolean = false;
     public faces: FaceAnalysis[];
 
     public cameraTrigger = new Subject<void>();
 
-    constructor(private faceService: FaceApiService) { }
+    constructor(private router: Router) { }
 
     public capturedImage(image: WebcamImage) {
-        this.loadingFaces = true;
-        this.faceService.detectFaces(image.imageAsBase64)
-            .pipe(finalize(() => this.loadingFaces = false))
-            .subscribe(
-                (faces) => {
-                    console.log(faces);
-                    this.faces = faces;
-                }
-        );
+        this.router.navigate(['/facial-recognition', image.imageAsBase64]);
     }
 }

@@ -15,7 +15,7 @@
 
   <mat-toolbar-row fxHide.gt-sm>
       <nav fxLayout="row" class="nav-flex-div">
-        <a class="menu-link" [ngClass.xs]="['smaller-menu']" *ngFor="let link of links"
+        <a class="menu-link" ngClass.xs="smaller-menu" *ngFor="let link of links"
         fxFlex mat-button [routerLink]="link.url"
         routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
           <mat-icon fxHide.xs>{{link.matIcon}}</mat-icon>

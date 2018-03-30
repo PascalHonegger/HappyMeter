@@ -1,0 +1,25 @@
+<div class="analysis-container">
+	<ng-container *ngIf="faces; else loadingFacesTemplate">
+		<div *ngIf="faces.length === 0">
+			Es wurden keine Gesichter gefunden.
+			<pre *ngIf="errorMessage">Die Analyse ist fehlgeschlagen: {{errorMessage}}</pre>
+		</div>
+		<div *ngFor="let face of faces; let i = index">
+			<mat-card>
+				<mat-card-header>
+					<mat-card-title>
+						Gesicht nummer {{i + 1}}
+					</mat-card-title>
+				</mat-card-header>
+				<mat-card-content>
+					<face-representation [face]="face"></face-representation>
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</ng-container>
+	<ng-template #loadingFacesTemplate>
+		<div fxLayout="row" fxLayoutAlign="center start">
+			<mat-spinner></mat-spinner>
+		</div>
+	</ng-template>
+</div>

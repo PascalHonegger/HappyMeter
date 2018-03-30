@@ -1,14 +1,34 @@
 @import "../constants/variables";
 
+@mixin video-dimensions($toolbar-height) {
+	height: calc(100vh - #{$toolbar-height} - #{$content-margin * 2});
+}
+
 .camera-container {
 	padding-top: $content-margin;
 	padding-left: $content-margin;
 	padding-right: $content-margin;
 }
 
-::ng-deep video {
+::ng-deep video, ::ng-deep .webcam-wrapper {
 	width: 100%;
 	height: 100%;
-	max-width: 1000px;
-	max-height: 25vh;
+}
+
+.camera-preview-gt-sm {
+	@include video-dimensions($toolbar-height-md-xl);
+}
+
+.camera-preview-sm {
+	@include video-dimensions($toolbar-height-sm);
+}
+
+.camera-preview-xs {
+	@include video-dimensions($toolbar-height-xs);
+}
+
+.camera-trigger-button {
+	position: absolute;
+	bottom: $content-margin + 5px;
+	right: $content-margin + 5px;
 }

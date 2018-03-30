@@ -29,6 +29,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { FaceComponent } from './face/face.component';
+import { FacialRecognitionComponent } from './facial-recognition/facial-recognition.component';
 import { AdministrationComponent } from './administration/administration.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 
@@ -90,6 +91,7 @@ import '../styles/styles.scss';
     LoginComponent,
     AdministrationComponent,
     FaceComponent,
+    FacialRecognitionComponent,
     FaceRepresentationComponent,
     StatisticsComponent,
     EmojiDisplayComponent,

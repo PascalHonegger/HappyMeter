@@ -1,4 +1,6 @@
-<div class="home-component" fxLayout.lt-md="column" fxLayout="row" fxLayoutGap="20px" *ngIf="activeEmotions && dailyEmotionalStates; else noDataTemplate">
+<div ngClass.gt-sm="home-component-gt-sm" ngClass.sm="home-component-sm" ngClass.xs="home-component-xs"
+  fxLayout.lt-md="column" fxLayout="row" fxLayoutGap="20px"
+  *ngIf="activeEmotions && dailyEmotionalStates; else noDataTemplate">
   <div ngClass.gt-sm="large-smiley-list-container" >
     <div class="smiley-list-container" fxLayout="column" fxLayoutGap="15px">
       <h2 class="mat-display-1">Heutige Gefühlslage ({{amountOfEmotions}} Teilnehmer)</h2>
@@ -24,7 +26,7 @@
         </button>
       </div>
 
-      <div [ngClass.lt-md]="['mobile-comment-and-send-container']" [ngClass.gt-sm]="['comment-and-send-container']" fxLayout="row" fxLayoutGap="20px">
+      <div ngClass.lt-md="mobile-comment-and-send-container" ngClass.gt-sm="comment-and-send-container" fxLayout="row" fxLayoutGap="20px">
         <mat-form-field fxFlex>
           <input matInput placeholder="Kommentar" (keyup.enter)="sendEmotion()"
             [formControl]="commentFormControl" [(ngModel)]="comment" maxLength="250" [pattern]="pattern">
