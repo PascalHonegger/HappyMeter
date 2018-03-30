@@ -30,7 +30,13 @@ export class SelectEmojiDialogComponent {
   constructor(public dialogRef: MatDialogRef<SelectEmojiDialogComponent>) { }
 
   public setSelectedEmoji(value: EmojiEvent) {
-    this.selectedEmojiCodePoint = twemoji.convert.toCodePoint(value.emoji.native);
+    // Can't use toCodePoint as the icons on Twemoji v2 ignore the variant
+    // The prase method correctly ignores these
+    // E.g. fixes ✈️ emoji
+    let parsedIconId: string;
+    twemoji.parse(value.emoji.native, (iconId) => parsedIconId = iconId);
+
+    this.selectedEmojiCodePoint = parsedIconId;
   }
 
   public save() {
