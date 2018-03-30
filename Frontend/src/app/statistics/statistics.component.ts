@@ -71,10 +71,6 @@ export class StatisticsComponent {
       }
     }
 
-    public getCode(emoji: string): string {
-      return twemoji.convert.toCodePoint(emoji);
-    }
-
     private handleDataLoaded(data: EmotionalStateHistoryItem[]) {
       this.comments = this.dataParserService.getCommentsWithDetails(data);
 
@@ -93,7 +89,7 @@ export class StatisticsComponent {
         const chartItem = this.chartData.find((c) => c.name === formattedName);
         chartItem.series = emojisPerDate.emotionalStates.map((e) => (
           {
-            name: String.fromCodePoint(parseInt(e.smileyCode, 16)),
+            name: e.smileyCode,
             value: e.count
           }));
       }

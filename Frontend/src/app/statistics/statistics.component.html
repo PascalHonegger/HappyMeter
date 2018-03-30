@@ -39,7 +39,7 @@
         [groupPadding]="4">
         <ng-template #tooltipTemplate let-model="model">
           <h1 class="emoji-tooltip">
-            <emoji-display [emojiCodePoint]="getCode(model.name)"></emoji-display>
+            <emoji-display [emojiCodePoint]="model.name"></emoji-display>
           </h1>
           <h2>
             {{model.value}}
