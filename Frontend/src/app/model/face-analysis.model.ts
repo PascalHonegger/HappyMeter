@@ -14,31 +14,40 @@ export interface FaceAnalysis {
 
 export interface FaceAttributes {
     age: number;
-    gender: 'male' | 'female';
+    gender: Gender;
     smile: number;
-    facialHair: {
-       moustache: number;
-       beard: number;
-       sideburns: number;
-    };
-    glasses: 'NoGlasses' | 'ReadingGlasses' | 'Sunglasses' | 'SwimmingGoggles';
-    emotion: {
-        neutral: number;
-        anger: number;
-        contempt: number;
-        disgust: number;
-        fear: number;
-        happiness: number;
-        sadness: number;
-        surprise: number;
-    };
-    hair: {
-        bald: number;
-        invisible: boolean; // E.g. off screen
-        hairColor?: Array<{ color: HairColor, confidence: number }>;
-    };
+    facialHair: FacialHair;
+    glasses: Glasses;
+    emotion: Emotion;
+    hair: Hair;
     accessories: Array<{ type: Accessoire, confidence: number }>;
+}
+
+export interface Emotion {
+    neutral: number;
+    anger: number;
+    contempt: number;
+    disgust: number;
+    fear: number;
+    happiness: number;
+    sadness: number;
+    surprise: number;
+}
+
+export interface FacialHair {
+    moustache: number;
+    beard: number;
+    sideburns: number;
+}
+
+export interface Hair {
+    bald: number;
+    invisible: boolean; // E.g. off screen
+    hairColor?: Array<{ color: HairColor, confidence: number }>;
 }
 
 export type HairColor = 'brown' | 'black' | 'blond' | 'red' | 'other';
 export type Accessoire = 'headwear' | 'glasses' | 'mask';
+export type Glasses = 'NoGlasses' | 'ReadingGlasses' | 'Sunglasses' | 'SwimmingGoggles';
+export type Gender = 'male' | 'female';
+export type EmotionKey = keyof Emotion;

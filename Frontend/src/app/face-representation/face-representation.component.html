@@ -1,8 +1,10 @@
 <canvas #faceCanvas></canvas>
-<p>Alter: {{face.faceAttributes.age}}‍</p>
-<p>Geschlecht: {{face.faceAttributes.gender}}‍</p>
-<p *ngIf="hasGlasses">Art der Brille: {{face.faceAttributes.glasses}}‍</p>
-<p>Haar: {{hairColor}}‍</p>
-<p>Lachen: {{face.faceAttributes.smile}}</p>
-<p>Gefühlslage: {{face.faceAttributes.emotion | json}}</p>
-<p>Gesichtsbehaarung: {{face.faceAttributes.facialHair | json}}</p>
+<p>Alter: {{age}}‍ Jahre</p>
+<p>Geschlecht: {{genderTranslated}}‍</p>
+<p>Brillenart: {{glassesTranslated}}‍</p>
+<p>Haarfarbe: {{hairColorsTranslated}}‍ ({{baldness | percent}} glatzköpfig)</p>
+<p>Lächeln: {{smile | percent}}</p>
+<p>Gesichtsausdruck: {{emotionsTranslated}}</p>
+<p>Kinnbart: {{facialHair.beard | percent}}</p>
+<p>Schnurrbart: {{facialHair.moustache | percent}}</p>
+<p>Kotelettenbart: {{facialHair.sideburns | percent}}</p>
