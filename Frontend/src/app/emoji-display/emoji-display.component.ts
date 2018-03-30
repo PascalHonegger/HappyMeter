@@ -1,5 +1,4 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import * as twemoji from 'twemoji';
 
 @Component({
   selector: 'emoji-display',

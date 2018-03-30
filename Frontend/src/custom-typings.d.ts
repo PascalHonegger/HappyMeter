@@ -47,7 +47,7 @@ import * as _ from 'lodash'
 // support NodeJS modules without type definitions
 declare module '*';
 
-declare var twemoji: any;
+declare var twemoji: Twemoji;
 
 /*
 // for legacy tslint etc to understand rename 'modern-lru' with your package
@@ -58,6 +58,106 @@ declare module 'modern-lru' {
   export = x;
 }
 */
+
+interface Twemoji {
+  convert: {
+    /**
+     * Given an HEX codepoint, returns UTF16 surrogate pairs.
+     *
+     * @param codePoint generic codepoint, i.e. '1F4A9'
+     * @return  codepoint transformed into utf16 surrogates pair,
+     *          i.e. \uD83D\uDCA9
+     *
+     * @example
+     *  twemoji.convert.fromCodePoint('1f1e8');
+     *  // "\ud83c\udde8"
+     *
+     *  '1f1e8-1f1f3'.split('-').map(twemoji.convert.fromCodePoint).join('')
+     *  // "\ud83c\udde8\ud83c\uddf3"
+     */
+    fromCodePoint(codePoint: string): string;
+
+    /**
+     * Given UTF16 surrogate pairs, returns the equivalent HEX codepoint.
+     *
+     * @param emoji  generic utf16 surrogates pair, i.e. \uD83D\uDCA9
+     * @param separator optional separator for double code points, default='-'
+     * @return utf16 transformed into codepoint, i.e. '1F4A9'
+     *
+     * @example
+     *  twemoji.convert.toCodePoint('\ud83c\udde8\ud83c\uddf3');
+     *  // "1f1e8-1f1f3"
+     *
+     *  twemoji.convert.toCodePoint('\ud83c\udde8\ud83c\uddf3', '~');
+     *  // "1f1e8~1f1f3"
+     */
+    toCodePoint(emoji: string, separator?: string): string;
+  },
+    /**
+   * Main method/logic to generate either <img> tags or HTMLImage nodes.
+   *  "emojify" a generic text or DOM Element.
+   *
+   * @overloads
+   *
+   * String replacement for `innerHTML` or server side operations
+   *  twemoji.parse(string);
+   *  twemoji.parse(string, Function);
+   *  twemoji.parse(string, Object);
+   *
+   * @param   source              the source to parse and enrich with emoji.
+   *
+   *                              replace emoji matches with <img> tags.
+   *                              Mainly used to inject emoji via `innerHTML`
+   *                              It does **not** parse the string or validate it,
+   *                              it simply replaces found emoji with a tag.
+   *                              NOTE: be sure this won't affect security.
+   *
+   * @param   callback            [optional]
+   *                              either the callback that will be invoked or an object
+   *                              with all properties to use per each found emoji.
+   *
+   *                              if specified, this will be invoked per each emoji
+   *                              that has been found through the RegExp except
+   *                              those follwed by the invariant \uFE0E ("as text").
+   *                              Once invoked, parameters will be:
+   *
+   *                                iconId:string     the lower case HEX code point
+   *                                                  i.e. "1f4a9"
+   *
+   *                                options:Object    all info for this parsing operation
+   *
+   *                                variant:char      the optional \uFE0F ("as image")
+   *                                                  variant, in case this info
+   *                                                  is anyhow meaningful.
+   *                                                  By default this is ignored.
+   *
+   *                              If such callback will return a falsy value instead
+   *                              of a valid `src` to use for the image, nothing will
+   *                              actually change for that specific emoji.
+   *
+   * @example
+   *
+   *  twemoji.parse("I \u2764\uFE0F emoji!");
+   *  // I <img class="emoji" draggable="false" alt="❤️" src="/assets/2764.gif"/> emoji!
+   *
+   *
+   *  twemoji.parse("I \u2764\uFE0F emoji!", function(iconId, options) {
+   *    return '/assets/' + iconId + '.gif';
+   *  });
+   *  // I <img class="emoji" draggable="false" alt="❤️" src="/assets/2764.gif"/> emoji!
+   *
+   *
+   * twemoji.parse("I \u2764\uFE0F emoji!", {
+   *   size: 72,
+   *   callback: function(iconId, options) {
+   *     return '/assets/' + options.size + '/' + iconId + options.ext;
+   *   }
+   * });
+   *  // I <img class="emoji" draggable="false" alt="❤️" src="/assets/72x72/2764.png"/> emoji!
+   *
+   */
+  parse(source: string, callback?: (iconId: string, options: any, variant: string) => string): string;
+}
 
 // Extra variables that live on Global that will be replaced by webpack DefinePlugin
 declare var ENV: string;
