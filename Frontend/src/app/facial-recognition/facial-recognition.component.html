@@ -1,4 +1,5 @@
 <div class="analysis-container">
+	<img *ngIf="imgSrc" [src]="imgSrc" alt="Aufgenommenes Bild" />
 	<ng-container *ngIf="faces; else loadingFacesTemplate">
 		<div *ngIf="faces.length === 0">
 			Es wurden keine Gesichter gefunden.

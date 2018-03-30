@@ -6,6 +6,7 @@ import { FaceAnalysis } from '../model/face-analysis.model';
 import { finalize } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
     selector: 'facial-recognition',
@@ -19,13 +20,20 @@ export class FacialRecognitionComponent {
 
     public cameraTrigger = new Subject<void>();
 
-    constructor(private faceService: FaceApiService, route: ActivatedRoute) {
+    public imgSrc: SafeUrl;
+
+    constructor(private faceService: FaceApiService,
+                private sanitizer: DomSanitizer,
+                route: ActivatedRoute) {
         route.params.subscribe(
             (params) => this.analyzeImage(params['imageBase64'])
         );
     }
 
     private analyzeImage(imageBase64: string) {
+        const imgSrc = `data:image/jpeg;base64, ${imageBase64}`;
+        this.imgSrc = this.sanitizer.bypassSecurityTrustUrl(imgSrc);
+
         this.faces = null;
         this.faceService.detectFaces(imageBase64)
             .subscribe(
