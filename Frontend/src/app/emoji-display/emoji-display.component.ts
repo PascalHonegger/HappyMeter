@@ -1,4 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import * as twemoji from 'twemoji';
 
 @Component({
   selector: 'emoji-display',
@@ -11,6 +12,6 @@ export class EmojiDisplayComponent {
   public emojiCodePoint: string;
 
   public get emojiFromCodePoint(): string {
-    return String.fromCodePoint(parseInt(this.emojiCodePoint, 16));
+    return twemoji.convert.fromCodePoint(this.emojiCodePoint);
   }
 }

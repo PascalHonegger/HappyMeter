@@ -10,6 +10,7 @@ const helpers = require('./helpers');
  * problem with copy-webpack-plugin
  */
 const DefinePlugin = require('webpack/lib/DefinePlugin');
+const ProvidePlugin = require('webpack/lib/ProvidePlugin');
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlElementsPlugin = require('./html-elements-plugin');
@@ -163,6 +164,9 @@ module.exports = function (options) {
      * See: https://webpack.js.org/configuration/plugins/
      */
     plugins: [
+      new ProvidePlugin({
+        twemoji: 'twemoji'
+      }),
       /**
        * Plugin: DefinePlugin
        * Description: Define free variables.

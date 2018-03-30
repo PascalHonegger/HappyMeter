@@ -72,7 +72,7 @@ export class StatisticsComponent {
     }
 
     public getCode(emoji: string): string {
-      return emoji.codePointAt(0).toString(16);
+      return twemoji.convert.toCodePoint(emoji);
     }
 
     private handleDataLoaded(data: EmotionalStateHistoryItem[]) {

@@ -1,15 +1,12 @@
 <div style="align-items: center" fxLayout="column" fxLayoutGap="20px">
-    <i
-    [emojiPickerIf]="true"
-    emojiPickerDirection="top"
-    [emojiPickerPreserveSelection]="true"
-    [emojiPickerAutofocus]="true"
-    (emojiPickerSelect)="setSelectedEmoji($event.char)"></i>
+    <emoji-mart [title]="'Wähle einen Emoji'" [autoFocus]="true" [i18n]="i18n"
+      color="#3f51b5" set="twitter" emoji="point_up"
+     (emojiSelect)="setSelectedEmoji($event)"></emoji-mart>
 
   <p>Vorschau</p>
 
   <emoji-display class="emoji-preview" *ngIf="selectedEmojiCodePoint" [emojiCodePoint]="selectedEmojiCodePoint"></emoji-display>
-  <button mat-raised-button (click)="save()">
+  <button mat-raised-button (click)="save()" color="primary">
     Speichern
   </button>
   <button mat-raised-button (click)="close()">

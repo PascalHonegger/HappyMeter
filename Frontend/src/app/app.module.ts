@@ -14,7 +14,7 @@ registerLocaleData(localeDeCh);
 
 // External libraries
 import { BarChartModule } from '@swimlane/ngx-charts';
-import { EmojiPickerModule } from 'angular2-emoji-picker';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { WebcamModule } from 'ngx-webcam';
 
 /*
@@ -129,7 +129,7 @@ import '../styles/styles.scss';
     MatProgressSpinnerModule,
     FlexLayoutModule,
     BarChartModule,
-    EmojiPickerModule.forRoot(),
+    PickerModule,
     WebcamModule
   ],
   /**

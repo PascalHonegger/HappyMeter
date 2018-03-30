@@ -2,6 +2,8 @@
 /* This file is for setting global styles  */
 @import 'custom-material-design.scss';
 
+@import "~@ctrl/ngx-emoji-mart/picker";
+
 html, body{
   padding: 0;
   margin: 0;
