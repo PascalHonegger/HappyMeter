@@ -1,10 +1,12 @@
-<canvas #faceCanvas></canvas>
+<canvas #faceCanvas width="250"></canvas>
+<emoji-display emojiCodePoint="1f600" class="emoji-representation"></emoji-display>
 <p>Alter: {{age}}‍ Jahre</p>
 <p>Geschlecht: {{genderTranslated}}‍</p>
 <p>Brillenart: {{glassesTranslated}}‍</p>
-<p>Haarfarbe: {{hairColorsTranslated}}‍ ({{baldness | percent}} glatzköpfig)</p>
+<p>Haarfarbe: {{hairColorsTranslated}}‍</p>
+<p *ngIf="baldness >= baldnessLimit">{{baldness | percent}} glatzköpfig</p>
 <p>Lächeln: {{smile | percent}}</p>
 <p>Gesichtsausdruck: {{emotionsTranslated}}</p>
-<p>Kinnbart: {{facialHair.beard | percent}}</p>
-<p>Schnurrbart: {{facialHair.moustache | percent}}</p>
-<p>Kotelettenbart: {{facialHair.sideburns | percent}}</p>
+<p *ngIf="facialHair.beard >= beardLimit">Kinnbart: {{facialHair.beard | percent}}</p>
+<p *ngIf="facialHair.moustache >= beardLimit">Schnurrbart: {{facialHair.moustache | percent}}</p>
+<p *ngIf="facialHair.sideburns >= beardLimit">Kotelettenbart: {{facialHair.sideburns | percent}}</p>

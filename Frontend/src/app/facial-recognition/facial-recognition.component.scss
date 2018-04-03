@@ -7,7 +7,7 @@
 }
 
 @mixin image-height($toolbar-height) {
-	height: calc(30vh - #{$content-margin} - #{$toolbar-height});
+	height: calc(35vh - #{$content-margin} - #{$toolbar-height});
 }
 
 .full-image-gt-sm {
@@ -20,4 +20,8 @@
 
 .full-image-xs {
 	@include image-height($toolbar-height-xs)
+}
+
+.face-card {
+	margin: 10px;
 }

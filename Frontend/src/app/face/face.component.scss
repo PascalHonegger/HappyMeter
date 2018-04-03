@@ -8,6 +8,7 @@
 	padding-top: $content-margin;
 	padding-left: $content-margin;
 	padding-right: $content-margin;
+	overflow-y: hidden;
 }
 
 ::ng-deep video, ::ng-deep .webcam-wrapper {

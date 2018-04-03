@@ -6,11 +6,13 @@
 			Es wurden keine Gesichter gefunden.
 			<pre *ngIf="errorMessage">Die Analyse ist fehlgeschlagen: {{errorMessage}}</pre>
 		</div>
-		<mat-card *ngFor="let face of faces">
-			<mat-card-content>
-				<face-representation [face]="face" [fullImage]="fullImage"></face-representation>
-			</mat-card-content>
-		</mat-card>
+		<div fxLayout="row wrap" fxLayoutAlign="space-around start">
+			<mat-card class="face-card" *ngFor="let face of faces">
+				<mat-card-content>
+					<face-representation [face]="face" [fullImage]="fullImage"></face-representation>
+				</mat-card-content>
+			</mat-card>
+		</div>
 	</ng-container>
 	<ng-template #loadingFacesTemplate>
 		<div fxLayout="row" fxLayoutAlign="center start">

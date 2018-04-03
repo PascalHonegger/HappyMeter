@@ -16,6 +16,11 @@ export class FaceRepresentationComponent implements OnInit {
     @ViewChild('faceCanvas')
     public canvasRef: ElementRef;
 
+    // Limits some data
+    // E.g. don't show you're 1% bald
+    public readonly baldnessLimit = 0.5;
+    public readonly beardLimit = 0.3;
+
     // Summarized data
     public age: number;
     public gender: Gender;
@@ -43,6 +48,8 @@ export class FaceRepresentationComponent implements OnInit {
                 return 'Sonnenbrille';
             case 'SwimmingGoggles':
                 return'Schwimmbrille';
+            default:
+                return this.glasses;
         }
     }
 
@@ -51,7 +58,7 @@ export class FaceRepresentationComponent implements OnInit {
             return 'Keine';
         }
 
-        return this.hairColors.map((color) => {
+        let translatedColors = this.hairColors.map((color) => {
             switch (color) {
                 case 'brown':
                     return 'Braun';
@@ -63,9 +70,17 @@ export class FaceRepresentationComponent implements OnInit {
                     return 'Rot';
                 case 'other':
                     return 'Anderes';
+                default:
+                    return color;
             }
-        })
-        .join('-');
+        });
+
+        if (translatedColors.length !== 1) {
+            // Filter color 'other' if it's not the only result
+            translatedColors = translatedColors.filter((color, index) => color !== 'Anderes' || index > 0);
+        }
+
+        return translatedColors.join('-');
     }
 
     public get emotionsTranslated() {
@@ -91,6 +106,8 @@ export class FaceRepresentationComponent implements OnInit {
                     return 'Traurig';
                 case 'surprise':
                     return 'Überrascht';
+                default:
+                    return emotion;
             }
         })
         .join(' & ');
@@ -108,12 +125,14 @@ export class FaceRepresentationComponent implements OnInit {
 
         const rect = this.face.faceRectangle;
 
-        canvas.width = rect.width;
-        canvas.height = rect.height;
+        // Height considering image aspect ration
+        const adjustedHeight = (rect.height / rect.width) * canvas.width;
+
+        canvas.height = adjustedHeight;
 
         context.drawImage(this.fullImage,
             rect.left, rect.top, rect.width, rect.height,
-            0, 0, rect.width, rect.height);
+            0, 0, canvas.width, canvas.height);
     }
 
     private analyzeFace() {
