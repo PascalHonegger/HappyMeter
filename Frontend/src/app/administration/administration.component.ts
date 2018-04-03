@@ -8,7 +8,6 @@ import { EmotionalStateService } from './../services/emotional-state.service';
 import { EmotionService } from './../services/emotion.service';
 import { UserService } from './../services/user.service';
 import { AuthService } from './../services/auth.service';
-import { DateService } from './../services/date.service';
 import { FullEmotion } from './../model/full-emotion.model';
 import { SelectEmojiDialogComponent } from './../select-emoji-dialog/select-emoji-dialog.component';
 import { RegularExpressions } from './../constants/regular-expressions';

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpUrlEncodingCodec } from '@angular/common/http';
 
 import { ServerService } from './server.service';
-import { DateService } from './date.service';
 import { EmotionalStateHistoryItem } from './../model/emotional-state-history-item.model';
 
 import { Moment } from 'moment';

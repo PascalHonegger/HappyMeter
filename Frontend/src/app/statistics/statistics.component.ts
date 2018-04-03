@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
 import { EmotionalStateService } from './../services/emotional-state.service';
-import { DateService } from './../services/date.service';
 import { CommentWithDetails } from './../model/comment-with-details.model';
 import { DataParserService } from './../services/data-parser.service';
 import { EmotionalStateHistoryItem } from './../model/emotional-state-history-item.model';

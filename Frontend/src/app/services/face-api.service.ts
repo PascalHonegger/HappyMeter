@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import { ServerService } from './server.service';
 import { FaceAnalysis } from '../model/face-analysis.model';
 
 const baseUrl = 'https://westeurope.api.cognitive.microsoft.com/face/v1.0';

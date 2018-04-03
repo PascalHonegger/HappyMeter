@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
 import { WebCamComponent } from 'ack-angular-webcam';
-import { FaceApiService } from '../services/face-api.service';
-import { Subject } from 'rxjs';
-import { FaceAnalysis } from '../model/face-analysis.model';
-import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
