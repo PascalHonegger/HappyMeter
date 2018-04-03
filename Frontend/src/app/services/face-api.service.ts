@@ -34,7 +34,7 @@ export class FaceApiService {
                     'hair',
                     // 'makeup',
                     // 'occlusion',
-                    'accessories',
+                    // 'accessories',
                     // 'blur',
                     // 'exposure',
                     // 'noise'

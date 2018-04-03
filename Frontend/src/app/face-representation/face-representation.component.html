@@ -1,12 +1,14 @@
 <canvas #faceCanvas width="250"></canvas>
-<emoji-display emojiCodePoint="1f600" class="emoji-representation"></emoji-display>
+<p fxLayout="row" style="width: 250px">
+	<emoji-display *ngFor="let emoji of fittingEmojis" [emojiCodePoint]="emoji" fxFlex></emoji-display>
+</p>
 <p>Alter: {{age}}‍ Jahre</p>
 <p>Geschlecht: {{genderTranslated}}‍</p>
-<p>Brillenart: {{glassesTranslated}}‍</p>
-<p>Haarfarbe: {{hairColorsTranslated}}‍</p>
-<p *ngIf="baldness >= baldnessLimit">{{baldness | percent}} glatzköpfig</p>
+<p *ngIf="hasGlasses">Brillenart: {{glassesTranslated}}‍</p>
+<p *ngIf="hasHairColor">Haarfarbe: {{hairColorsTranslated}}‍</p>
+<p *ngIf="isBald">{{baldness | percent}} glatzköpfig</p>
 <p>Lächeln: {{smile | percent}}</p>
-<p>Gesichtsausdruck: {{emotionsTranslated}}</p>
-<p *ngIf="facialHair.beard >= beardLimit">Kinnbart: {{facialHair.beard | percent}}</p>
-<p *ngIf="facialHair.moustache >= beardLimit">Schnurrbart: {{facialHair.moustache | percent}}</p>
-<p *ngIf="facialHair.sideburns >= beardLimit">Kotelettenbart: {{facialHair.sideburns | percent}}</p>
+<p *ngIf="hasEmotions">Gesichtsausdruck: {{emotionsTranslated}}</p>
+<p *ngIf="hasBeard">Kinnbart: {{facialHair.beard | percent}}</p>
+<p *ngIf="hasMoustache">Schnurrbart: {{facialHair.moustache | percent}}</p>
+<p *ngIf="hasSideburns">Kotelettenbart: {{facialHair.sideburns | percent}}</p>
