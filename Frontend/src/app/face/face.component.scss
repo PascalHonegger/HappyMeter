@@ -1,19 +1,12 @@
 @import "../constants/variables";
 
 @mixin video-dimensions($toolbar-height) {
-	height: calc(100vh - #{$toolbar-height} - #{$content-margin * 2});
+	height: calc(100vh - #{$toolbar-height} - #{$content-margin});
 }
 
 .camera-container {
-	padding-top: $content-margin;
-	padding-left: $content-margin;
-	padding-right: $content-margin;
+	padding: $content-margin / 2;
 	overflow-y: hidden;
-}
-
-::ng-deep video, ::ng-deep .webcam-wrapper {
-	width: 100%;
-	height: 100%;
 }
 
 .camera-preview-gt-sm {

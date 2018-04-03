@@ -3,11 +3,14 @@
 		<p class="mat-title">Die Kamera konnte nicht geladen werden. Bitte überprüfen Sie die Berechtigungen ihres Browsers.</p>
 	</ng-container>
 	<ng-template #loadedCameraTemplate>
-		<div ngClass.gt-sm="camera-preview-gt-sm" ngClass.sm="camera-preview-sm" ngClass.xs="camera-preview-xs" fxFlexAlign="center">
-			<webcam (initError)="failedToStartCamera = true" [trigger]="cameraTrigger" (imageCapture)="capturedImage($event)"></webcam>
+		<div ngClass.gt-sm="camera-preview-gt-sm" ngClass.sm="camera-preview-sm" ngClass.xs="camera-preview-xs">
+			<ack-webcam [(ref)]="webcam"
+				(catch)="failedToStartCamera = true"
+				facingMode="user"
+				[useParentWidthHeight]="true"></ack-webcam>
 		</div>
 
-		<button mat-fab (click)="cameraTrigger.next()" class="camera-trigger-button">
+		<button mat-fab (click)="captureImage()" class="camera-trigger-button">
 			<mat-icon>backup</mat-icon>
 		</button>
 	</ng-template>

@@ -15,7 +15,7 @@ registerLocaleData(localeDeCh);
 // External libraries
 import { BarChartModule } from '@swimlane/ngx-charts';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
-import { WebcamModule } from 'ngx-webcam';
+import { WebCamModule } from 'ack-angular-webcam';
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -133,7 +133,7 @@ import '../styles/styles.scss';
     FlexLayoutModule,
     BarChartModule,
     PickerModule,
-    WebcamModule
+    WebCamModule
   ],
   /**
    * Expose our Services and Providers into Angular's dependency injection.

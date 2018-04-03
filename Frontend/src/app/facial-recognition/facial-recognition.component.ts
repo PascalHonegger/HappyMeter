@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { WebcamImage } from 'ngx-webcam';
 import { FaceApiService } from '../services/face-api.service';
 import { Subject } from 'rxjs';
 import { FaceAnalysis } from '../model/face-analysis.model';
