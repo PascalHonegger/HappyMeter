@@ -85,5 +85,37 @@ namespace AtosHappyMeter.Controllers
 				return Ok();
 			}
 		}
+
+		[HttpPost]
+		[ResponseType(typeof(void))]
+		public async Task<IHttpActionResult> AddEmojiFromFaceAnalysis([FromBody] AddEmojiFromFaceAnalysisDto addEmojiFromFaceAnalysisDto)
+		{
+			// Validate parameters
+			if (!ModelState.IsValid || addEmojiFromFaceAnalysisDto == null)
+			{
+				return BadRequest();
+			}
+
+			using (var dbContext = new HappyMeterDatabaseContext())
+			{
+				// The provided Emotion has to exist (but doesn't have to be active)
+				var fittingEmoji =
+					await dbContext.Emotions.FirstOrDefaultAsync(e => e.Smiley == addEmojiFromFaceAnalysisDto.EmojiCode);
+				if (fittingEmoji == null)
+				{
+					return BadRequest();
+				}
+
+				dbContext.EmotionalStates.Add(new EmotionalState
+				{
+					EmotionId = fittingEmoji.Id,
+					CreatedDate = DateTime.UtcNow
+				});
+
+				await dbContext.SaveChangesAsync();
+
+				return Ok();
+			}
+		}
 	}
 }

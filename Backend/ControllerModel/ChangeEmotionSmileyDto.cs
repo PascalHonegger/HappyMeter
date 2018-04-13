@@ -8,7 +8,7 @@ namespace AtosHappyMeter.ControllerModel
 		public int EmotionId { get; set; }
 
 		[Required]
-		[MaxLength(6)]
+		[MaxLength(25)]
 		public string NewSmileyCode { get; set; }
 	}
 }

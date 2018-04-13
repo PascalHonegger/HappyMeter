@@ -26,6 +26,11 @@ export class EmotionalStateService extends ServerService {
         return this.httpClient
             .post<void>(this.baseUrl + '/AddEmotionalState', data);
     }
+
+    public addEmojiFromFaceAnalysis(emojiCode: string) {
+        return this.httpClient
+            .post<void>(this.baseUrl + '/AddEmojiFromFaceAnalysis', { emojiCode });
+    }
 }
 
 // Replace '+' as of issue https://github.com/angular/angular/issues/11058

@@ -107,6 +107,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\AuthorizeAdministratorAttribute.cs" />
     <Compile Include="Constants\AuthorizationConstants.cs" />
+    <Compile Include="ControllerModel\AddEmojiFromFaceAnalysisDto.cs" />
     <Compile Include="ControllerModel\AddNewEmotionDto.cs" />
     <Compile Include="ControllerModel\ChangeEmotionSmileyDto.cs" />
     <Compile Include="ControllerModel\ChangeEmotionIsActiveDto.cs" />

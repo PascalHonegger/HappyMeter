@@ -2,10 +2,10 @@
 
 namespace AtosHappyMeter.ControllerModel
 {
-	public class AddNewEmotionDto
+	public class AddEmojiFromFaceAnalysisDto
 	{
 		[Required]
 		[MaxLength(25)]
-		public string NewSmileyCode { get; set; }
+		public string EmojiCode { get; set; }
 	}
 }

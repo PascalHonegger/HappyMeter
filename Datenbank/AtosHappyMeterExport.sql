@@ -22,7 +22,7 @@ USE `AtosHappyMeter` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AtosHappyMeter`.`emotion` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `smiley` VARCHAR(6) NOT NULL,
+  `smiley` VARCHAR(25) NOT NULL,
   `is_active` TINYINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `Smiley_UNIQUE` (`smiley` ASC))
