@@ -19,46 +19,29 @@ export class EmojiService {
         hasBeard: boolean,
         hasMoustache: boolean,
         hasSideburns: boolean,
-        emotion: EmotionKey): string[] {
+        emotion: EmotionKey) {
 
-        const personEmoji = (hasBeard || hasMoustache || hasSideburns)
-            ? '🧔'
-            : this.findEmojiPerson(age, gender);
-
+        const personEmoji = (hasBeard || hasMoustache || hasSideburns) ? '🧔' : this.findEmojiPerson(age, gender);
         const glassesEmoji = this.findEmojiGlasses(glasses);
-
         const emotionEmoji = this.findEmojiEmotion(emotion);
 
-        let allEmojisString = '';
+        let personEmojiCode: string;
+        let glassesEmojiCode: string;
+        let emotionEmojiCode: string;
 
-        [personEmoji, glassesEmoji, emotionEmoji].forEach((emoji) => {
-            if (emoji === '') {
-                return;
-            }
+        twemoji.parse(personEmoji, (iconId) => personEmojiCode = iconId);
+        twemoji.parse(glassesEmoji, (iconId) => glassesEmojiCode = iconId);
+        twemoji.parse(emotionEmoji, (iconId) => emotionEmojiCode = iconId);
 
-            if (allEmojisString.length === 0) {
-                allEmojisString = emoji;
-            } else {
-                allEmojisString += '➕' + emoji;
-            }
-        });
-
-        const codePoints: string[] = [];
-
-        twemoji.parse(allEmojisString, (iconId) => {
-            codePoints.push(iconId);
-            return iconId;
-        });
-
-        return codePoints;
+        return { emotionEmojiCode, personEmojiCode, glassesEmojiCode };
     }
 
-    private findEmojiPerson(age: number, gender: Gender): string {
+    private findEmojiPerson(age: number, gender: Gender) {
         if (age <= 2) {
             return '👶';
         }
 
-        if (age <= 14) {
+        if (age <= 20) {
             return gender === 'male' ? '👦' : '👧';
         }
 
@@ -69,7 +52,7 @@ export class EmojiService {
         return gender === 'male' ? '👴' : '👵';
     }
 
-    private findEmojiGlasses(glasses: Glasses): string {
+    private findEmojiGlasses(glasses: Glasses) {
         switch (glasses) {
             case 'ReadingGlasses':
                 return '👓';
@@ -78,11 +61,11 @@ export class EmojiService {
             case 'SwimmingGoggles':
                 return '🥽';
             default:
-                return '';
+                return '👀';
         }
     }
 
-    private findEmojiEmotion(emotion: EmotionKey): string {
+    private findEmojiEmotion(emotion: EmotionKey) {
         switch (emotion) {
             case 'neutral':
                 return '😐';

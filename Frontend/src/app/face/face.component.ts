@@ -12,6 +12,7 @@ export class FaceComponent {
     public failedToStartCamera: boolean = false;
     public webcam: WebCamComponent; // Populated by template
 
+    // tslint:disable-next-line:max-line-length
     public latestImage: string;
 
     constructor(private router: Router, private snackBar: MatSnackBar) { }

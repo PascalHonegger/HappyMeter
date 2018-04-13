@@ -16,4 +16,4 @@
 	</ng-template>
 </div>
 
-<facial-recognition [imageData]="latestImage"></facial-recognition>
+<facial-recognition *ngIf="latestImage" [imageData]="latestImage"></facial-recognition>

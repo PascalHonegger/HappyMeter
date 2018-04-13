@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FaceAnalysis, HairColor, Glasses, Gender, EmotionKey, FacialHair } from '../model/face-analysis.model';
 import { EmojiService } from '../services/emoji.service';
+import { EmotionalStateService } from '../services/emotional-state.service';
 
 @Component({
     selector: 'face-representation',
@@ -17,7 +18,9 @@ export class FaceRepresentationComponent implements OnInit {
     @ViewChild('faceCanvas')
     public canvasRef: ElementRef;
 
-    public fittingEmojis: string[];
+    public fittingEmojis: { emotionEmojiCode: string, personEmojiCode: string, glassesEmojiCode: string };
+
+    public didSave: boolean = false;
 
     // Summarized data
     public age: number;
@@ -132,12 +135,21 @@ export class FaceRepresentationComponent implements OnInit {
         .join(' & ');
     }
 
-    constructor(private emojiService: EmojiService) { }
+    constructor(private emojiService: EmojiService, private emotionalStateService: EmotionalStateService) { }
 
     public ngOnInit() {
         this.drawImage();
         this.analyzeFace();
         this.findEmojis();
+    }
+
+    public saveEmotion() {
+        this.didSave = true;
+        this.emotionalStateService
+            .addEmojiFromFaceAnalysis(this.fittingEmojis.emotionEmojiCode)
+            .subscribe(
+                () => console.info('Saved emoji successfully'),
+                (err) => this.didSave = false);
     }
 
     private drawImage() {
