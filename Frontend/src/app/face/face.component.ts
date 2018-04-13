@@ -12,6 +12,8 @@ export class FaceComponent {
     public failedToStartCamera: boolean = false;
     public webcam: WebCamComponent; // Populated by template
 
+    public latestImage: string;
+
     constructor(private router: Router, private snackBar: MatSnackBar) { }
 
     public async captureImage() {
@@ -19,7 +21,7 @@ export class FaceComponent {
             const base64Image = await this.webcam.getBase64('image/JPEG');
             // Cut off 'data:image/JPEG;base64,'
             const onlyBase64 = base64Image.substring(23);
-            this.router.navigate(['/facial-recognition', onlyBase64]);
+            this.latestImage = onlyBase64;
         } catch (error) {
             console.error(error);
             this.snackBar.open('Bild konnte nicht verwendet werden', 'Ok', { duration: 5000 });

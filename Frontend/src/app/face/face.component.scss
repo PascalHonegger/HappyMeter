@@ -1,12 +1,13 @@
 @import "../constants/variables";
 
 @mixin video-dimensions($toolbar-height) {
-	height: calc(100vh - #{$toolbar-height} - #{$content-margin});
+	height: calc(40vh - #{$toolbar-height} - #{$content-margin});
 }
 
 .camera-container {
 	padding: $content-margin / 2;
-	overflow-y: hidden;
+	overflow: hidden;
+	position: relative;
 }
 
 .camera-preview-gt-sm {

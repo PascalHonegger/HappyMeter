@@ -11,7 +11,9 @@
 		</div>
 
 		<button mat-fab (click)="captureImage()" class="camera-trigger-button">
-			<mat-icon>backup</mat-icon>
+			<mat-icon>photo_camera</mat-icon>
 		</button>
 	</ng-template>
 </div>
+
+<facial-recognition [imageData]="latestImage"></facial-recognition>

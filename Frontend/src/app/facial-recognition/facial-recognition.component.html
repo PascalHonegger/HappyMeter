@@ -1,6 +1,4 @@
 <div class="analysis-container" fxLayoutGap="10px" fxLayout="column">
-	<img #fullImage [src]="imageDataUrl" (load)="imageLoaded.next()" fxFlexAlign="center"
-		ngClass.gt-sm="full-image-gt-sm" ngClass.sm="full-image-sm" ngClass.xs="full-image-xs">
 	<ng-container *ngIf="faces; else loadingFacesTemplate">
 		<div *ngIf="faces.length === 0">
 			Es wurden keine Gesichter gefunden.

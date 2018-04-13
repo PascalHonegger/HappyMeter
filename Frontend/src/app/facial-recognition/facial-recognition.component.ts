@@ -1,42 +1,53 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { FaceApiService } from '../services/face-api.service';
-import { Subject } from 'rxjs';
-import { FaceAnalysis } from '../model/face-analysis.model';
-import { first } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Component, Input } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { FaceAnalysis } from '../model/face-analysis.model';
+import { FaceApiService } from '../services/face-api.service';
 
 @Component({
     selector: 'facial-recognition',
     templateUrl: 'facial-recognition.component.html',
     styleUrls: ['facial-recognition.component.scss']
 })
-export class FacialRecognitionComponent implements AfterViewInit {
+export class FacialRecognitionComponent {
     public failedToStartCamera: boolean = false;
     public faces: FaceAnalysis[];
     public errorMessage: string;
-    public imageDataUrl: SafeUrl;
+    public fullImage: HTMLImageElement;
 
     public imageLoaded = new Subject<void>();
 
-    constructor(private faceService: FaceApiService,
-                private sanitizer: DomSanitizer,
-                private route: ActivatedRoute) {
+    @Input()
+    public set imageData(imageBase64: string) {
+        if (this._imageData === imageBase64) {
+            return;
+        }
+        this.analyzeImage(imageBase64);
     }
 
-    public ngAfterViewInit() {
-        this.route.params.subscribe(
-            (params) => setTimeout(() => this.analyzeImage(params['imageBase64']))
-        );
+    public get imageData(): string {
+        return this._imageData;
+    }
+
+    private _imageData: string;
+
+    constructor(private faceService: FaceApiService,
+                private sanitizer: DomSanitizer) {
+        this.fullImage = new Image();
+        this.fullImage.onload = () => this.imageLoaded.next();
     }
 
     private async analyzeImage(imageBase64: string) {
         const imageDataUrl = `data:image/JPEG;base64,${imageBase64}`;
-        this.imageDataUrl = this.sanitizer.bypassSecurityTrustUrl(imageDataUrl);
+
+        this.fullImage.src = imageDataUrl;
 
         // Ensure the image was loaded
-        await this.imageLoaded.pipe(first()).toPromise();
+        await this.imageLoaded
+            .pipe(first())
+            .toPromise();
 
         this.faces = null;
         this.faceService.detectFaces(imageBase64)

@@ -13,7 +13,6 @@ export const ROUTES: Routes = [
   { path: '', component: HomeComponent },
   { path: 'statistics', component: StatisticsComponent },
   { path: 'face', component: FaceComponent },
-  { path: 'facial-recognition/:imageBase64', component: FacialRecognitionComponent },
   { path: 'login', component: LoginComponent },
   { path: 'administration', component: AdministrationComponent,
     canActivate: [CanActivateViaAuthGuard] },
