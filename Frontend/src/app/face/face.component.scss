@@ -4,6 +4,10 @@
   height: calc(40vh - #{$toolbar-height} - #{$content-margin});
 }
 
+@mixin camera-preview() {
+  position: relative;
+}
+
 .camera-container {
   padding: $content-margin / 2;
   overflow: hidden;
@@ -11,15 +15,17 @@
 }
 
 .camera-preview-gt-sm {
-  @include video-dimensions($toolbar-height-md-xl);
+  @include camera-preview();
 }
 
 .camera-preview-sm {
   @include video-dimensions($toolbar-height-sm);
+  @include camera-preview();
 }
 
 .camera-preview-xs {
   @include video-dimensions($toolbar-height-xs);
+  @include camera-preview();
 }
 
 .camera-trigger-button {
