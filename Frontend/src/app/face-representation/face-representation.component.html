@@ -3,7 +3,12 @@
 	<p>
 		<emoji-display [emojiCodePoint]="fittingEmojis.emotionEmojiCode" fxFlex [matTooltip]="emotionsTranslated"></emoji-display>
 	</p>
-	<button mat-raised-button color="primary" (click)="saveEmotion()" [disabled]="didSave">Speichern</button>
+	<button mat-raised-button color="accent" (click)="saveEmotion()" [disabled]="didSave">
+		<div fxLayout="row" fxLayoutAlign="start center">
+			<div fxFlex>Gefühlslage teilen</div>
+			<mat-icon aria-label="Senden">send</mat-icon>
+		</div>
+	</button>
 	<strong>Details</strong>
 	<p>Alter: {{age}} Jahre</p>
 	<p *ngIf="hasHairColor">Haarfarbe: {{hairColorsTranslated}}</p>

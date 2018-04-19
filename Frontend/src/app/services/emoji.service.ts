@@ -76,7 +76,7 @@ export class EmojiService {
             case 'disgust':
                 return '🤢';
             case 'fear':
-                return '😨';
+                return '😱';
             case 'happiness':
                 return '😀';
             case 'sadness':
