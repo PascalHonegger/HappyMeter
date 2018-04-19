@@ -1,19 +1,19 @@
 <div class="camera-container">
-	<ng-container *ngIf="failedToStartCamera; else loadedCameraTemplate">
-		<p class="mat-title">Die Kamera konnte nicht geladen werden. Bitte überprüfen Sie die Berechtigungen ihres Browsers.</p>
-	</ng-container>
-	<ng-template #loadedCameraTemplate>
-		<div ngClass.gt-sm="camera-preview-gt-sm" ngClass.sm="camera-preview-sm" ngClass.xs="camera-preview-xs">
-			<ack-webcam [(ref)]="webcam"
-				(catch)="failedToStartCamera = true"
-				facingMode="user"
-				[useParentWidthHeight]="true"></ack-webcam>
-		</div>
+  <ng-container *ngIf="failedToStartCamera; else loadedCameraTemplate">
+    <p class="mat-title">Die Kamera konnte nicht geladen werden. Bitte überprüfen Sie die Berechtigungen ihres Browsers.</p>
+  </ng-container>
+  <ng-template #loadedCameraTemplate>
+    <div ngClass.gt-sm="camera-preview-gt-sm" ngClass.sm="camera-preview-sm" ngClass.xs="camera-preview-xs">
+      <ack-webcam [(ref)]="webcam"
+        (catch)="failedToStartCamera = true"
+        facingMode="user"
+        [useParentWidthHeight]="true"></ack-webcam>
+    </div>
 
-		<button mat-fab (click)="captureImage()" class="camera-trigger-button">
-			<mat-icon>photo_camera</mat-icon>
-		</button>
-	</ng-template>
+    <button mat-fab (click)="captureImage()" class="camera-trigger-button">
+      <mat-icon>photo_camera</mat-icon>
+    </button>
+  </ng-template>
 </div>
 
 <facial-recognition *ngIf="latestImage" [imageData]="latestImage"></facial-recognition>

@@ -1,20 +1,20 @@
 <div class="analysis-container" fxLayoutGap="10px" fxLayout="column">
-	<ng-container *ngIf="faces; else loadingFacesTemplate">
-		<div *ngIf="faces.length === 0">
-			Es wurden keine Gesichter gefunden.
-			<pre *ngIf="errorMessage">Die Analyse ist fehlgeschlagen: {{errorMessage}}</pre>
-		</div>
-		<div fxLayout="row wrap" fxLayoutAlign="space-around start">
-			<mat-card class="face-card" *ngFor="let face of faces">
-				<mat-card-content>
-					<face-representation [face]="face" [fullImage]="fullImage"></face-representation>
-				</mat-card-content>
-			</mat-card>
-		</div>
-	</ng-container>
-	<ng-template #loadingFacesTemplate>
-		<div fxLayout="row" fxLayoutAlign="center start">
-			<mat-spinner></mat-spinner>
-		</div>
-	</ng-template>
+  <ng-container *ngIf="faces; else loadingFacesTemplate">
+    <div *ngIf="faces.length === 0">
+      Es wurden keine Gesichter gefunden.
+      <pre *ngIf="errorMessage">Die Analyse ist fehlgeschlagen: {{errorMessage}}</pre>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="space-around start">
+      <mat-card class="face-card" *ngFor="let face of faces">
+        <mat-card-content>
+          <face-representation [face]="face" [fullImage]="fullImage"></face-representation>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </ng-container>
+  <ng-template #loadingFacesTemplate>
+    <div fxLayout="row" fxLayoutAlign="center start">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
 </div>

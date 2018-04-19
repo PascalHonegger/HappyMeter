@@ -1,20 +1,20 @@
 @import "../constants/variables";
 
 .statistics-container {
-	padding-top: $content-margin;
-	padding-left: $content-margin;
-	padding-right: $content-margin;
+  padding-top: $content-margin;
+  padding-left: $content-margin;
+  padding-right: $content-margin;
 }
 
 .emoji-tooltip {
-	width: 40px;
-	margin-top: 5px;
+  width: 40px;
+  margin-top: 5px;
 }
 
 .refresh-button {
-	align-self: center;
+  align-self: center;
 }
 
 .loading-spinner {
-	align-self: center;
+  align-self: center;
 }

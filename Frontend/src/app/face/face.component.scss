@@ -1,29 +1,29 @@
 @import "../constants/variables";
 
 @mixin video-dimensions($toolbar-height) {
-	height: calc(40vh - #{$toolbar-height} - #{$content-margin});
+  height: calc(40vh - #{$toolbar-height} - #{$content-margin});
 }
 
 .camera-container {
-	padding: $content-margin / 2;
-	overflow: hidden;
-	position: relative;
+  padding: $content-margin / 2;
+  overflow: hidden;
+  position: relative;
 }
 
 .camera-preview-gt-sm {
-	@include video-dimensions($toolbar-height-md-xl);
+  @include video-dimensions($toolbar-height-md-xl);
 }
 
 .camera-preview-sm {
-	@include video-dimensions($toolbar-height-sm);
+  @include video-dimensions($toolbar-height-sm);
 }
 
 .camera-preview-xs {
-	@include video-dimensions($toolbar-height-xs);
+  @include video-dimensions($toolbar-height-xs);
 }
 
 .camera-trigger-button {
-	position: absolute;
-	bottom: $content-margin + 5px;
-	right: $content-margin + 5px;
+  position: absolute;
+  bottom: $content-margin + 5px;
+  right: $content-margin + 5px;
 }

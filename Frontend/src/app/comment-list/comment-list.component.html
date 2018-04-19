@@ -1,34 +1,34 @@
 <ng-container *ngIf="!comments || comments.length === 0; else hasEmotionsTemplate">
-	<div class="chat-history-container">
-		<mat-card>
-			<mat-card-header>
-				<emoji-display mat-card-avatar emojiCodePoint="26a0"></emoji-display>
-				<mat-card-title>
-						Heute wurde noch kein Kommentar verfasst
-				</mat-card-title>
-			</mat-card-header>
-		</mat-card>
-	</div>
+  <div class="chat-history-container">
+    <mat-card>
+      <mat-card-header>
+        <emoji-display mat-card-avatar emojiCodePoint="26a0"></emoji-display>
+        <mat-card-title>
+            Heute wurde noch kein Kommentar verfasst
+        </mat-card-title>
+      </mat-card-header>
+    </mat-card>
+  </div>
 </ng-container>
 <ng-template #hasEmotionsTemplate>
-	<div fxfLayout="column" fxLayoutGap="5px" class="chat-history-container">
-		<mat-card *ngFor="let comment of comments; trackBy: commentIdFunc">
-			<mat-card-header>
-				<emoji-display mat-card-avatar [emojiCodePoint]="comment.emojiCode"></emoji-display>
-				<mat-card-title [style.margin-bottom.px]="6">
-					{{comment.comment}}
-				</mat-card-title>
-				<mat-card-subtitle [style.margin-bottom]="0">
-					{{comment.postDate | date:(fullDate ? 'medium' : 'shortTime')}}
-				</mat-card-subtitle>
-			</mat-card-header>
-			<!--
-			<mat-card-content>
-				Keine Bewertungen
-			</mat-card-content>
-			-->
-		</mat-card>
-	</div>
+  <div fxfLayout="column" fxLayoutGap="5px" class="chat-history-container">
+    <mat-card *ngFor="let comment of comments; trackBy: commentIdFunc">
+      <mat-card-header>
+        <emoji-display mat-card-avatar [emojiCodePoint]="comment.emojiCode"></emoji-display>
+        <mat-card-title [style.margin-bottom.px]="6">
+          {{comment.comment}}
+        </mat-card-title>
+        <mat-card-subtitle [style.margin-bottom]="0">
+          {{comment.postDate | date:(fullDate ? 'medium' : 'shortTime')}}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <!--
+      <mat-card-content>
+        Keine Bewertungen
+      </mat-card-content>
+      -->
+    </mat-card>
+  </div>
 </ng-template>
 
 

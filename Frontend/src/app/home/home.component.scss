@@ -1,57 +1,57 @@
 @import "../constants/variables";
 
 .emoji-container {
-	width: 100%;
+  width: 100%;
 }
 
 .comment-and-send-container {
-	width: 75%;
+  width: 75%;
 }
 
 .mobile-comment-and-send-container {
-	width: 100%;
+  width: 100%;
 }
 
 .select-emotion-button {
-	margin-top: 20px;
-	width: 90px;
-	height: 90px;
+  margin-top: 20px;
+  width: 90px;
+  height: 90px;
 }
 
 ::ng-deep .mat-tooltip {
-	font-size: large !important;
+  font-size: large !important;
 }
 
 .large-comment-list-container {
-	overflow-y: auto;
-	width: 35%;
+  overflow-y: auto;
+  width: 35%;
 }
 
 .large-smiley-list-container {
-	overflow-y: auto;
-	width: 65%;
+  overflow-y: auto;
+  width: 65%;
 }
 
 .smiley-list-container {
-	align-items: center;
-	padding-top: $content-margin;
-	padding-left: $content-margin;
-	padding-right: $content-margin;
+  align-items: center;
+  padding-top: $content-margin;
+  padding-left: $content-margin;
+  padding-right: $content-margin;
 }
 
 .home-component-gt-sm {
-	height: calc(100vh - #{$toolbar-height-md-xl});
+  height: calc(100vh - #{$toolbar-height-md-xl});
 }
 
 .home-component-sm {
-	height: calc(100vh - #{$toolbar-height-sm});
+  height: calc(100vh - #{$toolbar-height-sm});
 }
 
 .home-component-xs {
-	height: calc(100vh - #{$toolbar-height-xs});
+  height: calc(100vh - #{$toolbar-height-xs});
 }
 
 .spinner-container {
-	margin-top: $content-margin;
-	align-items: center;
+  margin-top: $content-margin;
+  align-items: center;
 }

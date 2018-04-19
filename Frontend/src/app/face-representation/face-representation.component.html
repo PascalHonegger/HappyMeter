@@ -1,25 +1,25 @@
 <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px" class="face-container">
-	<canvas #faceCanvas width="250"></canvas>
-	<p>
-		<emoji-display [emojiCodePoint]="fittingEmojis.emotionEmojiCode" fxFlex [matTooltip]="emotionsTranslated"></emoji-display>
-	</p>
-	<button mat-raised-button color="accent" (click)="saveEmotion()" [disabled]="didSave">
-		<div fxLayout="row" fxLayoutAlign="start center">
-			<div fxFlex>Gefühlslage teilen</div>
-			<mat-icon aria-label="Senden">send</mat-icon>
-		</div>
-	</button>
-	<strong>Details</strong>
-	<p>Alter: {{age}} Jahre</p>
-	<p *ngIf="hasHairColor">Haarfarbe: {{hairColorsTranslated}}</p>
-	<p *ngIf="isBald">{{baldness | percent}} glatzköpfig</p>
-	<p *ngIf="hasBeard">Kinnbart: {{facialHair.beard | percent}}</p>
-	<p *ngIf="hasMoustache">Schnurrbart: {{facialHair.moustache | percent}}</p>
-	<p *ngIf="hasSideburns">Kotelettenbart: {{facialHair.sideburns | percent}}</p>
-	<p>Lächeln: {{smile | percent}}</p>
-	<p fxLayout="row" fxLayoutAlign="stretch center" fxLayoutGap="5px">
-		<emoji-display [emojiCodePoint]="fittingEmojis.personEmojiCode" fxFlex="2 2 0" matTooltip="{{age}} Jahre alt & {{genderTranslated}}"></emoji-display>
-		<emoji-display emojiCodePoint="2795" fxFlex="1 1 0"></emoji-display>
-		<emoji-display [emojiCodePoint]="fittingEmojis.glassesEmojiCode" fxFlex="2 2 0" [matTooltip]="glassesTranslated"></emoji-display>
-	</p>
+  <canvas #faceCanvas width="250"></canvas>
+  <p>
+    <emoji-display [emojiCodePoint]="fittingEmojis.emotionEmojiCode" fxFlex [matTooltip]="emotionsTranslated"></emoji-display>
+  </p>
+  <button mat-raised-button color="accent" (click)="saveEmotion()" [disabled]="didSave">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <div fxFlex>Gefühlslage teilen</div>
+      <mat-icon aria-label="Senden">send</mat-icon>
+    </div>
+  </button>
+  <strong>Details</strong>
+  <p>Alter: {{age}} Jahre</p>
+  <p *ngIf="hasHairColor">Haarfarbe: {{hairColorsTranslated}}</p>
+  <p *ngIf="isBald">{{baldness | percent}} glatzköpfig</p>
+  <p *ngIf="hasBeard">Kinnbart: {{facialHair.beard | percent}}</p>
+  <p *ngIf="hasMoustache">Schnurrbart: {{facialHair.moustache | percent}}</p>
+  <p *ngIf="hasSideburns">Kotelettenbart: {{facialHair.sideburns | percent}}</p>
+  <p>Lächeln: {{smile | percent}}</p>
+  <p fxLayout="row" fxLayoutAlign="stretch center" fxLayoutGap="5px">
+    <emoji-display [emojiCodePoint]="fittingEmojis.personEmojiCode" fxFlex="2 2 0" matTooltip="{{age}} Jahre alt & {{genderTranslated}}"></emoji-display>
+    <emoji-display emojiCodePoint="2795" fxFlex="1 1 0"></emoji-display>
+    <emoji-display [emojiCodePoint]="fittingEmojis.glassesEmojiCode" fxFlex="2 2 0" [matTooltip]="glassesTranslated"></emoji-display>
+  </p>
 </div>
