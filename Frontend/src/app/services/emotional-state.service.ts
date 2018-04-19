@@ -5,7 +5,6 @@ import { ServerService } from './server.service';
 import { EmotionalStateHistoryItem } from './../model/emotional-state-history-item.model';
 
 import { Moment } from 'moment';
-import { HttpParamsOptions } from '@angular/common/http/src/params';
 
 @Injectable()
 export class EmotionalStateService extends ServerService {
@@ -14,7 +13,7 @@ export class EmotionalStateService extends ServerService {
     }
 
     public groupedEmotionalStatesWithinRange(from: Moment, to: Moment) {
-        const params = new HttpParams({encoder: new GhQueryEncoder()} as HttpParamsOptions)
+        const params = new HttpParams({encoder: new GhQueryEncoder()})
             .set('from', from.format())
             .set('to', to.format());
         return this.httpClient.get<EmotionalStateHistoryItem[]>(

@@ -16,7 +16,7 @@
     ],
     "baseUrl": "./src",
     "paths": {
-      "@angular/*": ["node_modules/@angular/*"]
+      "@angular/*": ["../node_modules/@angular/*"]
     },
     "typeRoots": [
       "node_modules/@types"
@@ -33,7 +33,10 @@
     "src/**/*.e2e.ts"
   ],
   "angularCompilerOptions": {
-    "skipMetadataEmit": true
+    "skipMetadataEmit": true,
+    "strictInjectionParameters": true,
+    "fullTemplateTypeCheck": true,
+    "preserveWhitespaces": false
   },
   "compileOnSave": false,
   "buildOnSave": false,

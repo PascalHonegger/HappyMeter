@@ -14,7 +14,7 @@ import { DataParserService } from './../services/data-parser.service';
 import { SpamProtectionService } from './../services/spam-protection.service';
 import { GroupedEmotionalState } from './../model/grouped-emotional-state.model';
 
-import * as moment from 'moment';
+import moment from 'moment';
 
 // 5 Minutes
 const reloadIntervalInMs = 300000;
