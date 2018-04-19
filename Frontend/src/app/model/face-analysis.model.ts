@@ -46,7 +46,7 @@ export interface Hair {
     hairColor?: Array<{ color: HairColor, confidence: number }>;
 }
 
-export type HairColor = 'brown' | 'black' | 'blond' | 'red' | 'other';
+export type HairColor = 'brown' | 'black' | 'blond' | 'red' | 'gray' | 'other';
 export type Accessoire = 'headwear' | 'glasses' | 'mask';
 export type Glasses = 'NoGlasses' | 'ReadingGlasses' | 'Sunglasses' | 'SwimmingGoggles';
 export type Gender = 'male' | 'female';

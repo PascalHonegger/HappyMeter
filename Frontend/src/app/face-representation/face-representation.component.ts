@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FaceAnalysis, HairColor, Glasses, Gender, EmotionKey, FacialHair } from '../model/face-analysis.model';
 import { EmojiService } from '../services/emoji.service';
 import { EmotionalStateService } from '../services/emotional-state.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'face-representation',
@@ -32,13 +33,14 @@ export class FaceRepresentationComponent implements OnInit {
     public facialHair: FacialHair;
 
     public smile: number;
-    public emotions: EmotionKey[];
+    public emotions: Array<{ confidence: number, emotion: EmotionKey }>;
 
     // Limits some data
     // E.g. don't show you're 1% bald
     private readonly baldnessLimit = 0.5;
     private readonly beardLimit = 0.5;
     private readonly emotionLimit = 0.3;
+    private readonly smileLimit = 0.3;
     private readonly hairColorLimit = 0.75;
 
     public get hasGlasses() {
@@ -62,6 +64,9 @@ export class FaceRepresentationComponent implements OnInit {
     public get hasEmotions() {
         return this.emotions.length !== 0;
     }
+    public get isSmiling() {
+        return this.smile >= this.smileLimit;
+    }
 
     // Translated fields
     public get genderTranslated() {
@@ -73,7 +78,7 @@ export class FaceRepresentationComponent implements OnInit {
             case 'NoGlasses':
                 return 'Keine Brille';
             case 'ReadingGlasses':
-                return 'Lesebrille';
+                return 'Brille';
             case 'Sunglasses':
                 return 'Sonnenbrille';
             case 'SwimmingGoggles':
@@ -94,8 +99,10 @@ export class FaceRepresentationComponent implements OnInit {
                     return 'Schwarz';
                 case 'red':
                     return 'Rot';
+                case 'gray':
+                    return 'Grau';
                 case 'other':
-                    return 'Anderes';
+                    return 'Unbekannt';
                 default:
                     return color;
             }
@@ -103,39 +110,22 @@ export class FaceRepresentationComponent implements OnInit {
 
         if (translatedColors.length !== 1) {
             // Filter color 'other' if it's not the only result
-            translatedColors = translatedColors.filter((color, index) => color !== 'Anderes' || index > 0);
+            translatedColors = translatedColors.filter((color, index) => color !== 'Unbekannt');
         }
 
         return translatedColors.join('-');
     }
 
     public get emotionsTranslated() {
-        return this.emotions.map((emotion) => {
-            switch (emotion) {
-                case 'neutral':
-                    return 'Neutral';
-                case 'anger':
-                    return 'Wütend';
-                case 'contempt':
-                    return 'Verachtend';
-                case 'disgust':
-                    return 'Angeekelt';
-                case 'fear':
-                    return 'Verängstigt';
-                case 'happiness':
-                    return 'Glücklich';
-                case 'sadness':
-                    return 'Traurig';
-                case 'surprise':
-                    return 'Überrascht';
-                default:
-                    return emotion;
-            }
-        })
-        .join(' & ');
+        return this.emotions.map((emotion) => ({
+                label: this.translatedEmotionKey(emotion.emotion),
+                confidence: emotion.confidence
+            }));
     }
 
-    constructor(private emojiService: EmojiService, private emotionalStateService: EmotionalStateService) { }
+    constructor(private emojiService: EmojiService,
+                private emotionalStateService: EmotionalStateService,
+                private router: Router) { }
 
     public ngOnInit() {
         this.drawImage();
@@ -148,8 +138,31 @@ export class FaceRepresentationComponent implements OnInit {
         this.emotionalStateService
             .addEmojiFromFaceAnalysis(this.fittingEmojis.emotionEmojiCode)
             .subscribe(
-                () => console.info('Saved emoji successfully'),
+                async () => await this.router.navigate(['/']),
                 (err) => this.didSave = false);
+    }
+
+    private translatedEmotionKey(emotion: EmotionKey) {
+        switch (emotion) {
+            case 'neutral':
+                return 'Neutral';
+            case 'anger':
+                return 'Wütend';
+            case 'contempt':
+                return 'Verachtend';
+            case 'disgust':
+                return 'Angeekelt';
+            case 'fear':
+                return 'Verängstigt';
+            case 'happiness':
+                return 'Glücklich';
+            case 'sadness':
+                return 'Traurig';
+            case 'surprise':
+                return 'Überrascht';
+            default:
+                return emotion;
+        }
     }
 
     private drawImage() {
@@ -186,7 +199,7 @@ export class FaceRepresentationComponent implements OnInit {
             .map((key) => ({ emotion: key as EmotionKey, confidence: attributes.emotion[key] as number }))
             .filter((h) => h.confidence >= this.emotionLimit)
             .sort((a, b) => b.confidence - a.confidence)
-            .map((guess) => guess.emotion);
+            .map((guess) => ({ confidence: guess.confidence, emotion: guess.emotion }));
 
         this.facialHair = attributes.facialHair;
     }
@@ -201,6 +214,6 @@ export class FaceRepresentationComponent implements OnInit {
             this.hasBeard,
             this.hasMoustache,
             this.hasSideburns,
-            this.hasEmotions ? this.emotions[0] : null);
+            this.hasEmotions ? this.emotions[0].emotion : null);
     }
 }
