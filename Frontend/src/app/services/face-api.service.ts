@@ -26,7 +26,7 @@ export class FaceApiService {
                     'age',
                     'gender',
                     // 'headPose',
-                    'smile',
+                    // 'smile',
                     'facialHair',
                     'glasses',
                     'emotion',

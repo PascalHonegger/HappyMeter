@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px" class="face-container">
-  <canvas #faceCanvas width="250"></canvas>
-  <p>
+  <canvas #faceCanvas width="200"></canvas>
+  <p class="main-emotion-emoji">
     <emoji-display [emojiCodePoint]="fittingEmojis.emotionEmojiCode" fxFlex></emoji-display>
   </p>
   <button *ngIf="!didSave; else savedTemplate" mat-raised-button color="accent" (click)="saveEmotion()">
@@ -17,12 +17,11 @@
   <strong>Details</strong>
   <p>Alter: {{age}} Jahre</p>
   <p *ngFor="let emotion of emotionsTranslated">{{emotion.label}}: {{emotion.confidence | percent}}</p>
-  <p *ngIf="isSmiling">Lächeln: {{smile | percent}}</p>
   <p *ngIf="hasHairColor">Haarfarbe: {{hairColorsTranslated}}</p>
   <p *ngIf="isBald">{{baldness | percent}} glatzköpfig</p>
   <p *ngIf="hasBeard">Kinnbart: {{facialHair.beard | percent}}</p>
   <p *ngIf="hasMoustache">Schnurrbart: {{facialHair.moustache | percent}}</p>
   <p *ngIf="hasSideburns">Kotelettenbart: {{facialHair.sideburns | percent}}</p>
-  <p fxLayout="row" fxLayoutAlign="start center"><span>Geschlecht:</span><emoji-display class="detail-emoji" [emojiCodePoint]="fittingEmojis.personEmojiCode"></emoji-display></p>
-  <p *ngIf="hasGlasses" fxLayout="row" fxLayoutAlign="start center"><span>Accessoire:</span><emoji-display class="detail-emoji" [emojiCodePoint]="fittingEmojis.glassesEmojiCode" [matTooltip]="glassesTranslated"></emoji-display></p>
+  <p fxLayout="row" fxLayoutAlign="start center"><span fxFlex>Geschlecht:</span><emoji-display class="detail-emoji" [emojiCodePoint]="fittingEmojis.personEmojiCode" [matTooltip]="genderTranslated"></emoji-display></p>
+  <p *ngIf="hasGlasses" fxLayout="row" fxLayoutAlign="start center"><span fxFlex>Accessoire:</span><emoji-display class="detail-emoji" [emojiCodePoint]="fittingEmojis.glassesEmojiCode" [matTooltip]="glassesTranslated"></emoji-display></p>
 </div>

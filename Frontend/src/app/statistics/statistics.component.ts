@@ -6,7 +6,7 @@ import { CommentWithDetails } from './../model/comment-with-details.model';
 import { DataParserService } from './../services/data-parser.service';
 import { EmotionalStateHistoryItem } from './../model/emotional-state-history-item.model';
 
-import moment from 'moment';
+import * as moment from 'moment';
 
 const dateFormat = 'YYYY-MM-DD';
 

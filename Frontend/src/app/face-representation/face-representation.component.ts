@@ -32,7 +32,6 @@ export class FaceRepresentationComponent implements OnInit {
     public hairColors: HairColor[];
     public facialHair: FacialHair;
 
-    public smile: number;
     public emotions: Array<{ confidence: number, emotion: EmotionKey }>;
 
     // Limits some data
@@ -40,7 +39,6 @@ export class FaceRepresentationComponent implements OnInit {
     private readonly baldnessLimit = 0.5;
     private readonly beardLimit = 0.5;
     private readonly emotionLimit = 0.3;
-    private readonly smileLimit = 0.3;
     private readonly hairColorLimit = 0.75;
 
     public get hasGlasses() {
@@ -63,9 +61,6 @@ export class FaceRepresentationComponent implements OnInit {
     }
     public get hasEmotions() {
         return this.emotions.length !== 0;
-    }
-    public get isSmiling() {
-        return this.smile >= this.smileLimit;
     }
 
     // Translated fields
@@ -194,7 +189,6 @@ export class FaceRepresentationComponent implements OnInit {
             .sort((a, b) => b.confidence - a.confidence)
             .map((guess) => guess.color);
 
-        this.smile = attributes.smile;
         this.emotions = Object.keys(attributes.emotion)
             .map((key) => ({ emotion: key as EmotionKey, confidence: attributes.emotion[key] as number }))
             .filter((h) => h.confidence >= this.emotionLimit)
