@@ -21,6 +21,15 @@ namespace AtosHappyMeter.Services
 				var foundAdministrator = dbContext.Administrators.FirstOrDefault(a => a.Username == username);
 				if (foundAdministrator == null)
 				{
+					if (!dbContext.Administrators.Any())
+					{
+						// First login ever and currently no user created
+						var createdAdministrator = CreateUser(username, password);
+						dbContext.Administrators.Add(createdAdministrator);
+						dbContext.SaveChanges();
+						return (true, createdAdministrator);
+					}
+
 					// Wrong username
 					return (false, null);
 				}

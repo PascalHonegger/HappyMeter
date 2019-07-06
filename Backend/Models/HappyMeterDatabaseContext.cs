@@ -1,16 +1,15 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using MySql.Data.Entity;
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace AtosHappyMeter.Models
 {
-	[DbConfigurationType(typeof(MySqlEFConfiguration))]
 	public class HappyMeterDatabaseContext : DbContext
 	{
 		public HappyMeterDatabaseContext() : base("name=AtosHappyMeterDatabase")
 		{
+			Database.SetInitializer(new CreateDatabaseIfNotExists<HappyMeterDatabaseContext>());
 		}
 
 		public virtual DbSet<EmotionalState> EmotionalStates { get; set; }

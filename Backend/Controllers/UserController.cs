@@ -31,7 +31,7 @@ namespace AtosHappyMeter.Controllers
 				return BadRequest();
 			}
 
-			var autorisedAdministrator =
+			var authorizedAdministrator =
 				(Administrator) ActionContext.Request.Properties[AuthorizationConstants.UserInformationKey];
 
 			using (var dbContext = new HappyMeterDatabaseContext())
@@ -41,9 +41,9 @@ namespace AtosHappyMeter.Controllers
 					return BadRequest();
 				}
 
-				dbContext.Administrators.Attach(autorisedAdministrator);
+				dbContext.Administrators.Attach(authorizedAdministrator);
 
-				autorisedAdministrator.UpdateUsername(setUsernameDto.NewUsername);
+				authorizedAdministrator.UpdateUsername(setUsernameDto.NewUsername);
 
 				await dbContext.SaveChangesAsync();
 
@@ -61,14 +61,14 @@ namespace AtosHappyMeter.Controllers
 				return BadRequest();
 			}
 
-			var autorisedAdministrator =
+			var authorizedAdministrator =
 				(Administrator) ActionContext.Request.Properties[AuthorizationConstants.UserInformationKey];
 
 			using (var dbContext = new HappyMeterDatabaseContext())
 			{
-				dbContext.Administrators.Attach(autorisedAdministrator);
+				dbContext.Administrators.Attach(authorizedAdministrator);
 
-				autorisedAdministrator.UpdatePassword(setPasswordDto.NewPassword);
+				authorizedAdministrator.UpdatePassword(setPasswordDto.NewPassword);
 
 				await dbContext.SaveChangesAsync();
 
