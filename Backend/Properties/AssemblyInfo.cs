@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Atos AG")]
 [assembly: AssemblyProduct("AtosHappyMeter")]
-[assembly: AssemblyCopyright("Copyright © Atos AG 2017")]
+[assembly: AssemblyCopyright("Copyright © Pascal Honegger 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
